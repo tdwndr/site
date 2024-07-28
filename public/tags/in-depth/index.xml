@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>In Depth on Ted Winder</title>
+    <link>//localhost:1313/tags/in-depth/</link>
+    <description>Recent content in In Depth on Ted Winder</description>
+    <generator>Hugo -- 0.129.0</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Mar 2024 21:20:42 +0100</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/in-depth/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Building a beta: launching an internal testing programme in under 100 days</title>
+      <link>//localhost:1313/posts/draft1/</link>
+      <pubDate>Mon, 18 Mar 2024 21:20:42 +0100</pubDate>
+      <guid>//localhost:1313/posts/draft1/</guid>
+      <description>The mobile apps we work on at Lloyds Banking Group are already some of the best rated in the industry, with an average app store rating of over 4.6 stars.
+But we know there&amp;rsquo;s more we can do. That&amp;rsquo;s why we&amp;rsquo;re on an exciting journey this year to make the app experience even better for customers and supercharge our mobile-first strategy.</description>
+    </item>
+  </channel>
+</rss>

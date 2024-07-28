@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Changing to Hugo and Netlify | Ted Winder</title>
+<meta name="keywords" content="in brief">
+<meta name="description" content="The internet has changed a lot since I was first dabbling at 11 years old.
+I&rsquo;m now using Hugo and Netlify.
+Customisations I&rsquo;ve made:
+Changed title to SVG and updated colour Modified the overal width Updated to Google fonts, and amended sizes and line-heights Created &lsquo;in brief&rsquo; and &lsquo;in depth&rsquo; tags Display these tags as post metadata on the main list, with custom colour Update formatting for post entries based on the tag Changed some other list behaviours, e.">
+<meta name="author" content="">
+<link rel="canonical" href="//localhost:1313/posts/draft2/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.6af412c53dc897bbdd1f51882bde66df3a14a7b3c7c0bb7820ce36f5b7c65145.css" integrity="sha256-avQSxT3Il7vdH1GIK95m3zoUp7PHwLt4IM429bfGUUU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="//localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="//localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="//localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="//localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="//localhost:1313/posts/draft2/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Onest:wght@300;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="//localhost:1313/" accesskey="h" title="Ted Winder (Alt + H)">
+                <h1 class="hide">Ted Winder</h1>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 342.58 54.35" style="enable-background:new 0 0 342.58 54.35" xml:space="preserve">
+                    <path d="m40.29 4.02.79.67 3.9 10.12c.55 1.46-.67 2.38-1.71 2.38-.43 0-.85-.12-1.1-.43C41.45 15.84 34.99 7 30.42 7h-2.8v39.56c0 1.95 1.22 3.23 3.05 3.23.79 0 .79 2.93.12 2.93H15.31c-.67 0-.67-2.93.12-2.93 1.83 0 3.05-1.28 3.05-3.23V7h-2.8C11.09 7 4.63 15.84 3.9 16.76c-.24.3-.67.43-1.1.43-1.04 0-2.26-.91-1.71-2.38L5 4.69l.79-.67h34.5z" />
+                    <path d="M57.54 46.93c2.99 0 6.28-1.83 7.92-4.27.37-.49.67-.91 1.22-.91.73 0 1.28.49 1.28 1.1-1.16 5.97-7.8 10.48-15.42 10.48-22.55 0-23.23-35.97.49-35.97 7.92 0 14.39 6.4 14.39 14.26 0 2.07-1.16 3.17-3.41 3.17H45.35c.37 7.57 5 12.14 12.19 12.14zm.43-15.18c0-7.56-1.83-11.22-5.42-11.09-3.41.12-6.52 4.94-7.19 11.09h12.61zM91.38 13.04c0-1.95-1.22-3.23-3.05-3.23-.79 0-.92-2.68-.12-2.93 4.39-1.22 6.89-2.26 11.28-4.69h1.04v44.38c0 1.95 1.22 3.23 3.05 3.23.79 0 .79 2.93.12 2.93H92.36l-.24-.91c-1.52.97-3.47 1.52-5.61 1.52-10.73 0-17.43-6.71-17.56-17.62-.12-10.24 6.1-18.23 14.2-18.23 3.23 0 6.22 1.4 8.23 3.78v-8.23zm0 12.19c-1.04-1.83-2.87-2.99-4.82-2.99-11.58 0-11.03 28.04-.06 28.04 2.13 0 3.72-.61 4.88-1.89V25.23zM169.95 51.08c-.43 1.28-.79 1.65-1.52 1.65h-6.1l-8.17-29.44-6.95 27.8c-.3 1.16-.73 1.65-1.52 1.65h-6.1L125.27 9.99c-.67-2.07-1.83-3.05-3.6-3.05-.79 0-.79-2.93-.12-2.93h17.07c.67 0 .67 2.93-.12 2.93-2.13 0-3.78 1.71-3.17 3.29L146 41.99l6.46-24.87-2.01-7.13c-.55-2.01-1.77-3.05-3.6-3.05-.79 0-.79-2.93-.12-2.93h17.07c.67 0 .67 2.93-.12 2.93-2.13 0-3.78 1.71-3.17 3.29l8.66 32.43 6.22-19.02c2.74-7.56 6.52-19.63 16.34-19.87 9.02-.18 8.9 11.95 1.71 12.31-1.71-1.58-3.72-2.5-5.67-2.5-5.12 0-7.19 6.1-8.78 9.94l-9.04 27.56zm17.19-24.75c-.79 0-.91-2.68-.12-2.93 4.45-1.22 6.95-2.26 11.34-4.69h1.04v27.86c0 1.95 1.22 3.23 3.05 3.23.79 0 .79 2.93.12 2.93h-15.48c-.67 0-.67-2.93.12-2.93 1.77 0 3.05-1.28 3.05-3.23V29.56c-.07-1.95-1.29-3.23-3.12-3.23zM208.29 29.56c0-1.95-1.22-3.23-3.05-3.23-.79 0-.91-2.68-.12-2.93 4.39-1.22 6.89-2.26 11.28-4.69h1.04v3.78c1.95-3.11 5.36-5 9.08-5 7.5 0 11.16 3.84 11.16 11.83V42.3c0 .85-.3 4.76 1.28 4.76 1.83 0 1.83-2.19 3.11-2.19.73 0 1.28.49 1.28 1.1 0 4.02-3.17 7.19-7.19 7.19-4.51 0-7.62-3.54-7.62-8.72V29.01c0-4.08-2.26-6.83-5.43-6.77-2.93 0-5.3 2.38-5.67 5.73v18.59c0 1.95 1.22 3.23 3.05 3.23.79 0 .79 2.93.12 2.93h-15.48c-.67 0-.67-2.93.12-2.93 1.83 0 3.05-1.28 3.05-3.23v-17zM265.83 13.04c0-1.95-1.22-3.23-3.05-3.23-.79 0-.92-2.68-.12-2.93 4.39-1.22 6.89-2.26 11.28-4.69h1.04v44.38c0 1.95 1.22 3.23 3.05 3.23.79 0 .79 2.93.12 2.93h-11.34l-.24-.91c-1.52.97-3.47 1.52-5.61 1.52-10.73 0-17.43-6.71-17.56-17.62-.12-10.24 6.1-18.23 14.2-18.23 3.23 0 6.22 1.4 8.23 3.78v-8.23zm0 12.19c-1.04-1.83-2.87-2.99-4.82-2.99-11.58 0-11.03 28.04-.06 28.04 2.13 0 3.72-.61 4.88-1.89V25.23z" />
+                    <path d="M311 31.63c0 2.07-1.16 3.17-3.41 3.17h-18.65c.37 7.56 5 12.13 12.19 12.13 4.75 0 9.14-3.17 14.45-10.49v-6.89c0-1.95-1.22-3.23-3.05-3.23-.79 0-.91-2.68-.12-2.93 4.39-1.22 6.89-2.26 11.28-4.69h1.04v5.06c3.23-3.78 6.22-5.61 9.2-5.67 4.51 0 7.25 2.44 7.25 6.46v.18c0 3.05-2.62 4.45-5.12 4.45-1.89 0-3.72-.79-4.33-2.32 0-1.77-.97-2.8-2.25-2.8-.79 0-1.65.37-2.5 1.16-3.66 3.47-9.57 13.35-11.4 15.61-7.01 8.66-13.17 12.74-19.45 12.5-22.55 0-23.23-35.97.49-35.97 7.92.01 14.38 6.41 14.38 14.27zm-9.45.12c0-7.56-1.83-11.22-5.42-11.09-3.41.12-6.52 4.94-7.13 11.09h12.55zm10.98 18.05c1.83 0 3.05-1.28 3.05-3.23v-3.9c1.52-1.89 5.61-8.72 9.14-13.11v17.01c0 1.95 1.22 3.23 3.05 3.23.79 0 .79 2.93.12 2.93h-15.48c-.68-.01-.68-2.93.12-2.93z" />
+                  </svg>
+            </a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://tedwinder.co.uk" title="home">
+                    <span>home</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="//localhost:1313/" title="posts">
+                    <span>posts</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Changing to Hugo and Netlify
+      <span class="entry-hint" title="Draft">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+        </svg>
+      </span>
+    </h1>
+    <div class="post-meta"><span title='2024-07-27 21:20:42 +0100 BST'>July 27, 2024</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;<a class="tag-in-brief" href="/tags/in-brief"> in brief</a>
+
+</div>
+  </header> 
+  <div class="post-content"><p>The internet has changed a lot since I was first dabbling at 11 years old.</p>
+<p>I&rsquo;m now using <a href="https://gohugo.io" title="Hugo">Hugo</a> and <a href="https://www.netlify.com" title="Netlify">Netlify</a>.</p>
+<p>Customisations I&rsquo;ve made:</p>
+<ul>
+<li>Changed title to SVG and updated colour</li>
+<li>Modified the overal width</li>
+<li>Updated to Google fonts, and amended sizes and line-heights</li>
+<li>Created &lsquo;in brief&rsquo; and &lsquo;in depth&rsquo; tags</li>
+<li>Display these tags as post metadata on the main list, with custom colour</li>
+<li>Update formatting for post entries based on the tag</li>
+<li>Changed some other list behaviours, e.g. so &lsquo;in brief&rsquo; are displayed in full</li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="//localhost:1313/">Ted Winder</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

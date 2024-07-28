@@ -1,0 +1,32 @@
+baseURL: ''
+languageCode: en-us
+title: Ted Winder
+theme: PaperMod
+
+summaryLength: 60
+
+params:
+
+  homeInfoParams:
+    Content: Various musings etc...
+
+  defaultTheme: auto # to switch between dark or light according to browser theme
+
+  buildDrafts: true
+      
+  ShowReadingTime: true
+  enableEmoji: true
+  disableSpecial1stPost: true
+
+  disableScrollToTop: true
+
+menu:
+  main:
+    - identifier: home
+      name: home
+      url: https://tedwinder.co.uk
+      weight: 10
+    - identifier: posts
+      name: posts
+      url: /
+      weight: 20
