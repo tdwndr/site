@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Profiles on Ted Winder</title>
-    <link>/profile/</link>
+    <link>http://localhost:1313/profile/</link>
     <description>Recent content in Profiles on Ted Winder</description>
     <generator>Hugo -- 0.129.0</generator>
     <language>en-us</language>
-    <atom:link href="/profile/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/profile/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

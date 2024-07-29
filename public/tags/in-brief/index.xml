@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>In Brief on Ted Winder</title>
-    <link>//localhost:1313/tags/in-brief/</link>
+    <link>http://localhost:1313/tags/in-brief/</link>
     <description>Recent content in In Brief on Ted Winder</description>
     <generator>Hugo -- 0.129.0</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 27 Jul 2024 21:20:42 +0100</lastBuildDate>
-    <atom:link href="//localhost:1313/tags/in-brief/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/in-brief/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Changing to Hugo and Netlify</title>
-      <link>//localhost:1313/posts/draft2/</link>
+      <link>http://localhost:1313/posts/draft2/</link>
       <pubDate>Sat, 27 Jul 2024 21:20:42 +0100</pubDate>
-      <guid>//localhost:1313/posts/draft2/</guid>
+      <guid>http://localhost:1313/posts/draft2/</guid>
       <description>The internet has changed a lot since I was first dabbling at 11 years old.
 I&amp;rsquo;m now using Hugo and Netlify.
 Customisations I&amp;rsquo;ve made:

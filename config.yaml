@@ -7,6 +7,11 @@ summaryLength: 60
 
 params:
 
+  # use an embedded font-family
+  # if you import your own fonts, name them here too
+  customtextFontFamily: "Onest"
+  customheadingFontFamily: "Gloock"
+
   homeInfoParams:
     Content: Various musings etc...
 
