@@ -5,9 +5,7 @@ _build:
   list: never
 ---
 
-{{< attr class="profile-home" >}}
 I help teams to deliver digital experiences that drive value and deepen customer relationships by supercharging strategy, storytelling and measurement capabilities.
-{{< /attr >}}
 
 I'm currently Senior Product Manager for Digital Experience & Mass Affluent at [Lloyds Banking Group](https://www.lloydsbankinggroup.com).
 
