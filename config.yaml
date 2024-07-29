@@ -1,4 +1,4 @@
-baseURL: 'tedw.netlify.app'
+baseURL: 'http://tedw.netlify.app'
 languageCode: en-us
 title: Ted Winder
 theme: PaperMod
