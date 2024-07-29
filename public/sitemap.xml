@@ -24,5 +24,7 @@
     <lastmod>2024-03-18T21:20:42+01:00</lastmod>
   </url><url>
     <loc>//localhost:1313/categories/</loc>
+  </url><url>
+    <loc>//localhost:1313/profile/</loc>
   </url>
 </urlset>

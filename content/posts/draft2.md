@@ -18,3 +18,4 @@ Customisations I've made:
 - Display these tags as post metadata on the main list, with custom colour
 - Update formatting for post entries based on the tag
 - Changed some other list behaviours, e.g. so 'in brief' are displayed in full
+- Adding a standalone profile homepage

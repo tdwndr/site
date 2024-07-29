@@ -24,9 +24,17 @@ menu:
   main:
     - identifier: home
       name: home
-      url: https://tedwinder.co.uk
+      url: /profile
       weight: 10
     - identifier: posts
       name: posts
       url: /
       weight: 20
+    - identifier: linkedin
+      name: linkedin
+      url: https://www.linkedin.com/in/ted-winder/
+      weight: 30
+
+markup:
+  defaultMarkdownHandler: goldmark
+  block: true

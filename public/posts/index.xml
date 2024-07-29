@@ -13,8 +13,10 @@
       <link>//localhost:1313/posts/draft2/</link>
       <pubDate>Sat, 27 Jul 2024 21:20:42 +0100</pubDate>
       <guid>//localhost:1313/posts/draft2/</guid>
-      <description>Customisations I&amp;rsquo;ve made:
-Changed title to SVG and updated colour Modified the overal width Updated to Google fonts, and amended sizes and line-heights Created &amp;lsquo;in brief&amp;rsquo; and &amp;lsquo;in depth&amp;rsquo; tags Display these tags as post metadata on the main list, with custom colour Update formatting for post entries based on the tag </description>
+      <description>The internet has changed a lot since I was first dabbling at 11 years old.
+I&amp;rsquo;m now using Hugo and Netlify.
+Customisations I&amp;rsquo;ve made:
+Changed title to SVG and updated colour Modified the overal width Updated to Google fonts, and amended sizes and line-heights Created &amp;lsquo;in brief&amp;rsquo; and &amp;lsquo;in depth&amp;rsquo; tags Display these tags as post metadata on the main list, with custom colour Update formatting for post entries based on the tag Changed some other list behaviours, e.</description>
     </item>
     <item>
       <title>Building a beta: launching an internal testing programme in under 100 days</title>
