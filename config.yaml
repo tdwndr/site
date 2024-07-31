@@ -41,5 +41,7 @@ menu:
       weight: 30
 
 markup:
-  defaultMarkdownHandler: goldmark
-  block: true
+  goldmark:
+    parser:
+      attribute:
+        block: true

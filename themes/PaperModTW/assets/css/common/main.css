@@ -16,10 +16,11 @@ a.tag-in-depth {
     color: #7513f6;
 }
 
-.page-header h1 {
-    font-size: 40px;
+h2.page-header {
+    font-size: 30px;
     font-family: 'Gloock', serif;
     font-weight: 400;
+    color: #f73859;
 }
 
 .pagination {

@@ -34,7 +34,7 @@ h1.hide {
     font-size: 24px;
 }
 
-.logo a img, .logo a svg {
+.logo a svg, .logo a img {
     display: inline;
     vertical-align: middle;
     pointer-events: none;
