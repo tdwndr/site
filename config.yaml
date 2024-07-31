@@ -29,11 +29,11 @@ menu:
   main:
     - identifier: home
       name: home
-      url: /profile
+      url: /
       weight: 10
     - identifier: posts
       name: posts
-      url: /
+      url: /posts
       weight: 20
     - identifier: linkedin
       name: linkedin
