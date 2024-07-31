@@ -11,9 +11,9 @@ export default defineConfig({
   branch,
 
   // Get this from tina.io
-  clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
+  clientId: process.env.e8d14696-0e93-4ca4-bbd2-b190ffbc14c5,
   // Get this from tina.io
-  token: process.env.TINA_TOKEN,
+  token: process.env.55896f4095bcc883e6dbc59a5708f345ad0d0133,
 
   build: {
     outputFolder: "admin",
@@ -39,6 +39,27 @@ export default defineConfig({
             label: "Title",
             isTitle: true,
             required: true,
+          },
+          {
+            type: 'datetime',
+            name: 'date',
+            label: 'Date'
+          },
+          {
+            type: "string",
+            name: "tags",
+            label: "Tags",
+            required: true,
+            options: [
+              {
+                value: 'in brief',
+                label: 'in brief',
+              },
+              {
+                value: 'in depth',
+                label: 'in depth',
+              },
+            ]
           },
           {
             type: "rich-text",
