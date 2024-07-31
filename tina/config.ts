@@ -64,7 +64,7 @@ export default defineConfig({
             required: true,
             options: [
               {
-                value: 'in brief',
+                value: '\u005Bin brief\u005D',
                 label: 'in brief',
               },
               {
