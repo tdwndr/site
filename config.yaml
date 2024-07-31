@@ -13,7 +13,7 @@ params:
   customheadingFontFamily: "Gloock"
 
   homeInfoParams:
-    Content: Various musings etc...
+    Content: Occasional thoughts and reflections.
 
   defaultTheme: auto # to switch between dark or light according to browser theme
 
@@ -24,9 +24,6 @@ params:
   disableSpecial1stPost: true
 
   disableScrollToTop: true
-
-  taxonomies:
-  tag: tags
 
 menu:
   main:

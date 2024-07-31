@@ -1,7 +1,7 @@
 +++
 title = 'Changing to Hugo and Netlify'
 date = 2024-07-27T21:20:42+01:00
-tags = 'in brief'
+tags = ['in brief']
 draft = true
 +++
 
