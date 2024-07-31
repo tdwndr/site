@@ -1,7 +1,7 @@
 baseURL: 'http://tedw.netlify.app'
 languageCode: en-us
 title: Ted Winder
-theme: PaperMod
+theme: PaperModTW
 
 summaryLength: 60
 
