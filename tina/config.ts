@@ -58,10 +58,20 @@ export default defineConfig({
             label: 'Date'
           },
           {
-            type: 'string',
-            name: 'tags',
-            label: 'Tags',
-            list: true,
+            type: "string",
+            name: "tags",
+            label: "Tags",
+            required: true,
+            options: [
+              {
+                value: 'in brief',
+                label: 'in brief',
+              },
+              {
+                value: 'in depth',
+                label: 'in depth',
+              },
+            ]
           },
           {
             type: "rich-text",
