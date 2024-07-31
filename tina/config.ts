@@ -30,9 +30,21 @@ export default defineConfig({
     collections: [
       {
         name: "post",
+        format: "md",
         label: "Posts",
         path: "content/posts",
+        defaultItem: () => {
+          return {
+            draft: true,
+          }
+        },
         fields: [
+          {
+            name: "draft",
+            type: "boolean",
+            label: "Draft",
+            required: true,
+          },
           {
             type: "string",
             name: "title",
