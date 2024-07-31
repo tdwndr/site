@@ -1,7 +1,7 @@
 ---
-draft: true
+draft: false
 title: 'Hello, World!'
-tags: in brief
+tags: in depth
 ---
 
 ## Hello World!
