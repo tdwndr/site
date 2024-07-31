@@ -59,7 +59,7 @@ export default defineConfig({
           },
           {
             type: "string",
-            name: "tags",
+            name: "tag",
             label: "Tags",
             required: true,
             options: [

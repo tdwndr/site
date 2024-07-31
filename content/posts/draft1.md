@@ -1,7 +1,7 @@
 +++
 title = 'Building a beta: launching an internal testing programme in under 100 days'
 date = 2024-03-18T21:20:42+01:00
-tags = 'in depth'
+tag = 'in depth'
 draft = true
 featured = true
 +++
