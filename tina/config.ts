@@ -63,7 +63,7 @@ export default defineConfig({
             label: "Tags",
             required: true,
             multiple: true,
-            options: ['\u005B'in brief'\u005B', '\u005B'in depth'\u005B']
+            options: ["\u005Bin brief'\u005B", "\u005B'in depth'\u005B"]
           },
           {
             type: "rich-text",
