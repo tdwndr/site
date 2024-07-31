@@ -25,6 +25,9 @@ params:
 
   disableScrollToTop: true
 
+  taxonomies:
+  tag: tags
+
 menu:
   main:
     - identifier: home
