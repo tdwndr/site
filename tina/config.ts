@@ -1,19 +1,14 @@
-import { defineConfig } from "tinacms";
+import {  defineConfig } from 'tinacms'
 
-// Your hosting provider likely exposes this as an environment variable
 const branch =
-  process.env.GITHUB_BRANCH ||
-  process.env.VERCEL_GIT_COMMIT_REF ||
-  process.env.HEAD ||
-  "main";
+  process.env.NEXT_PUBLIC_TINA_BRANCH ||
+  process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF ||
+  process.env.HEAD
 
 export default defineConfig({
+  token: '55896f4095bcc883e6dbc59a5708f345ad0d0133' // generated on app.tina.io
+  clientId: 'e8d14696-0e93-4ca4-bbd2-b190ffbc14c5', // generated on app.tina.io
   branch,
-
-  // Get this from tina.io
-  clientId: process.env.e8d14696-0e93-4ca4-bbd2-b190ffbc14c5,
-  // Get this from tina.io
-  token: process.env.55896f4095bcc883e6dbc59a5708f345ad0d0133,
 
   build: {
     outputFolder: "admin",
