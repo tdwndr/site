@@ -1,5 +1,6 @@
 ---
-title: Hello, World!
+title: 'Hello, World!'
+tags: ['in brief']
 ---
 
 ## Hello World!
