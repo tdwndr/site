@@ -64,12 +64,12 @@ export default defineConfig({
             required: true,
             options: [
               {
-                value: '\u005B\u0027in brief\u0027\u005D',
-                label: '[in brief]',
+                value: "['in brief']",
+                label: 'in brief',
               },
               {
-                value: '\u005B\u0027in depth\u0027\u005D',
-                label: '[in depth]',
+                value: "['in depth']",
+                label: 'in depth',
               },
             ]
           },
