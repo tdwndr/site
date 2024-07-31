@@ -1,7 +1,6 @@
 ---
 draft: false
 title: 'Hello, World!'
-tags: '[in brief]'
 ---
 
 ## Hello World!
