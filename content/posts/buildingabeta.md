@@ -1,6 +1,7 @@
 ---
 share: true
 draft: false
+featured: true
 title: "Building a beta: launching an internal testing programme in under 100 days"
 tags:
   - in depth
