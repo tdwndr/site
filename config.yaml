@@ -1,4 +1,4 @@
-baseURL: 'http://tedw.netlify.app'
+baseURL: 'https://tedw.co.uk'
 languageCode: en-us
 title: Ted Winder | Experience performance strategist
 description: I help teams to deliver digital experiences that drive value and deepen customer relationships by supercharging strategy, storytelling and measurement capabilities.
@@ -6,9 +6,11 @@ theme: PaperModTW
 
 summaryLength: 60
 
-params:
+permalinks:
+  page:
+    posts: /posts/:year/:month/:slugorfilename/
 
-theme-color: 
+params:
 
   # use an embedded font-family
   # if you import your own fonts, name them here too

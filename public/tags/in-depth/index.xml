@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>In Depth on Ted Winder</title>
+    <title>In Depth on Ted Winder | Experience performance strategist</title>
     <link>http://localhost:1313/tags/in-depth/</link>
-    <description>Recent content in In Depth on Ted Winder</description>
+    <description>Recent content in In Depth on Ted Winder | Experience performance strategist</description>
     <generator>Hugo -- 0.129.0</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 18 Mar 2024 21:20:42 +0100</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/in-depth/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Building a beta: launching an internal testing programme in under 100 days</title>
-      <link>http://localhost:1313/posts/draft1/</link>
+      <link>http://localhost:1313/posts/2024/03/buildingabeta/</link>
       <pubDate>Mon, 18 Mar 2024 21:20:42 +0100</pubDate>
-      <guid>http://localhost:1313/posts/draft1/</guid>
+      <guid>http://localhost:1313/posts/2024/03/buildingabeta/</guid>
       <description>The mobile apps we work on at Lloyds Banking Group are already some of the best rated in the industry, with an average app store rating of over 4.6 stars.
 But we know there&amp;rsquo;s more we can do. That&amp;rsquo;s why we&amp;rsquo;re on an exciting journey this year to make the app experience even better for customers and supercharge our mobile-first strategy.</description>
+    </item>
+    <item>
+      <title>Lessons on motivation from my Apple Watch</title>
+      <link>http://localhost:1313/posts/2023/08/lessonsfrommyapplewatch/</link>
+      <pubDate>Mon, 14 Aug 2023 20:12:00 +0100</pubDate>
+      <guid>http://localhost:1313/posts/2023/08/lessonsfrommyapplewatch/</guid>
+      <description>If you know me, you&amp;rsquo;ll know I live by my Apple Watch. For 4.5 years, I&amp;rsquo;ve worn it pretty much every single day. It&amp;rsquo;s my single biggest motivator.
+There are 3 goals to achieve each day: Move (active calories burned), Exercise (minutes of brisk activity), and Stand (hours with at least a minute of standing).
+I take these pretty seriously: I&amp;rsquo;ve hit my Move goal 96% of the time — 1559 out of 1629 days — and Exercise and Stand 93% of the time.</description>
     </item>
   </channel>
 </rss>

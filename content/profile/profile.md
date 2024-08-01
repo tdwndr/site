@@ -1,6 +1,6 @@
 ---
 title: "Profile"
-url: 
+url:
 _build:
   list: never
 ---

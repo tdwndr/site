@@ -8,7 +8,7 @@ _build:
 ## I help teams to deliver digital experiences that drive value and deepen customer relationships by supercharging strategy, storytelling and measurement capabilities.
 {class="page-header"}
 
-I'm currently Senior Product Manager for Digital Experience & Mass Affluent at [Lloyds Banking Group](https://www.lloydsbankinggroup.com).
+I'm currently Senior Product Manager for Digital Experience Performance at [Lloyds Banking Group](https://www.lloydsbankinggroup.com).
 
 With over seven years' experience across design, sales, product and transformation teams in financial services, I get hands-on to:
 
