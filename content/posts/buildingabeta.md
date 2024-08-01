@@ -1,11 +1,10 @@
 ---
 share: true
-draft: true
-title: "{{title}}"
+draft: false
+title: "Building a beta: launching an internal testing programme in under 100 days"
 tags:
   - in depth
-date:
-  "{ date }": 
+date: 2024-03-18T21:20:42+01:00
 ---
 
 The mobile apps we work on at Lloyds Banking Group are already some of the best rated in the industry, with an average app store rating of over 4.6 stars.
