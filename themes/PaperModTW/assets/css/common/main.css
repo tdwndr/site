@@ -4,8 +4,9 @@
     max-width: calc(var(--main-width) + var(--gap) * 2);
     margin: auto;
     padding: var(--gap);
-    font-family: 'Onest', sans-serif;
+    font-family: 'Onest', serif;
 	font-weight: 300;
+    font-size: 30px
 }
 
 a.tag-in-brief {

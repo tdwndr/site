@@ -117,7 +117,7 @@
 
 .post-content dt {
     width: 25%;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .post-content dd {
@@ -278,7 +278,7 @@
 
 .toc .details {
     display: inline;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .toc .inner {
@@ -361,7 +361,7 @@ h6:hover .anchor {
     display: inline-flex;
     color: var(--secondary);
     margin-inline-start: 8px;
-    font-weight: 500;
+    font-weight: 400;
     user-select: none;
 }
 
