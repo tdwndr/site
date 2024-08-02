@@ -1,10 +1,10 @@
-/* gloock-regular - latin */
+/* dm-serif-display-regular - latin */
 @font-face {
     font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: 'Gloock';
+    font-family: 'DM Serif Display';
     font-style: normal;
     font-weight: 400;
-    src: url('/fonts/gloock-v6-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    src: url('/fonts/dm-serif-display-v15-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
   }
   /* onest-300 - latin */
   @font-face {
