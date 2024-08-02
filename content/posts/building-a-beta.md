@@ -20,8 +20,6 @@ So let's go behind the scenes of one of the ways we're doing this: building, lau
 
 Obsessively using research, data and insight to inform our approach is woven into the fabric of how we deliver and manage change.
 
-Adam Williams leads a brilliant group of designers and researchers. Johnny Rookes and team run hundreds of A/B tests a year. Our Insight & Analytics function under Jo Strong is second to none. And the estate of insight sources and surveys that Sarah Farrington and team manage for the channel generates over half a million pieces of feedback a year.
-
 But as we transform the design of our apps, there are three things we wanted to do better:
 
 **1. Move faster.** We need to bring behavioural insight and learnings earlier into the design and development process to give us more time to test, learn and iterate before delivering to customers.
@@ -42,29 +40,29 @@ Inevitably, the reality was more complex. Here's how we did it.
 
 ### 🛠️ Laying the groundwork
 
-This isn't our first foray into beta testing. In fact, we've been running mobile beta programmes for almost a decade — currently led by Shazan Aktar — to give colleagues early sight of production changes before they roll out to customers.
+This isn't our first foray into beta testing. In fact, we've been running mobile beta programmes for almost a decade to give colleagues early sight of production changes before they roll out to customers.
 
 But we wanted to build on this to scale even further and test even bigger, more experimental change over a longer period of time.
 
-Ed Beecroft and Justin Cockerell led the thinking to enable this. For example, a server-side switch and feature flag were required to control visibility of beta functionality, while an opt-in toggle within the app itself was also created to allow testers to switch the beta experience on and off.
+For example, a server-side switch and feature flag were required to control visibility of beta functionality, while an opt-in toggle within the app itself was also created to allow testers to switch the beta experience on and off.
 
-A separate backlog for beta versions was spun off, with Andreas Georgiou managing the pipeline through to each fortnightly release.
+A separate backlog for beta versions was spun off to enable management of the pipeline through to each fortnightly release.
 
 ### 📢 Spreading the word
 
-With the technical approach defined, we kicked off tester recruitment. We knew that any internal programme may not be 100% representative of our customer base as a whole, but we wanted to get as close as we could. Chloe Steuer set the ambitious goal of 10,000 sign-ups — that's 15% of the entire business!
+With the technical approach defined, we kicked off tester recruitment. We knew that any internal programme may not be 100% representative of our customer base as a whole, but we wanted to get as close as we could. We set the ambitious goal of 10,000 sign-ups — that's 15% of the entire business!
 
-Amazingly, we're right on track. The current total stands at 4,886 and covers every business unit, every product holding and every grade (including GEC).
+Amazingly, we're right on track. The current total stands at 4,886 and covers every business unit, every product holding and every grade (including executives).
 
 > We crossed 500 sign-ups in 12 days and 1,000 in 36 days. Since then, we're averaging over 400 sign-ups a week.
 
-Word of mouth carried us a long way, supplemented by tagging along to team meetings and offsites. Alistair Dewar and his team in Group Corporate Affairs bought into the engagement potential of the programme straight away and were a huge help in spreading the word through internal and leadership comms.
+Word of mouth carried us a long way, supplemented by tagging along to team meetings and offsites. The team in Group Corporate Affairs bought into the engagement potential of the programme straight away and were a huge help in spreading the word through internal and leadership comms.
 
 ### 🦺 Dotting the i's and crossing the t's
 
 In addition to all the hard work that goes into the design, build and testing of the beta app itself, there's been a lot to consider to make sure we're operating compliantly.
 
-Scott Cornell and I worked closely with both Digital and HR Legal teams to define transparent terms of use, and engaged with colleagues in Data Privacy to make sure we had robust processes and disclosures relating to consent and handling of data. We also worked with our Risk partners to define how we'd be gathering insight and using it to de-risk change delivery.
+I worked closely with both Digital and HR Legal teams to define transparent terms of use, and engaged with colleagues in Data Privacy to make sure we had robust processes and disclosures relating to consent and handling of data. We also worked with our Risk partners to define how we'd be gathering insight and using it to de-risk change delivery.
 
 I've been particularly adamant about making sure our processes are as clear and simple as possible. Participants should always feel they know what's going on and what they need to do. So we put a lot of work into the onboarding comms journey, which involved some fun navigating mail merges, Outlook send limits, and misbehaving CSV files...
 
@@ -72,7 +70,7 @@ I've been particularly adamant about making sure our processes are as clear and 
 
 Alongside driving sign-ups, we're taking a progressive approach to scaling the actual testing part of the programme, starting with iOS and opening up to Android later in the year.
 
-For the iOS release process, we're using Apple's TestFlight for distribution. It's a fiddly operation to run at scale, requiring email invites and personal devices, so this part has been particularly challenging. But Simon Brookfield and the Digital Platforms team have been all over making this as smooth as possible.
+For the iOS release process, we're using Apple's TestFlight for distribution. It's a fiddly operation to run at scale, requiring email invites and personal devices, so this part has been particularly challenging. But the Digital Platforms team have been all over making this as smooth as possible.
 
 > In under 100 days from inception, we'd onboarded our pilot group of 30 testers to the first beta release.
 
@@ -93,5 +91,3 @@ In addition to gathering this unprompted qualitative feedback, we're running reg
 I'm really excited by what we've started to build and the value it's already driving. And I'm proud of how so many people have worked together to navigate complexity and push the bar to move at pace on this without cutting corners.
 
 We’re learning a lot — both in terms of how we run the programme and the changes we're delivering to beta — but we're not done! There’s more to do on scaling sign-ups, using AI to synthesise feedback, and of course continuing to use these super valuable insights to shape and optimise what we deliver to customers.
-
-Watch this space!
