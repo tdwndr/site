@@ -5,7 +5,7 @@ featured: true
 title: An analysis of my home energy usage
 tags:
   - in depth
-date: 2023-08-14T20:12:00+01:00
+date: 2023-08-11T10:30:00+01:00
 ---
 
 As an EV owner, thinking consciously about my consumption is important to me both in terms of cost and in order to support the transition to cleaner vehicles. And I was recently inspired to think more about my own energy use at home.
