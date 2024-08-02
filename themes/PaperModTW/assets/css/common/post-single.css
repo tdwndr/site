@@ -5,9 +5,10 @@
 
 .post-title {
     margin-bottom: 2px;
-    font-size: 40px;
+    font-size: 42px;
     font-family: 'DM Serif Display', serif;
     font-weight: 400;
+    line-height: 1.1;
 }
 
 .post-description {
@@ -82,6 +83,10 @@
     margin: auto 0;
     border-radius: 0;
     box-shadow: 0 -1px 0 var(--primary) inset;
+}
+
+.post-content a:hover {
+    color: #f73859;
 }
 
 .post-content del {

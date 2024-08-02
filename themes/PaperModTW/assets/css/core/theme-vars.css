@@ -38,7 +38,7 @@
     font-weight: 600;
     src: url('/fonts/onest-v6-latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
   }
-
+  
 ::-webkit-scrollbar{ background: var(--theme); }
 
 :root {
