@@ -10,6 +10,8 @@ summaryLength: 60
 
 enableRobotsTXT: true
 
+googleAnalytics: G-KHX8T0Z10C
+
 permalinks:
   page:
     posts: /posts/:year/:month/:slugorfilename/
