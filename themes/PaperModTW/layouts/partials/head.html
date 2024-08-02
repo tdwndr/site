@@ -24,7 +24,7 @@
 {{- else -}}
 <meta name="description" content="{{- with .Description }}{{ . }}{{- else }}{{- if or .IsPage .IsSection}}
     {{- .Summary | default (printf "%s - %s" .Title  site.Title) }}{{- else }}
-    {{- with site.Params.description }}{{ . }}{{- end }}{{- end }}{{- end -}}">{{- end }}
+    {{- with site.Params.description }}{{ . }}{{- end }}{{- end }}{{- end -}}">
 {{- end }}
 
 <meta name="author" content="{{ (partial "author.html" . ) }}">

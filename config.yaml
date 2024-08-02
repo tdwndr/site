@@ -8,6 +8,8 @@ theme: PaperModTW
 
 summaryLength: 60
 
+enableRobotsTXT: true
+
 permalinks:
   page:
     posts: /posts/:year/:month/:slugorfilename/
