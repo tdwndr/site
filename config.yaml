@@ -1,7 +1,9 @@
 baseURL: 'https://tedw.co.uk'
 languageCode: en-us
-title: Ted Winder | Experience performance strategist
+title: Ted Winder
 description: I help teams to deliver digital experiences that drive value and deepen customer relationships by supercharging strategy, storytelling and measurement capabilities.
+author: Ted Winder
+
 theme: PaperModTW
 
 summaryLength: 60

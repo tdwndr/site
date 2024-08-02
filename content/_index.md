@@ -1,5 +1,6 @@
 ---
 title: "Profile"
+description: I help teams to deliver digital experiences that drive value and deepen customer relationships by supercharging strategy, storytelling and measurement capabilities.
 url: profile
 _build:
   list: never
