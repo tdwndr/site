@@ -22,13 +22,17 @@ svg.home-name {
     margin-left: -1.5%;
 }
 
-h2.page-header {
+.page-header {
     font-size: 30px;
     font-family: 'DM Serif Display', serif;
     font-weight: 400;
     color: #f73859;
 }
 
+.page-header em {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+}
 
 .pagination {
     display: flex;
