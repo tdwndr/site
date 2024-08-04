@@ -1,10 +1,9 @@
 ---
 share: true
 draft: false
-featured: true
 title: Returning from paternity leave
 tags:
-  - in depth
+  - in brief
 date: 2023-07-02T18:23:00+01:00
 ---
 
