@@ -5,7 +5,7 @@ featured: true
 title: "Re-learning the web: getting started with Hugo, GitHub, Netlify and Obsidian"
 tags:
   - in depth
-date: 2023-08-04T21:40:00+01:00
+date: 2024-08-04T21:40:00+01:00
 ---
 The internet has changed a lot since 12-year-old me was throwing together HTML and CSS files via FTP to make websites almost 20 years ago. Back then, WordPress was the king of content management systems. [Web 2.0](https://www.oreilly.com/pub/a/web2/archive/what-is-web-20.html) was on the rise. And the concept of a 'responsive' web as we know it today barely existed, given the iPhone wasn't to be announced until 2007.
 
