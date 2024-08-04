@@ -28,7 +28,7 @@ I wanted to add a new 'posts' section to my site, so I was interested in an SSG 
 Hugo is one of a number of open source SSGs that fits this bill. It's a 'headless content management system', which means that the core components of its structure are:
 
 - The **content** itself that should be displayed in pages and posts
-- **Templates** that tell content, resources, and data how to appear 
+- The **Templates** that tell content, resources, and data how to appear 
 - A **templating system** that uses variables, functions and actions to tell templates which content to render
 
 With Hugo,  I can write *content* for a new post in [Markdown](https://daringfireball.net/projects/markdown/), separately define how this type of content should be displayed using HTML and CSS *templates*, then use Go variables from the *templating system* to tell the templates which content to pull through.
@@ -54,7 +54,7 @@ Git is run through a command line interface (CLI), and it's been a learning curv
 
 - `git pull` to update the local repository with any remote changes
 - `git add` to 'stage' (or snapshot) changes
-- `git commit -m`, to 'commit' (or record) changes as a version
+- `git commit -m` to 'commit' (or record) changes as a version
 - `git push` to upload local changes to GitHub
 
 Despite my initial unfamiliarity, I have to admit it works beautifully. And I'm barely scratching the surface of its capability, given the enormous number of powerful and widespread use cases for collaborative and efficient software development.
@@ -62,9 +62,7 @@ Despite my initial unfamiliarity, I have to admit it works beautifully. And I'm 
 ### Netlify
 I mentioned above that static sites need to be 'pre-built' and served to the user. So how does that happen?
 
-Enter Netlify. It's linked to my site's GitHub repository, which contains the files from Hugo required to build my site.
-
-When Netlify detects changes to this repository — because Git has committed new updates — it automatically ***builds*** them (by taking all of the front end templates and content and turning them into static pages), ***deploys*** them (by publishing the site), and ***hosts*** them by enabling the deployment to be accessed on the web via a domain name.
+Enter Netlify. It's linked to my site's GitHub repository, which contains the files from Hugo required to build my site. When Netlify detects changes to this repository — because Git has committed new updates — it automatically ***builds*** them (by taking all of the front end templates and content and turning them into static pages), ***deploys*** them (by publishing the site), and ***hosts*** them by enabling the deployment to be accessed on the web via a domain name.
 
 Once I'd got it working, Netlify is awesome. The way it picks up on changes and automatically does what's required to build and publish them is really neat.
 
