@@ -87,7 +87,7 @@ The first reason for this is that the whole approach is designed to be lightweig
 
 The second reason is my own capability. It's early days. It works, and I now have somewhere to self-host posts like this one. But I'd be lying if I said I knew *how* or *why* it all works. There's a huge amount still to learn about every step in this process, and lots of tweaks I still want to make when I can find the time.
 
-But most important to me is the learning process I've been on to get here. In particular, it's highlighted to me the [power of open source](https://opensource.googleblog.com/2024/04/the-power-of-open-source.html.).
+But most important to me is the learning process I've been on to get here. In particular, it's highlighted to me the [power of open source](https://opensource.googleblog.com/2024/04/the-power-of-open-source.html).
 
 The concept of using open technologies to drive innovation that benefits everyone is more important than I could hope to do justice to in my own words. But I can land one point from a personal perspective: **every part of this process is totally free.** Hugo is open source. Git is open source. GitHub is free for personal use. Netlify is free for personal projects. Obsidian is free. Enveloppe is open source.
 
