@@ -9,9 +9,9 @@ _build:
 ## I'm an experience performance strategist, helping teams to define and deliver big things that delight customers and drive value.
 {class="page-header"}
 
-I'm currently Senior Product Manager for Digital Experience Performance at [Lloyds Banking Group](https://www.lloydsbankinggroup.com).
+I'm currently Experience Design Transformation Lead at [Lloyds Banking Group](https://www.lloydsbankinggroup.com).
 
-With over seven years' experience across design, sales, product and transformation teams in financial services, I get hands-on to:
+With over eight years' experience across design, sales, product and transformation teams in financial services, I get hands-on to:
 
 *   **Prioritise** backlogs and investment using insight and analytics
 *   **Create** unique communications propositions to drive engagement
