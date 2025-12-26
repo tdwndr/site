@@ -14,7 +14,7 @@
 </head>
 <body>
 <p class="p1"><span class="s1">{{- if not (.Param "hideFooter") }}</span></p>
-<p class="p1"><span class="s1">{{- if not site.Params.footer.hideCopyright }} {{- if site.Copyright }} {{ site.Copyright | markdownify }} {{- else }} © {{ now.Year }} <a href="file:///Users/ted/Documents/GitHub/site/themes/PaperModTW/layouts/partials/%7B%7B"><span class="s2">Ted Winder</span></a> {{- end }} {{- print " Â· "}} {{- end }} {{- with site.Params.footer.text }} {{ . | markdownify }} {{- print " Â· "}} {{- end }} Built by hand with by <a href="https://gohugo.io/"><span class="s2">Hugo</span></a> &amp; <a href="https://github.com/adityatelange/hugo-PaperMod/"><span class="s2">PaperMod</span></a>.</span></p>
+<p class="p1"><span class="s1">{{- if not site.Params.footer.hideCopyright }} {{- if site.Copyright }} {{ site.Copyright | markdownify }} {{- else }} © {{ now.Year }} <a href="file:///Users/ted/Documents/GitHub/site/themes/PaperModTW/layouts/partials/%7B%7B"><span class="s2">Ted Winder</span></a> {{- end }} {{- print " Â· "}} {{- end }} {{- with site.Params.footer.text }} {{ . | markdownify }} {{- print " Â· "}} {{- end }} Powered by <a href="https://gohugo.io/"><span class="s2">Hugo</span></a> &amp; <a href="https://github.com/adityatelange/hugo-PaperMod/"><span class="s2">PaperMod</span></a> with custom mods.</span></p>
 <p class="p1"><span class="s1">{{- end }} {{- if (not site.Params.disableScrollToTop) }} {{- end }} {{- partial "extend_footer.html" . }} {{- if (not site.Params.disableScrollToTop) }} {{- end }} {{- if (not site.Params.disableThemeToggle) }} {{- end }} {{- if (and (eq .Kind "page") (ne .Layout "archives") (ne .Layout "search") (.Param "ShowCodeCopyButtons")) }} {{- end }}</span></p>
 </body>
 </html>
