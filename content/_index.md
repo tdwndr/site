@@ -15,7 +15,7 @@ I have a 10-year track record across design, product and strategy roles in finan
 
 *   Creating a new **design operations framework** to support a team of 500+ designers
 *   Building **CancaraOS**, an operating system for brand experience and design quality
-*   Setting up one of the UK's largest internal **beta programmes** with 10,000 colleagues
+*   Setting up one of the UK's largest internal **beta programmes** with 10k colleagues
 *   Defining a multi-channel comms plan to **land a new app with over 15 million users**
 *   Achieving digital service **NPS of 70+** and increasing app store ratings to 4.5+ stars
-*   Sending **£1 cheques in the post** to drive adoption of the mobile cheque deposit feature
+*   Sending **£1 cheques in the post** to drive adoption of mobile cheque deposit
