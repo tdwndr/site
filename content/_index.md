@@ -1,20 +1,21 @@
 ---
 title: "Profile"
-description: I help teams to deliver digital experiences that drive value and deepen customer relationships by supercharging strategy, storytelling and measurement capabilities.
+description: I help organisations to deliver world-class experiences by transforming teams, systems and capabilities to increase effectiveness and maximise impact.
 url: profile
 _build:
   list: never
 ---
 
-## I help organisations to deliver best-in-class experiences by transforming teams, systems and capabilities to increase effectiveness and maximise impact at pace.
+## I help organisations to deliver world-class experiences by transforming teams, systems and capabilities to increase effectiveness and maximise impact.
 {class="page-header"}
 
 I'm currently Experience Design Transformation Lead at [Lloyds Banking Group](https://www.lloydsbankinggroup.com).
 
-With ten years' experience across design, sales, product and transformation teams in financial services, I get hands-on to:
+I have a 10-year track record across design, product and strategy roles in financial services. Some of the things I've delivered include:
 
-*   **Prioritise** backlogs and investment using insight and analytics
-*   **Create** unique communications propositions to drive engagement
-*   **Transform** digital performance and measurement frameworks
-*   **Lead** autonomous and high-performing teams of experts
-*   **Influence** executives through impactful storytelling
+*   Creating a new **design operations framework** to support a team of 500+ designers
+*   Building **CancaraOS**, an operating system for brand experience and design quality
+*   Setting up one of the UK's largest internal **beta programmes** with 10,000 colleagues
+*   Defining a multi-channel comms plan to **land a new app with over 15 million users**
+*   Achieving digital service **NPS of 70+** and increasing app store ratings to 4.5+ stars
+*   Sending **£1 cheques in the post** to drive adoption of the mobile cheque deposit feature
