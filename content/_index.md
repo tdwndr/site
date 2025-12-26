@@ -11,7 +11,7 @@ _build:
 
 I'm currently Experience Design Transformation Lead at [Lloyds Banking Group](https://www.lloydsbankinggroup.com).
 
-I have a 10-year track record across design, product and strategy roles in financial services. Some of the things I've delivered include:
+With a 10-year track record across design, product and strategy roles in financial services, some of the big things I've delivered include:
 
 *   Creating a new **design operations framework** to support a team of 500+ designers
 *   Building **CancaraOS**, an operating system for brand experience and design quality
