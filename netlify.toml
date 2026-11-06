@@ -1,10 +1,5 @@
 [build]
-  publish = "public"
-  command = "hugo"
-
-  [build.environment]
-    HUGO_VERSION = "0.129.0"
-
-[context.production.environment]
-  HUGO_ENV           = "production"
-  HUGO_ENABLEGITINFO = "true"
+  # Static site: nothing to build. The explicit no-op overrides any build
+  # command left over in the Netlify UI settings.
+  command = "echo 'static site, no build step'"
+  publish = "."
