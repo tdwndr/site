@@ -160,8 +160,9 @@ b, strong { font-weight: 650; }
 .intro .beta { background: rgba(255, 255, 255, .18); color: #fff; }
 .advanced { margin-top: 40px; }
 .advanced .row__label { font-weight: 600; }
-.method h3 { margin: 0 0 6px; font: 700 18px/1.3 var(--ui); }
-.method p, .method li { font-size: 16px; line-height: 1.6; }
+.method h3 { margin: 0 0 6px; font: 700 16.5px/1.3 var(--ui); }
+.method p, .method li { font-size: 15px; line-height: 1.6; }
+.method .sheet__head h2 { font-size: 22px; }
 .method p + p { margin-top: 10px; }
 .method ul.dots { list-style: disc; padding-left: 20px; display: grid; gap: 6px; }
 .method .sheet__sec + .sheet__sec { margin-top: 14px; }
@@ -183,9 +184,10 @@ b, strong { font-weight: 650; }
 .method details summary::-webkit-details-marker { display: none; }
 .method details[open] .t-show, .method details:not([open]) .t-hide { display: none; }
 .sources { counter-reset: src; display: grid; gap: 10px; }
-.sources li { counter-increment: src; display: grid; grid-template-columns: 28px 1fr; font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
+.sources li { counter-increment: src; display: grid; grid-template-columns: 26px 1fr; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); }
 .sources li::before { content: counter(src) "."; font-weight: 700; color: var(--ink); }
-.ai-note { display: flex; gap: 12px; align-items: flex-start; padding: 16px 18px; border-radius: var(--r-lg); background: var(--accent-soft); font-size: 15.5px; line-height: 1.55; }
+.ai-note { display: flex; gap: 12px; align-items: flex-start; padding: 16px 18px; border-radius: var(--r-lg); background: var(--accent-soft); font-size: 15px; line-height: 1.55; }
+.method .ai-note p { font-size: 15px; }
 .ai-note .ic { color: var(--accent); width: 22px; height: 22px; margin-top: 1px; }
 .version { margin-top: 10px; text-align: center; font-size: 12.5px; color: var(--ink-3); }
 /* Race week: a little party */
@@ -518,9 +520,10 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
 }
-.top__in { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "brand count" "tabs tabs"; align-items: center; column-gap: 12px; max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+.top__in { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "brand end" "tabs tabs"; align-items: center; column-gap: 12px; max-width: 1080px; margin: 0 auto; padding: 0 16px; }
 .top .brandmark { grid-area: brand; padding: 14px 4px 4px; }
-.count { grid-area: count; justify-self: end; margin-top: 10px; display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font: 700 14px/1 var(--ui); white-space: nowrap; }
+.top__end { grid-area: end; }
+.count { grid-area: end; justify-self: end; margin-top: 10px; display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font: 700 14px/1 var(--ui); white-space: nowrap; }
 .count .ic { width: 16px; height: 16px; stroke-width: 2.4; }
 .tabs { grid-area: tabs; display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 6px; }
 .tab {
@@ -534,7 +537,7 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 @media (hover: hover) { .tab:hover { color: var(--ink); } .tab[aria-current="page"]:hover { color: var(--accent); } }
 @media (max-width: 380px) { .tab .ic { display: none; } }
 @media (min-width: 760px) {
-  .top__in { grid-template-columns: auto 1fr auto; grid-template-areas: "brand tabs count"; padding: 0 24px; }
+  .top__in { grid-template-columns: 1fr auto 1fr; grid-template-areas: "brand tabs end"; padding: 0 24px; }
   .top .brandmark { padding: 0; }
   .count { margin-top: 0; }
   .tabs { display: flex; justify-content: center; gap: 6px; margin-top: 0; }
@@ -704,7 +707,8 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 }
 .sheet[open] { display: flex; flex-direction: column; will-change: transform; }
 .sheet::backdrop { background: rgba(8, 10, 24, .5); }
-.sheet__scroll { flex: 1; overflow: auto; overscroll-behavior: contain; padding: 0 20px 22px; }
+.sheet__scroll { flex: 1; overflow: auto; overscroll-behavior: none; padding: 0 20px 22px; }
+.sheet.dragging .sheet__scroll { overflow: hidden; }
 .sheet__grab { width: 40px; height: 5px; margin: 10px auto 4px; border-radius: 3px; background: var(--fill-2); }
 .sheet__head { display: flex; align-items: center; gap: 14px; padding: 12px 0 18px; }
 .sheet__head h2 { margin-top: 3px; font: 750 25px/1.15 var(--ui); letter-spacing: -.02em; }
@@ -720,13 +724,14 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 .effort-n span { flex: 1; text-align: center; font-size: 12px; font-weight: 600; color: var(--ink-3); }
 .effort-n span.on { color: var(--ink); }
 .profile { margin: 2px 0 18px; }
-.profile svg { display: block; width: 100%; height: 64px; overflow: visible; }
-.profile .area { fill: color-mix(in srgb, var(--c) 20%, transparent); stroke: var(--c); stroke-width: 2; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-.profile .base { stroke: var(--line-2); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.profile svg { display: block; width: 100%; height: 52px; overflow: visible; }
+.profile .fill { fill: color-mix(in srgb, var(--c) 14%, transparent); }
+.profile .line { fill: none; stroke: var(--c); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
 .profile__labels { display: grid; gap: 6px; margin-top: 8px; font-size: 12.5px; line-height: 1.35; color: var(--ink-2); }
 .profile__labels span { min-width: 0; }
-.profile__labels span:nth-child(2) { text-align: center; color: var(--ink); font-weight: 600; }
-.profile__labels span:last-child:not(:first-child) { text-align: right; }
+.profile__labels span:first-child:not(:only-child), .profile__labels span:nth-child(3) { white-space: nowrap; }
+.profile__labels span:nth-child(2), .profile__labels span:only-child { text-align: center; color: var(--ink); font-weight: 600; }
+.profile__labels span:nth-child(3) { text-align: right; }
 .profile__note { margin-top: 6px; font-size: 12px; color: var(--ink-3); }
 .effort i { flex: 1; height: 10px; border-radius: 5px; background: var(--fill); }
 .effort i.on { background: var(--c); }
@@ -746,7 +751,7 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 /* Not editable: a faint hatch over the day picker */
 .locked { position: relative; padding: 8px; margin: -8px; border-radius: 16px; background: repeating-linear-gradient(135deg, var(--fill-2) 0 1.5px, transparent 1.5px 8px); }
 .locked .day7 { background: color-mix(in srgb, var(--surface) 75%, transparent); }
-.locked .day7[aria-checked="true"] { background: var(--c); border-color: var(--c); opacity: .8; }
+.locked .day7[aria-checked="true"] { background: color-mix(in srgb, var(--c) 78%, var(--surface)); border-color: transparent; opacity: 1; }
 .lock-i .ic { width: 16px; height: 16px; vertical-align: -3px; margin-right: 6px; }
 .day7 .dot { position: absolute; bottom: 6px; width: 5px; height: 5px; border-radius: 50%; background: var(--ink-3); }
 .sheet__foot { padding: 14px 20px calc(env(safe-area-inset-bottom) + 14px); border-top: 1px solid var(--line); background: var(--bg); }
@@ -1444,11 +1449,12 @@ IC.move = '<path d="M8 7 4 11l4 4"/><path d="M4 11h11a5 5 0 0 1 0 10h-2"/>';
 IC.chart = '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>';
 IC.trend = '<path d="M3 6.5l6.5 6.5 4-4 7.5 7.5"/><path d="M15.5 17.5H21V12"/>';
 /* Version: each published update of Run plan is a release */
-const APP_VERSION = '0.8';
+const APP_VERSION = '0.9';
 /* Releases: 0.1 first plan · 0.2 app look · 0.3 web-app feel, chart, moving runs · 0.4 phase/total chart, safer saves ·
    0.5 past runs fixed, clearer explained words · 0.6 logo, time ranges, race-week celebration, evidence-based taper ·
    0.7 parkrun buggy runs, "How this plan is built" (methodology and sources) ·
-   0.8 long-run day, session diagrams, clearer run tags, smoother sheets, race confetti */
+   0.8 long-run day, session diagrams, clearer run tags, smoother sheets, race confetti ·
+   0.9 simpler diagrams, smoother pull-to-close, tray closes when marked done */
 const versionHTML = () => `<p class="version">Run plan v${APP_VERSION} · Beta</p>`;
 const LOGO = '<span class="logo" aria-hidden="true"><svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#1A33F5"/><path fill="#F6F4EE" transform="translate(8.89 39.80) scale(0.02272)" d="M334.9 0V-572.9H27V-686.8H771.9V-572.9H464V0ZM1099.6 0 862.9 -686.8H1002.9L1151.6 -229.7Q1155.8 -218.7 1161.1 -200Q1166.3 -181.3 1172.1 -161.4Q1178 -141.6 1181.7 -125.8H1188.7Q1190.9 -137.8 1194.8 -152.1Q1198.7 -166.3 1202.3 -180.9Q1205.9 -195.5 1209.5 -208.3Q1213.1 -221 1215.6 -229.7L1351.9 -686.8H1530.2L1667 -229.7Q1670.5 -218.7 1675.5 -200.1Q1680.5 -181.5 1685.7 -161.5Q1690.9 -141.6 1693.6 -125.8H1700.6Q1704.1 -137.3 1708.1 -151.6Q1712.1 -165.8 1716.7 -180.1Q1721.3 -194.5 1724.9 -207.3Q1728.5 -220.2 1731.8 -229.7L1881.2 -686.8H2007.6L1770.2 0H1608.8L1465.9 -463.1Q1462.2 -476.2 1456.8 -494.9Q1451.4 -513.6 1447.1 -533.2Q1442.7 -552.8 1439.5 -568.1H1433.3Q1430.6 -552.6 1425.1 -532.5Q1419.6 -512.4 1414.6 -493.9Q1409.6 -475.4 1405.6 -463.1L1266.3 0Z"/></svg><i></i><i></i><i></i><i></i></span>';
 const BRAND = link => link ? `<a class="brandmark" href="/run/">${LOGO}<span class="brand">Run plan</span><span class="beta">Beta</span></a>` : `<span class="brandmark">${LOGO}<span class="brand">Run plan</span><span class="beta">Beta</span></span>`;
@@ -1555,14 +1561,22 @@ $$('dialog.sheet').forEach(d => {
   d.addEventListener('touchmove', e => {
     if (y0 == null) return;
     dy = Math.max(0, e.touches[0].clientY - y0);
-    if (dy > 4) { d.style.transition = 'none'; d.style.transform = `translateY(${dy}px)`; }
-  }, { passive: true });
+    if (dy > 4) {
+      e.preventDefault();                                   // stop the content bouncing on its own
+      d.classList.add('dragging'); d.style.transition = 'none'; d.style.transform = `translateY(${dy}px)`;
+    }
+  }, { passive: false });
   d.addEventListener('touchend', () => {
     if (y0 == null) return;
-    d.style.transition = 'transform .25s cubic-bezier(.2,.8,.2,1)'; d.style.transform = '';
-    if (dy > 110) { d.style.transition = 'none'; d.style.transform = ''; closeSheet(d); }
-    y0 = null;
-    setTimeout(() => { d.style.transition = ''; }, 260);
+    y0 = null; d.classList.remove('dragging');
+    if (dy > 110) {
+      // carry on from where the finger let go, then close
+      d.style.transition = 'transform .24s cubic-bezier(.3, .6, .6, 1)'; d.style.transform = 'translateY(100%)';
+      setTimeout(() => { d.close ? d.close() : d.removeAttribute('open'); d.style.transition = ''; d.style.transform = ''; }, 240);
+    } else {
+      d.style.transition = 'transform .3s cubic-bezier(.32, .72, 0, 1)'; d.style.transform = '';
+      setTimeout(() => { d.style.transition = ''; }, 300);
+    }
   });
 });
 document.addEventListener('click', e => {
@@ -1928,7 +1942,7 @@ function renderApp() {
     <header class="top"><div class="top__in">
       ${BRAND(true)}
       <nav class="tabs" aria-label="Sections">${TABS.map(([k, l, i]) => `<button class="tab" data-tab="${k}" ${k === tab ? 'aria-current="page"' : ''}>${ic(i)}<span>${l}</span></button>`).join('')}</nav>
-      <span class="count" id="count"></span>
+      <span class="top__end" aria-hidden="true"></span>
     </div></header>
     ${TABS.map(([k]) => `<main class="page ${k === 'today' ? 'page--wide' : ''}" id="s-${k}" data-screen="${k}" ${k === tab ? '' : 'hidden'}></main>`).join('')}`;
   openWeeks = new Set(); lastNow = null; chartSel = null;
@@ -1944,7 +1958,7 @@ function refresh(firstTime) {
     openWeeks = new Set([now.wkIdx < 0 ? (now.t < plan.weeks[0].start ? 0 : plan.weeks.length - 1) : now.wkIdx]);
     lastNow = now.ti;
   }
-  renderCount(now); renderToday(now);
+  renderToday(now);
   const rw = $('#race-week'), key = `rw-${now.ti}`;
   if (rw && !refresh[key] && tab === 'today') { refresh[key] = 1; setTimeout(() => burst(rw.querySelector('.race-week__emoji'), '#fff'), 400); } renderPlanTab(now); renderPaces(now); syncAdjust();
   if (sheetId && $('#run-sheet').open) fillRunSheet();
@@ -2028,7 +2042,7 @@ function runCardHTML(run, now) {
   return `<article class="run-card k-${run.cat}">
     <div class="run-card__head"><span class="tile tile--lg">${ic(run.cat)}</span><div><p class="run-card__kicker">${isToday ? 'Today' : fmtShort(d)} · ${tagOf(run)}</p><h3 class="run-card__title">${esc(run.title)}</h3></div></div>
     ${statsHTML(run)}
-    <p class="run-card__purpose"><b>Purpose: ${esc(run.purpose)}.</b> ${WHY[run.kind](p.distance)}</p>
+    <p class="run-card__purpose"><b>Purpose:</b> ${esc(run.purpose)}. ${WHY[run.kind](p.distance)}</p>
     ${run.buggy ? `<p><span class="tag k-accent">${ic('buggy')} With the buggy</span></p>` : ''}
     <div class="cheer">${ic('sparkle')}<span>${(NOTE[run.cat] || NOTE.easy)(nm)}</span></div>
     <div class="run-card__actions"><button class="btn btn--secondary" data-open="${run.id}">${ic('learn')}Details</button>${tickBtn(run)}</div>
@@ -2444,30 +2458,40 @@ function openRun(id) { sheetId = id; fillRunSheet(); openSheet($('#run-sheet'));
 function profileHTML(r) {
   const B = r.blocks;
   if (!B || B.length < 2 || !B.some(b => b.l >= 2)) return '';
-  const tot = B.reduce((a, b) => a + b.m, 0), y = l => 46 - l * 13;
-  let x = 0, prev = 1;
-  const pts = [`0,46`];
-  B.forEach(b => {
-    const x1 = x + b.m / tot * 100;
-    if (b.s === 'up') { pts.push(`${x},${y(prev)}`, `${x1},${y(b.l)}`); prev = b.l; }
-    else if (b.s === 'down') { pts.push(`${x},${y(prev)}`, `${x1},${y(1)}`); prev = 1; }
-    else { pts.push(`${x},${y(b.l)}`, `${x1},${y(b.l)}`); prev = b.l; }
+  // Show the pattern, not every minute: easy ends get a fixed short width, and the middle shows up to four reps
+  let lead = B[0].l < 1.5 ? B[0] : null, trail = B.length > 1 && B[B.length - 1].l < 1.5 ? B[B.length - 1] : null;
+  let midB = B.slice(lead ? 1 : 0, trail ? -1 : undefined);
+  const hardN = midB.filter(b => b.l >= 1.5).length;
+  if (hardN > 4) { let seen = 0; midB = midB.filter(b => (b.l >= 1.5 ? ++seen : seen) <= 4 && !(b.l < 1.5 && seen >= 4)); }
+  const ends = (lead ? 1 : 0) + (trail ? 1 : 0), endW = ends === 2 ? 17 : ends === 1 ? 30 : 0;
+  const midW = 100 - endW * ends, midTot = midB.reduce((a, b) => a + b.m, 0) || 1;
+  const y = l => l < 1.5 ? 30 : l < 2.5 ? 18 : 8, ramp = 1.6;
+  const pts = []; let x = 0, prevY = 30, lastUp = false;
+  const seg = (w, b) => {
+    const x1 = x + w, ty = y(b.l);
+    if (b.s === 'up') { pts.push([x, prevY], [x1, y(3)]); prevY = y(3); lastUp = true; }
+    else if (b.s === 'down') { pts.push([x, prevY], [x1, 30]); prevY = 30; lastUp = false; }
+    else { const r0 = lastUp ? Math.min(7, w / 3) : Math.min(ramp, w / 3); pts.push([x + (pts.length ? r0 : 0), ty], [x1, ty]); prevY = ty; lastUp = false; }
     x = x1;
-  });
-  pts.push(`100,46`);
-  const wu = B[0].l === 1 && B[0].m === 10, cd = B[B.length - 1].l === 1 && B[B.length - 1].m === 10;
+  };
+  if (lead) seg(endW, lead);
+  midB.forEach(b => seg(b.m / midTot * midW, b));
+  if (trail) seg(endW, trail);
+  const line = pts.map(p => p.map(v => +v.toFixed(2)).join(',')).join(' ');
+  const area = `0,40 ${line} 100,40`;
   const sp = r.spec || {}, F = fmt(state.units);
   const main = { intervals: () => `${sp.reps} × ${F.rep(sp.m)}, jog ${sp.rest} s`, hills: () => `${sp.reps} × 45 s uphill, jog down`, fartlek: () => `${sp.reps} × 1 min quicker`,
     tempo: () => sp.split ? `2 × ${sp.mins / 2} min tempo` : `${sp.mins} min tempo`, racepace: () => `${sp.reps > 1 ? `${sp.reps} × ` : ''}${F.dist(sp.rk)} at race pace`,
-    sharpen: () => sp.long ? '3 × 1 km at race pace' : '4 × 400 m at race pace', strides: () => 'Easy, then 6 × 20 s strides', shakeout: () => 'Very easy, then 4 strides',
-    fastfinish: () => `Easy, then last ${F.dist(sp.ff)} at race pace`, 'parkrun-tempo': () => '3 km tempo in the middle', 'parkrun-tt': () => 'Warm up, then 5K hard' }[r.kind];
+    sharpen: () => sp.long ? '3 × 1 km at race pace' : '4 × 400 m at race pace', strides: () => '6 × 20 s strides', shakeout: () => '4 short strides',
+    fastfinish: () => `Last ${F.dist(sp.ff)} at race pace`, 'parkrun-tempo': () => '3 km tempo', 'parkrun-tt': () => '5K hard' }[r.kind];
   const mid = main ? main() : '';
-  const cols = wu && cd ? `${B[0].m}fr ${Math.max(tot - 20, 8)}fr ${B[B.length - 1].m}fr` : '1fr';
-  const labels = wu && cd ? `<span>Warm-up<br>10 min</span><span>${mid}</span><span>Cool-down<br>10 min</span>` : `<span style="text-align:center;color:var(--ink);font-weight:600">${mid}</span>`;
-  return `<figure class="profile" role="img" aria-label="Session shape: ${wu ? '10 minute warm-up, ' : ''}${mid}${cd ? ', 10 minute cool-down' : ''}. About ${Math.round(tot)} minutes in total.">
-    <svg viewBox="0 0 100 50" preserveAspectRatio="none" aria-hidden="true"><line class="base" x1="0" y1="46" x2="100" y2="46"/><polygon class="area" points="${pts.join(' ')}"/></svg>
-    <div class="profile__labels" style="grid-template-columns:${cols}" aria-hidden="true">${labels}</div>
-    <p class="profile__note" aria-hidden="true">Height shows effort, width shows time</p></figure>`;
+  const wu = lead && lead.m === 10 && trail && trail.m === 10;
+  const cols = ends === 2 ? 'auto 1fr auto' : ends === 1 && lead ? 'auto 1fr' : '1fr';
+  const labels = ends === 2 ? `<span>${wu ? 'Warm up' : 'Easy'}</span><span>${mid}</span><span>${wu ? 'Cool down' : 'Easy'}</span>`
+    : ends === 1 && lead ? `<span>Easy</span><span>${mid}</span>` : `<span>${mid}</span>`;
+  return `<figure class="profile" role="img" aria-label="Session shape: ${wu ? 'warm up, ' : ''}${mid}${wu ? ', cool down' : ''}.">
+    <svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><polygon class="fill" points="${area}"/><polyline class="line" points="${line}"/></svg>
+    <div class="profile__labels" style="grid-template-columns:${cols}" aria-hidden="true">${labels}</div></figure>`;
 }
 function moverHTML(r) {
   const p = state.profile, wk = weekOf(r), start = parseISO(state.start), race = parseISO(p.date);
@@ -2501,7 +2525,7 @@ function fillRunSheet() {
     <header class="sheet__head"><span class="tile tile--lg">${ic(r.cat)}</span><div><p class="eyebrow">${fmtShort(d)} · ${tagOf(r)}</p><h2 id="run-sheet-title">${esc(r.title)}</h2></div><button class="icon-btn sheet__close" data-close aria-label="Close">${ic('close')}</button></header>
     ${statsHTML(r)}
     <section class="sheet__sec"><h3 class="eyebrow sheet__h">What to do</h3>${profileHTML(r)}<ol class="steps">${r.steps.map((s, i) => `<li><span class="steps__n">${i + 1}</span><span>${s}</span></li>`).join('')}</ol></section>
-    <section class="sheet__sec"><h3 class="eyebrow sheet__h">Why it matters</h3><p><b>${esc(r.purpose)}.</b> ${WHY[r.kind](p.distance)}</p></section>
+    <section class="sheet__sec"><h3 class="eyebrow sheet__h">Why it matters</h3><p><b>Purpose:</b> ${esc(r.purpose)}. ${WHY[r.kind](p.distance)}</p></section>
     <section class="sheet__sec"><h3 class="eyebrow sheet__h">How it should feel</h3>
       <div class="effort" role="img" aria-label="Effort ${e[0]} to ${e[1]} out of 10">${Array.from({ length: 10 }, (_, i) => `<i class="${i < e[1] ? (i < e[0] ? 'on' : 'on half') : ''}"></i>`).join('')}</div>
       <div class="effort-n" aria-hidden="true">${Array.from({ length: 10 }, (_, i) => `<span class="${i + 1 >= e[0] && i + 1 <= e[1] ? 'on' : ''}">${i + 1}</span>`).join('')}</div>
@@ -2524,6 +2548,7 @@ function toggleDone(id, btn) {
   save(); haptic();
   refresh();
   if (hadFocus && whereSel) { const again = $(`${whereSel} [data-tick="${id}"]`); again && again.focus({ preventScroll: true }); }
+  if (!was && whereSel === '#run-sheet') setTimeout(() => closeSheet($('#run-sheet')), 450);
   if (was) return;
   const r = runById(id), wk = weekOf(r), wkDone = wk.runs.every(isDone);
   let msg = pick(DONE_MSG, seedOf(id))(nm), icon = 'star';
