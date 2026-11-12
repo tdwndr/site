@@ -69,7 +69,7 @@
   --c-rest: #8A8FA3;
   --c-line: #E0700A;
   /* Training phases, in order. Validated for colour-blind separation; always shown with a text label too */
-  --ph-foundation: #8A8FA3;
+  --ph-foundation: #7FBF2A;
   --ph-base: #0AA19E;
   --ph-build: #E8930A;
   --ph-peak: #D6336C;
@@ -107,6 +107,7 @@
     --c-long: #5B8CFF;
     --c-race: #9C6BFF;
     --c-line: #D8721C;
+    --ph-foundation: #6FA320;
     --ph-base: #0B9C99;
     --ph-build: #C77F0A;
     --ph-peak: #D6336C;
@@ -767,22 +768,32 @@ body[data-view="setup"] .toast { bottom: calc(env(safe-area-inset-bottom) + 100p
 .toast .ic { width: 20px; height: 20px; color: var(--c-tempo); }
 
 /* 14. CHARM & MOTION ---------------------------------------------------------- */
-.building { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 24px; color: #fff;
-  background: radial-gradient(120% 60% at 85% 0%, rgba(255, 255, 255, .18), transparent 60%), linear-gradient(165deg, var(--grad-a), var(--grad-b) 70%);
-  animation: fade .3s ease; transition: opacity .45s ease; }
-.building.out { opacity: 0; }
-.building__in { width: min(360px, 100%); }
-.building h2 { margin-top: 28px; font: 750 26px/1.2 var(--ui); letter-spacing: -.02em; }
-.building ul { display: grid; gap: 12px; margin-top: 20px; }
-.building li { display: flex; align-items: center; gap: 12px; font-size: 16.5px; opacity: 0; transform: translateY(6px); animation: build-in .4s var(--ease) forwards; animation-delay: calc(.25s + var(--i) * .42s); }
-.building li .ic { width: 20px; height: 20px; padding: 3px; border-radius: 50%; background: rgba(255, 255, 255, .2); stroke-width: 3; }
-.building__road { position: relative; height: 8px; border-radius: 4px; background: rgba(255, 255, 255, .2); }
-.building__road::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 4px; background: #fff; animation: build-road 2.3s cubic-bezier(.5, 0, .3, 1) .15s forwards; }
-.building__shoe { position: absolute; top: 50%; left: 0; translate: -50% -50%; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #fff; color: var(--grad-b); animation: build-shoe 2.3s cubic-bezier(.5, 0, .3, 1) .15s forwards; }
-.building__shoe .ic { width: 19px; height: 19px; }
-@keyframes build-in { to { opacity: 1; transform: none; } }
-@keyframes build-road { to { width: 100%; } }
-@keyframes build-shoe { to { left: 100%; } }
+.building { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 24px; color: #fff; overflow: hidden;
+  background: radial-gradient(120% 60% at 85% 0%, rgba(255, 255, 255, .18), transparent 60%), linear-gradient(165deg, var(--grad-a), var(--grad-b) 70%); animation: fade .3s ease; }
+.building__in { width: min(340px, 100%); text-align: center; }
+.orb { display: block; width: min(250px, 72vw); height: auto; margin: 0 auto 8px; overflow: visible; }
+.orb circle, .orb ellipse { transform-box: fill-box; transform-origin: center; }
+.b-glow { fill: rgba(255, 255, 255, .16); animation: b-glow 1.8s ease-in-out infinite; }
+.b-track { fill: none; stroke: rgba(255, 255, 255, .18); stroke-width: 3; }
+.b-arc { fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transform: rotate(-90deg); animation: b-arc 3.5s cubic-bezier(.45, .05, .3, 1) .35s forwards; }
+.b-orbit { fill: none; stroke: rgba(255, 255, 255, .4); stroke-width: 1.3; stroke-dasharray: 1; stroke-dashoffset: 1; animation: b-arc 1.4s var(--ease) .2s forwards; }
+.b-sat { fill: #fff; opacity: 0; animation: b-in .4s ease 1.1s forwards; }
+.b-dot { fill: #fff; opacity: 0; transform: scale(0); animation: b-pop .45s var(--ease) var(--d) forwards; }
+.b-dot--race { fill: #FFD98A; }
+.b-core { transform-box: view-box; transform-origin: 0 0; animation: b-core 3.9s cubic-bezier(.2, .8, .2, 1) forwards; }
+.building h2 { font: 750 24px/1.2 var(--ui); letter-spacing: -.02em; }
+.building__line { margin-top: 8px; min-height: 26px; font-size: 16.5px; color: rgba(255, 255, 255, .88); opacity: 0; }
+.building__line.in { animation: b-line .45s var(--ease) forwards; }
+.building__flood { position: fixed; left: 50%; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--bg); transform: scale(0); pointer-events: none; }
+.building.flood { background: transparent; animation: none; }
+.building.flood .building__in { opacity: 0; transition: opacity .25s; }
+.building.flood .building__flood { transform: scale(420); transition: transform .65s cubic-bezier(.5, 0, .2, 1); }
+@keyframes b-arc { to { stroke-dashoffset: 0; } }
+@keyframes b-in { to { opacity: 1; } }
+@keyframes b-pop { 0% { opacity: 0; transform: scale(0); } 70% { opacity: 1; transform: scale(1.5); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes b-glow { 50% { transform: scale(1.22); opacity: .7; } }
+@keyframes b-core { 0% { transform: scale(0); } 18% { transform: scale(1.12); } 28% { transform: scale(1); } 60% { transform: scale(1.06); } 100% { transform: scale(1.1); } }
+@keyframes b-line { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .confetti { position: fixed; inset: 0; z-index: 80; overflow: hidden; pointer-events: none; }
 .confetti i { position: absolute; top: -20px; width: 9px; height: 14px; border-radius: 2px; opacity: .95; animation: fall var(--d) cubic-bezier(.25, .6, .4, 1) var(--w) forwards; }
 @keyframes fall { 0% { transform: translate(0, 0) rotate(0); } 100% { transform: translate(var(--x), 110vh) rotate(var(--r)); opacity: .9; } }
@@ -1358,24 +1369,24 @@ const S = {
    Copy: what each run is for, how it should feel, and the glossary
    ====================================================================== */
 const WHY = {
-  easy: n => `Most of your running, about 80%, should feel this easy. Easy runs build your heart, lungs and legs without wearing you out, so you’re fresh for the harder days.`,
-  strides: n => `An easy run with a few short, relaxed bursts of speed at the end. ${T('strides', 'Strides')} sharpen your running form and wake up your legs without tiring them.`,
-  long: n => `The most important run of the week. It teaches your body to keep going for longer, makes your legs stronger, and gives you confidence that you can go the distance.`,
-  fastfinish: n => `Finishing a long run at ${T('racepace', 'goal race pace')} teaches you to run strong on tired legs, which is exactly how the last few miles of race day feel.`,
-  fartlek: n => `${T('fartlek', 'Fartlek')} is Swedish for “speed play”. Mixing short, quicker bursts into an easy run is a gentle first step into speed work.`,
-  hills: n => `${T('hills', 'Hill reps')} build leg strength and power, like a gym session that’s also a run. They improve your form too, as it’s hard to run uphill sloppily.`,
-  intervals: n => `${T('intervals', 'Intervals')} are fast repeats with rests in between. Running quickly in small doses makes your heart and legs more efficient, so your normal pace starts to feel easier.`,
-  tempo: n => `${T('tempo', 'Tempo')} running is “comfortably hard”. It raises the pace you can hold for a long time, which is the key to a strong ${DIST[n].name}.`,
-  racepace: n => `Practising your ${T('racepace', 'goal race pace')} teaches your body, and your brain, exactly how it feels. On race day it will feel familiar rather than frightening.`,
-  sharpen: n => `A short, sharp session keeps your legs feeling quick while you rest up. This is the ${T('taper', 'taper')}: less running, same intensity.`,
-  shakeout: n => `A short, very easy run loosens your legs and settles the nerves before the big day.`,
-  'parkrun-easy': n => `Your weekly ${T('parkrun', 'parkrun')} gets you used to start lines, crowds and race-day nerves. This week it’s relaxed because your harder session is midweek, which keeps most of your running easy.`,
-  'parkrun-steady': n => `This week ${T('parkrun', 'parkrun')} is your harder session: a strong, steady effort, around marathon effort. Holding an even pace in a crowd is great race practice. Your midweek run is easy to balance it.`,
-  parkrun: n => `This week ${T('parkrun', 'parkrun')} is your harder session: brisk, close to your 10K effort. It builds speed endurance, and running with others helps you hold the pace. Your midweek run is easy to balance it.`,
-  'parkrun-shake': n => `Keep it very gentle: a relaxed jog loosens your legs and settles the nerves, and volunteering is just as good.`,
-  'parkrun-tempo': n => `Using ${T('parkrun', 'parkrun')} for a ${T('tempo', 'tempo')} effort: the crowd helps you hold a comfortably hard pace.`,
-  'parkrun-tt': n => `Every few weeks, running ${T('parkrun', 'parkrun')} hard shows you how much fitter you’re getting. Set a new 5K PB? Add it in “Tune your plan” and your paces will update.`,
-  race: n => `Everything has been building to this. Trust your training, start steady, and enjoy every step. You’ve earned it.`,
+  easy: n => `Most of your running should feel this easy. It builds your heart, lungs and legs without wearing you out, so you’re fresh for the harder days.`,
+  strides: n => `A few relaxed bursts of speed after an easy run. ${T('strides', 'Strides')} sharpen your form without tiring you.`,
+  long: n => `Your most important run. It builds endurance and strong legs, and proves you can go the distance.`,
+  fastfinish: n => `Finishing at ${T('racepace', 'goal race pace')} teaches you to run strong on tired legs, as in the last miles of race day.`,
+  fartlek: n => `${T('fartlek', 'Fartlek')} is Swedish for “speed play”: short, quicker bursts in an easy run. A gentle start to speed work.`,
+  hills: n => `${T('hills', 'Hill reps')} build strength and power, and sloppy form doesn’t survive a hill.`,
+  intervals: n => `${T('intervals', 'Intervals')} are fast repeats with rests between. Short doses of speed make your usual pace feel easier.`,
+  tempo: n => `${T('tempo', 'Tempo')} is “comfortably hard”. It raises the pace you can hold for longer, the key to a strong ${DIST[n].name}.`,
+  racepace: n => `Practising ${T('racepace', 'goal race pace')} makes it feel familiar, not frightening, on race day.`,
+  sharpen: n => `Short and sharp. It keeps your legs quick while you ${T('taper', 'taper')}.`,
+  shakeout: n => `Short and very easy. It loosens your legs and settles the nerves.`,
+  'parkrun-easy': n => `Relaxed this week, as your harder session is midweek. Also good practice for crowds and start lines.`,
+  'parkrun-steady': n => `Your harder session this week: a strong, even effort. Holding steady in a crowd is great race practice.`,
+  parkrun: n => `Your harder session this week: brisk, close to 10K effort. It builds speed endurance.`,
+  'parkrun-shake': n => `Very gentle. It loosens your legs and settles the nerves. Volunteering counts too.`,
+  'parkrun-tempo': n => `A ${T('tempo', 'tempo')} effort in the middle: the crowd helps you hold it.`,
+  'parkrun-tt': n => `A hard 5K shows how much fitter you’re getting. New PB? Add it in Adjust and your paces update.`,
+  race: n => `Everything has led here. Start steady and enjoy it.`,
 };
 const PACE = {
   easy: { name: 'Conversational', term: 'conversational', feel: 'Effort 3–4 out of 10. You can chat in full sentences.' },
@@ -1451,8 +1462,21 @@ function save(now) {
   now ? go() : (saveTimer = setTimeout(go, 250));
   if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
 }
-const encode = o => btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-const decode = s => JSON.parse(decodeURIComponent(escape(atob(s.replace(/-/g, '+').replace(/_/g, '/')))));
+/* Backup links: the saved plan, compressed. Bulky derived data (frozen past runs) is left out and rebuilt on restore. */
+const b64u = bytes => { let t = ''; for (let i = 0; i < bytes.length; i += 8192) t += String.fromCharCode.apply(null, bytes.subarray(i, i + 8192)); return btoa(t).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
+const unb64u = str => Uint8Array.from(atob(str.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0));
+const pipe = async (bytes, Stream) => new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(new Stream('deflate-raw'))).arrayBuffer());
+async function pack(o) {
+  const lean = { ...o }; delete lean.frozen;
+  ['buggy', 'moves', 'raceList'].forEach(k => { if (lean[k] && !Object.keys(lean[k]).length) delete lean[k]; });
+  const bytes = new TextEncoder().encode(JSON.stringify(lean));
+  if (window.CompressionStream) { try { return '~' + b64u(await pipe(bytes, CompressionStream)); } catch (e) { /* fall through */ } }
+  return b64u(bytes);
+}
+async function unpack(str) {
+  if (str[0] === '~') return JSON.parse(new TextDecoder().decode(await pipe(unb64u(str.slice(1)), DecompressionStream)));
+  return JSON.parse(new TextDecoder().decode(unb64u(str)));      // older, uncompressed links still work
+}
 
 /* ======================================================================
    Icons (24px grid, 2px rounded strokes)
@@ -1501,7 +1525,7 @@ IC.move = '<path d="M8 7 4 11l4 4"/><path d="M4 11h11a5 5 0 0 1 0 10h-2"/>';
 IC.chart = '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>';
 IC.trend = '<path d="M3 6.5l6.5 6.5 4-4 7.5 7.5"/><path d="M15.5 17.5H21V12"/>';
 /* Version: each published update of Run plan is a release */
-const APP_VERSION = '0.12';
+const APP_VERSION = '0.13';
 /* Releases: 0.1 first plan · 0.2 app look · 0.3 web-app feel, chart, moving runs · 0.4 phase/total chart, safer saves ·
    0.5 past runs fixed, clearer explained words · 0.6 logo, time ranges, race-week celebration, evidence-based taper ·
    0.7 parkrun buggy runs, "How this plan is built" (methodology and sources) ·
@@ -1510,7 +1534,8 @@ const APP_VERSION = '0.12';
    0.10 model review: paces from current fitness, Daniels-aligned bands, 15% long-run growth cap,
         parkrun as alternate-week hard session; build animation; PB auto-format ·
    0.11 in-app confirm, backup and restore trays (no browser pop-ups) ·
-   0.12 new TW logo: the W's last stroke as a light-blue slash */
+   0.12 new TW logo: the W's last stroke as a light-blue slash ·
+   0.13 clearer date errors, orb build animation, tighter run descriptions, slowest-first paces, shorter backup links */
 const versionHTML = () => `<p class="version">Run plan v${APP_VERSION} · Beta</p>`;
 /* TW mark: the favicon's letters, with the W's last stroke cut free as a light-blue slash.
    Tuned for 24-32px: the gap is the narrowest that still separates the slash cleanly, and the slash is a touch heavier than the W's own stroke. */
@@ -1740,17 +1765,17 @@ function renderSetup() {
       <div class="field"><label class="field__label" for="f-date">Race date</label>
         <div class="input-wrap">${ic('cal')}<input class="input" id="f-date" type="date" min="${min}" value="${esc(d.date)}" aria-describedby="date-hint err-date"></div>
         <p class="hint" id="date-hint" style="margin:0 2px"></p>
-        <p class="err" id="err-date" hidden style="margin:0 2px">Choose a race date at least a week away.</p></div>
+        <p class="err" id="err-date" hidden style="margin:0 2px">Enter the full race date.</p></div>
     </fieldset>`;
   if (step === 2) body = `
     <fieldset class="step">${head('Where are you starting from?', 'Brand new to running? Skip the times and the plan will start gently.')}
       <p class="field__label" style="margin:0 2px 10px">Your ${T('pb', 'PBs')} <small>(optional)</small></p>
       <div class="pbs">
-        ${[['5k', '5K', 'mm:ss'], ['10k', '10K', 'mm:ss'], ['hm', 'Half', 'h:mm:ss']].map(([k, l, ph]) => `
+        ${[['5k', '5K', 'mm:ss'], ['10k', '10K', 'h:mm:ss'], ['hm', 'Half', 'h:mm:ss']].map(([k, l, ph]) => `
         <div class="field"><label class="field__label" for="pb-${k}">${l}</label><input class="input input--time" id="pb-${k}" data-pb="${k}" inputmode="numeric" placeholder="${ph}" value="${d.pbs[k] ? hms(d.pbs[k]) : ''}" aria-describedby="pb-${k}-err"></div>`).join('')}
       </div>
-      ${['5k', '10k', 'hm'].map(k => `<p class="err" id="pb-${k}-err" hidden>That doesn’t look like a ${DIST[k].label} time. Try something like ${k === 'hm' ? '2:15:00' : k === '10k' ? '58:30' : '29:45'}.</p>`).join('')}
-      <p class="hint">Just type the numbers and we’ll add the colons: 2745 becomes 27:45. Your best recent time is most useful.</p>
+      ${['5k', '10k', 'hm'].map(k => `<p class="err" id="pb-${k}-err" hidden>That doesn’t look like a ${DIST[k].label} time. Try something like ${k === 'hm' ? '2:15:00' : k === '10k' ? '58:30 or 1:05:00' : '29:45'}.</p>`).join('')}
+      <p class="hint">Just type the numbers and we’ll add the colons: 2745 becomes 27:45, and 10500 becomes 1:05:00. Your best recent time is most useful.</p>
       <div class="callout k-warn" id="ready-hint" hidden></div>
       <div class="card pad" style="margin-top:28px">
         <div class="slider"><div class="slider__top"><label class="slider__label" for="r-longest">Longest run in the last month</label><output class="slider__value" id="o-longest" for="r-longest">${longestLabel(d.longest)}</output></div>
@@ -1811,6 +1836,7 @@ function syncSetup() {
   const wk = weeksUntil(d.date, editing ? state.start : null), D = DIST[d.distance];
   const dh = $('#date-hint');
   if (dh) dh.textContent = !d.date ? `Most ${D.name} plans run for about ${D.rec} weeks.`
+    : +d.date.slice(0, 4) < 2000 ? 'Keep typing the year, for example 2027.'
     : wk < D.min ? `${wk} week${wk === 1 ? '' : 's'} away is tight for a ${D.name} (${D.min}+ recommended). We’ll make the most of it and keep it gentle.`
     : wk < D.rec ? `${wk} weeks to go. A little shorter than the usual ${D.rec}, but very doable.`
     : `${wk} weeks to go. Plenty of time${wk > D.ramp + D.taper ? ', so we’ll start with some easy foundation weeks' : ''}.`;
@@ -1860,9 +1886,20 @@ function readStep(showErr) {
     return !bad;
   }
   if (step === 1) {
-    d.event = $('#f-event').value.trim(); d.date = $('#f-date').value;
-    const bad = !d.date || parseISO(d.date) < addDays(today(), 7);
-    $('#err-date').hidden = !(bad && showErr); $('#f-date').setAttribute('aria-invalid', bad && showErr);
+    d.event = $('#f-event').value.trim();
+    let v = $('#f-date').value, msg = '';
+    if (!v) msg = 'Enter the full race date: day, month and year.';
+    else {
+      let [y, m, dd] = v.split('-').map(Number);
+      if (y < 100) { y += 2000; v = `${y}-${pad(m)}-${pad(dd)}`; $('#f-date').value = v; }      // "27" means 2027
+      const dt = parseISO(v), away = diffDays(today(), dt);
+      if (dt < today()) msg = 'That date has already passed. Choose a day in the future.';
+      else if (away < 7) msg = `That’s only ${away} day${away === 1 ? '' : 's'} away, which is too soon to build a plan. Choose a race at least a week out.`;
+      else if (away > 730) msg = 'That’s more than two years away. Choose a nearer date, and you can always change it later.';
+    }
+    d.date = v;
+    const bad = !!msg;
+    $('#err-date').textContent = msg; $('#err-date').hidden = !(bad && showErr); $('#f-date').setAttribute('aria-invalid', bad && showErr);
     if (bad && showErr) $('#f-date').focus();
     return !bad;
   }
@@ -1908,17 +1945,34 @@ function onSetupInput(t) {
   syncSetup();
 }
 
-/* A short full-screen moment while the plan is "built" (2.5 s; skipped with reduced motion) */
+/* A short full-screen moment while the plan is "built": a glowing sphere, a ring that closes week by week, and orbits.
+   About 4 seconds, then the sphere floods the screen to reveal the app. Skipped with reduced motion. */
 function buildingScreen(p, then) {
   if (reduceMotion()) return then();
-  const nm = first(p.name), D = DIST[p.distance], wk = weeksUntil(p.date, null);
+  const nm = first(p.name), D = DIST[p.distance], wk = weeksUntil(p.date, null), N = clamp(wk, 6, 26);
   const lines = ['Reading your race times', 'Setting your paces', `Planning ${wk} weeks of runs`, 'Adding rest and deload weeks', `Ready for your ${D.name}!`];
+  const R = 92, step = 3.2 / N;
+  const dots = Array.from({ length: N }, (_, i) => { const a = (-90 + i * 360 / N) * Math.PI / 180, last = i === N - 1;
+    return `<circle class="b-dot${last ? ' b-dot--race' : ''}" cx="${(Math.cos(a) * R).toFixed(1)}" cy="${(Math.sin(a) * R).toFixed(1)}" r="${last ? 5 : 3.2}" style="--d:${(.45 + i * step).toFixed(2)}s"/>`; }).join('');
+  const sat = (rot, dur, delay) => `<g transform="rotate(${rot})"><ellipse class="b-orbit" rx="66" ry="25" pathLength="1"/><circle class="b-sat" r="4"><animateMotion dur="${dur}s" begin="${delay}s" repeatCount="indefinite" path="M-66 0a66 25 0 1 0 132 0a66 25 0 1 0 -132 0"/></circle></g>`;
   const o = document.createElement('div');
   o.className = 'building'; o.setAttribute('role', 'status');
-  o.innerHTML = `<div class="building__in"><div class="building__road"><span class="building__shoe">${ic('shoe')}</span></div>
-    <h2>Building your plan, ${nm}</h2><ul>${lines.map((l, i) => `<li style="--i:${i}">${ic('check')}<span>${l}</span></li>`).join('')}</ul></div>`;
+  o.innerHTML = `<div class="building__in">
+    <svg class="orb" viewBox="-110 -110 220 220" aria-hidden="true">
+      <defs><radialGradient id="orbg" cx=".36" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".42" stop-color="#D5DCFF"/><stop offset="1" stop-color="#6A84FF"/></radialGradient></defs>
+      <circle class="b-glow" r="52"/>
+      <circle class="b-track" r="${R}"/>
+      <circle class="b-arc" r="${R}" pathLength="1"/>
+      ${sat(28, 3.1, 0)}${sat(-34, 4.2, -1)}
+      ${dots}
+      <g class="b-core"><circle r="31" fill="url(#orbg)"/><ellipse cx="-10" cy="-12" rx="11" ry="7" fill="#fff" opacity=".55" transform="rotate(-30 -10 -12)"/></g>
+    </svg>
+    <h2>Building your plan, ${nm}</h2><p class="building__line" id="b-line">${lines[0]}</p></div><span class="building__flood"></span>`;
   document.body.appendChild(o);
-  setTimeout(() => { then(); o.classList.add('out'); setTimeout(() => o.remove(), 500); }, 2600);
+  const line = o.querySelector('#b-line'); let i = 0;
+  const tick = setInterval(() => { i++; if (i >= lines.length) return clearInterval(tick); line.classList.remove('in'); void line.offsetWidth; line.textContent = lines[i]; line.classList.add('in'); }, 750);
+  line.classList.add('in');
+  setTimeout(() => { then(); o.classList.add('flood'); setTimeout(() => o.remove(), 700); }, 4050);
 }
 function finishSetup() {
   const p = draft;
@@ -2186,7 +2240,7 @@ function renderToday(now) {
       <ul class="card list">${wk.runs.map(x => cell(x, now)).join('') || '<li class="empty">No runs this week.</li>'}</ul>` : '')
     + `<div class="card tip k-tempo" style="margin-top:20px"><span class="tile">${ic('bulb')}</span><p><b>Tip of the day: ${tip[0]}</b>${tip[1]}</p></div>`;
   $('#s-today').innerHTML = `<div class="today-grid"><div class="col">${hero}${main}</div><div class="col">${side}
-    <p class="sign-off">Made with ${ic('heart')} for everyone lacing up for their first race 👟</p>${versionHTML()}</div></div>`;
+    <p class="sign-off">Made with ${ic('heart')} for everyone lacing up for a race 👟</p>${versionHTML()}</div></div>`;
 }
 
 const RACE_LIST = ['Pick up your race number (and safety pins)', 'Lay out your kit the night before', 'Plan your journey and aim to arrive early', 'Sleep well two nights before: race-eve nerves are normal', 'Eat familiar food. Nothing new on race day!'];
@@ -2380,7 +2434,7 @@ function onTune(t) {
 function renderLearnStatic() {
   $('#s-learn').innerHTML = `
   <div class="head"><p class="eyebrow">Running, explained</p><h1 class="h1">Learn</h1><p class="head__sub">Everything in your plan, in plain English. Wherever you see a word in blue with an ⓘ, tap it for a quick explanation.</p></div>
-  <p class="eyebrow group-label" style="margin-top:4px">Your paces</p>
+  <p class="eyebrow group-label" style="margin-top:4px">Your paces, slowest to fastest</p>
   <ul class="card list" id="paces"></ul>
   <p class="hint">Each range covers your whole plan. You’ll move towards the faster end as you get fitter. ${T('pace', 'What’s a pace?')} · ${T('effort', 'What’s effort out of 10?')}</p>
   <p class="eyebrow group-label">How your plan works</p>
@@ -2394,10 +2448,12 @@ function renderPaces(now) {
   let pi = plan.weeks.length - 1; while (pi > 0 && plan.weeks[pi].phase === 'taper') pi--;
   const pk = plan.weeks[Math.max(pi, ci)];
   const keys = ['easy', 'long', 'steady', ...(state.profile.parkrun ? ['prrelax', 'prsteady', 'parkrun'] : []), 'tempo', 'tenk', 'interval', 'race'];
+  // From this week's slower end to the peak week's faster end, listed slowest first
+  const span = k => k === 'race' ? [goalPace(), goalPace()] : [pk.Z[k][0], wk.Z[k][1]];
+  keys.sort((x, y) => (span(y)[0] + span(y)[1]) - (span(x)[0] + span(x)[1]));
   $('#paces').innerHTML = keys.map(k => {
     const P = PACE[k], e = k === 'race' ? RACE_EFF[dk] : EFF[k];
-    // from this week's slower end to the peak week's faster end
-    const [v, u] = splitUnit(k === 'race' ? F.pace(goalPace()) : F.range([pk.Z[k][0], wk.Z[k][1]]));
+    const [v, u] = splitUnit(k === 'race' ? F.pace(goalPace()) : F.range(span(k)));
     return `<li class="row ${PACE_KIND[k]}"><span class="tile tile--txt" role="img" aria-label="Effort ${e[0]} to ${e[1]} out of 10">${e[0] === e[1] ? e[0] : `${e[0]}–${e[1]}`}</span>
       <span class="row__label">${esc(P.name)}<small>${P.feel.replace(/^Effort [^.]*\.\s*/, '')}</small></span>
       <span class="row__value">${v}<small>${u}</small></span></li>`;
@@ -2673,8 +2729,8 @@ async function copyText(text, field) {
     try { field.focus(); field.select(); field.setSelectionRange(0, text.length); return document.execCommand('copy'); } catch (e2) { return false; }
   }
 }
-function backup() {
-  const url = `${location.origin}${location.pathname}#plan=${encode(state)}`, nm = first(state.profile.name);
+async function backup() {
+  const url = `${location.origin}${location.pathname}#p=${await pack(state)}`, nm = first(state.profile.name);
   ask({ icon: 'share', kind: 'k-good', title: 'Back up your plan',
     body: `<p>This link holds your whole plan: your details, ticks, moved runs and settings. Keep it somewhere safe, like a note or an email to yourself.</p>
       <p style="margin-top:8px">To restore, open the link, or paste it into <b>Restore from a backup</b> in Adjust.</p>
@@ -2689,10 +2745,10 @@ function backup() {
   const sh = d.querySelector('[data-ask="share"]');
   if (sh) sh.addEventListener('click', () => { navigator.share({ title: `${nm}’s run plan`, text: 'My running plan backup. Open this link to restore it.', url }).catch(() => toast('Sharing isn’t available here. Use Copy link instead.', 'info')); });
 }
-function restoreFrom(text) {
-  const m = String(text || '').trim().match(/(?:#plan=)?([\w-]{20,})\s*$/);
+async function restoreFrom(text) {
+  const m = String(text || '').trim().match(/(?:#p(?:lan)?=)?([\w~-]{20,})\s*$/);
   if (!m) return null;
-  try { const s = decode(m[1]); return migrate(s) && s.profile ? s : null; } catch (e) { return null; }
+  try { const s = await unpack(m[1]); return migrate(s) && s.profile ? s : null; } catch (e) { return null; }
 }
 function restorePrompt() {
   ask({ icon: 'share', kind: 'k-accent', title: 'Restore from a backup',
@@ -2701,8 +2757,8 @@ function restorePrompt() {
       <p class="err" id="restore-err" hidden>That doesn’t look like a Run plan backup link. Check you copied all of it.</p>`,
     actions: [{ label: 'Restore plan', value: 'restore', cls: 'btn--primary' }] });
   const d = $('#ask-sheet');
-  d.querySelector('[data-ask="restore"]').addEventListener('click', () => {
-    const s = restoreFrom($('#restore-code').value);
+  d.querySelector('[data-ask="restore"]').addEventListener('click', async () => {
+    const s = await restoreFrom($('#restore-code').value);
     if (!s) { $('#restore-err').hidden = false; return; }
     state = s; save(true); closeSheet(d); view = 'plan'; tab = 'today'; render(); window.scrollTo(0, 0);
     toast(`Welcome back, ${first(s.profile.name)}. Your plan is restored.`, 'check');
@@ -2830,11 +2886,11 @@ document.addEventListener('submit', e => {
 });
 
 /* Restore from a backup link */
-function restoreFromHash() {
-  const m = location.hash.match(/^#plan=([\w-]+)/);
+async function restoreFromHash() {
+  const m = location.hash.match(/^#p(?:lan)?=([\w~-]+)/);
   if (!m) return;
   try {
-    const s = decode(m[1]);
+    const s = await unpack(m[1]);
     if (migrate(s) && s.profile) {
       if (!state.profile) { state = s; save(true); view = 'plan'; }
       else setTimeout(() => ask({ icon: 'share', title: `Restore ${s.profile.name ? esc(s.profile.name) + '’s' : 'this'} plan?`,
@@ -2849,8 +2905,9 @@ function restoreFromHash() {
 /* Keep "today" right if the app is left open overnight */
 document.addEventListener('visibilitychange', () => { if (!document.hidden && view === 'plan' && lastNow !== iso(today())) refresh(); });
 
-restoreFromHash();
-render();
+restoreFromHash().then(render, render);
+/* Opening a backup link while the app is already open */
+window.addEventListener('hashchange', () => { if (/^#p(?:lan)?=/.test(location.hash)) restoreFromHash().then(render, render); });
 window.RunPlan = { generate, estimate, verdict, parseTime, DIST, zones, defaultGoal };
 })();
 </script>
