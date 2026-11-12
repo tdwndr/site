@@ -774,15 +774,7 @@ body[data-view="setup"] .toast { bottom: calc(env(safe-area-inset-bottom) + 100p
 .building { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 24px; color: #fff; overflow: hidden;
   background: radial-gradient(120% 60% at 85% 0%, rgba(255, 255, 255, .18), transparent 60%), linear-gradient(165deg, var(--grad-a), var(--grad-b) 70%); animation: fade .3s ease; }
 .building__in { width: min(340px, 100%); text-align: center; }
-.scene { display: block; width: min(320px, 88vw); height: auto; margin: 0 auto 14px; overflow: visible; }
-.b-ground { stroke: rgba(255, 255, 255, .22); stroke-width: 2.4; stroke-linecap: round; fill: none; }
-.b-ground--drawn { stroke: #fff; stroke-dasharray: 1; stroke-dashoffset: .681; animation: b-ground 3.4s linear .35s forwards; }
-.b-run { animation: b-run 3.4s linear .35s forwards; }
-.b-hop { transform-box: fill-box; transform-origin: 50% 100%; animation: b-hop .36s ease-in-out .35s infinite; }
-.b-shoe { fill: none; stroke: #fff; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
-.b-speed { fill: none; stroke: rgba(255, 255, 255, .7); stroke-width: 2.2; stroke-linecap: round; animation: b-speed .24s steps(2) .35s infinite; }
-.b-dot { fill: #fff; opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0); animation: b-pop .45s var(--ease) var(--d) forwards; }
-.b-dot--race { fill: #FFD98A; }
+.spinner { display: block; width: 56px; height: 56px; margin: 0 auto 22px; border-radius: 50%; border: 4px solid rgba(255, 255, 255, .25); border-top-color: #fff; animation: b-spin .8s linear infinite; }
 .building h2 { font: 750 24px/1.2 var(--ui); letter-spacing: -.02em; }
 .building__line { margin-top: 8px; min-height: 26px; font-size: 16.5px; color: rgba(255, 255, 255, .88); opacity: 0; }
 .building__line.in { animation: b-line .45s var(--ease) forwards; }
@@ -790,11 +782,7 @@ body[data-view="setup"] .toast { bottom: calc(env(safe-area-inset-bottom) + 100p
 .building.flood { background: transparent; animation: none; }
 .building.flood .building__in { opacity: 0; transition: opacity .25s; }
 .building.flood .building__flood { transform: scale(420); transition: transform .65s cubic-bezier(.5, 0, .2, 1); }
-@keyframes b-ground { to { stroke-dashoffset: 0; } }
-@keyframes b-run { to { transform: translateX(182px); } }
-@keyframes b-hop { 0%, 100% { transform: translateY(0) rotate(0deg); } 45% { transform: translateY(-12px) rotate(-7deg); } 75% { transform: translateY(-3px) rotate(3deg); } }
-@keyframes b-speed { 0% { opacity: .2; } 100% { opacity: .85; } }
-@keyframes b-pop { 0% { opacity: 0; transform: scale(0); } 70% { opacity: 1; transform: scale(1.6); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes b-spin { to { transform: rotate(360deg); } }
 @keyframes b-line { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .confetti { position: fixed; inset: 0; z-index: 80; overflow: hidden; pointer-events: none; }
 .confetti i { position: absolute; top: -20px; width: 9px; height: 14px; border-radius: 2px; opacity: .95; animation: fall var(--d) cubic-bezier(.25, .6, .4, 1) var(--w) forwards; }
@@ -1537,7 +1525,7 @@ const APP_VERSION = '0.14';
    0.11 in-app confirm, backup and restore trays (no browser pop-ups) ·
    0.12 new TW logo: the W's last stroke as a light-blue slash ·
    0.13 clearer date errors, orb build animation, tighter run descriptions, slowest-first paces, shorter backup links ·
-   0.14 parkrun logo on parkrun runs, running-shoe build animation */
+   0.14 parkrun logo on parkrun runs, simple spinner build screen */
 const versionHTML = () => `<p class="version">Run plan v${APP_VERSION} · Beta</p>`;
 /* TW mark: the favicon's letters, with the W's last stroke cut free as a light-blue slash.
    Tuned for 24-32px: the gap is the narrowest that still separates the slash cleanly, and the slash is a touch heavier than the W's own stroke. */
@@ -1954,32 +1942,16 @@ function buildingScreen(p, then) {
   if (reduceMotion()) return then();
   const nm = first(p.name), D = DIST[p.distance], wk = weeksUntil(p.date, null), N = clamp(wk, 6, 26);
   const lines = ['Reading your race times', 'Setting your paces', `Planning ${wk} weeks of runs`, 'Adding rest and deload weeks', `Ready for your ${D.name}!`];
-  const RUN = 3.4, X0 = 98, SPAN = 182;                      // the shoe's front runs from x=98 to x=280 in 3.4s
-  const ticks = Array.from({ length: N }, (_, i) => { const f = N > 1 ? i / (N - 1) : 0, last = i === N - 1;
-    return `<circle class="b-dot${last ? ' b-dot--race' : ''}" cx="${(X0 + f * SPAN).toFixed(1)}" cy="111" r="${last ? 4.2 : 2.8}" style="--d:${(.4 + f * RUN).toFixed(2)}s"/>`; }).join('');
   const o = document.createElement('div');
   o.className = 'building'; o.setAttribute('role', 'status');
   o.innerHTML = `<div class="building__in">
-    <svg class="scene" viewBox="0 0 300 124" aria-hidden="true">
-      <line class="b-ground" x1="12" y1="100" x2="282" y2="100"/>
-      <line class="b-ground b-ground--drawn" x1="12" y1="100" x2="282" y2="100" pathLength="1"/>
-      ${ticks}
-      <g transform="translate(24 63.4)"><g class="b-run">
-        <path class="b-speed" d="M-18 13 H-6 M-25 24 H-10 M-16 34 H-4"/>
-        <g class="b-hop"><g transform="scale(.62)" class="b-shoe">
-          <path d="M10 45 L8 27 C8 23 11 21 15 22 L28 26 C32 27 35 25 37 21 L40 14 C41 12 43 12 44 14 L49 24 C52 29 58 31 64 32 C80 34 94 38 102 44 C106 47 110 48 112 50"/>
-          <path d="M10 45 L10 54 C10 57 12 59 15 59 L88 59 C98 59 106 57 112 50"/>
-          <path d="M10 45 H103 C107 45 110 47 112 50"/>
-          <path d="M51 26 L57 22 M56 30 L62 26 M62 32 L68 28"/>
-          <path d="M26 40 C42 40 58 37 74 34"/>
-        </g></g></g></g>
-    </svg>
+    <span class="spinner" aria-hidden="true"></span>
     <h2>Building your plan, ${nm}</h2><p class="building__line" id="b-line">${lines[0]}</p></div><span class="building__flood"></span>`;
   document.body.appendChild(o);
   const line = o.querySelector('#b-line'); let i = 0;
-  const tick = setInterval(() => { i++; if (i >= lines.length) return clearInterval(tick); line.classList.remove('in'); void line.offsetWidth; line.textContent = lines[i]; line.classList.add('in'); }, 750);
+  const tick = setInterval(() => { i++; if (i >= lines.length) return clearInterval(tick); line.classList.remove('in'); void line.offsetWidth; line.textContent = lines[i]; line.classList.add('in'); }, 560);
   line.classList.add('in');
-  setTimeout(() => { then(); o.classList.add('flood'); setTimeout(() => o.remove(), 700); }, 4050);
+  setTimeout(() => { then(); o.classList.add('flood'); setTimeout(() => o.remove(), 700); }, 3000);
 }
 function finishSetup() {
   const p = draft;
