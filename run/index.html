@@ -144,6 +144,35 @@ b, strong { font-weight: 650; }
   letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2);
 }
 .nojs { padding: 3rem 1.5rem; text-align: center; }
+/* Brand: the TW mark, selected as if on a design canvas, plus a beta badge */
+.brandmark { display: inline-flex; align-items: center; gap: 11px; color: inherit; text-decoration: none; }
+.logo { position: relative; flex: none; width: 24px; height: 24px; margin: 4px; }
+.logo svg { display: block; width: 100%; height: 100%; }
+.logo::before { content: ""; position: absolute; inset: -4px; border: 1px solid var(--accent); pointer-events: none; }
+.logo i { position: absolute; width: 5px; height: 5px; background: var(--surface); border: 1px solid var(--accent); }
+.logo i:nth-of-type(1) { top: -6.5px; left: -6.5px; }
+.logo i:nth-of-type(2) { top: -6.5px; right: -6.5px; }
+.logo i:nth-of-type(3) { bottom: -6.5px; left: -6.5px; }
+.logo i:nth-of-type(4) { bottom: -6.5px; right: -6.5px; }
+.beta { padding: 4px 7px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); font: 750 10.5px/1 var(--ui); letter-spacing: .06em; text-transform: uppercase; }
+.intro .logo::before, .intro .logo i { border-color: rgba(255, 255, 255, .9); }
+.intro .logo i { background: var(--grad-a); }
+.intro .beta { background: rgba(255, 255, 255, .18); color: #fff; }
+.version { margin-top: 10px; text-align: center; font-size: 12.5px; color: var(--ink-3); }
+/* Race week: a little party */
+.race-week { position: relative; overflow: hidden; margin-top: 20px; padding: 22px; border-radius: var(--r-xl); color: #fff;
+  background: radial-gradient(80% 90% at 0% 0%, rgba(255, 255, 255, .25), transparent 60%), linear-gradient(140deg, var(--c-race), var(--c-speed)); }
+.race-week__emoji { font-size: 34px; line-height: 1; }
+.race-week h2 { margin-top: 10px; font: 750 24px/1.2 var(--ui); letter-spacing: -.015em; }
+.race-week > p { margin-top: 6px; font-size: 16px; line-height: 1.5; color: rgba(255, 255, 255, .92); }
+.checklist { display: grid; gap: 4px; margin-top: 14px; }
+.checklist button { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 48px; padding: 8px 10px; border: 0; border-radius: 12px; background: rgba(255, 255, 255, .14); color: #fff; font: 550 15.5px/1.35 var(--ui); text-align: left; transition: background-color .2s; }
+.checklist button:active { background: rgba(255, 255, 255, .24); }
+.checklist .box { flex: none; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .8); }
+.checklist .box .ic { width: 14px; height: 14px; stroke-width: 3.2; opacity: 0; }
+.checklist [aria-pressed="true"] .box { background: #fff; color: var(--c-race); }
+.checklist [aria-pressed="true"] .box .ic { opacity: 1; }
+.checklist [aria-pressed="true"] span:last-child { text-decoration: line-through; opacity: .8; }
 
 /* An explained word: tap for a short definition */
 .term {
@@ -269,6 +298,7 @@ b, strong { font-weight: 650; }
 .cell__main:active .cell__chev { color: var(--accent); }
 .cell__title { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; font-weight: 650; font-size: 16.5px; line-height: 1.25; }
 .cell__sub { font-size: 14.5px; color: var(--ink-2); line-height: 1.4; }
+.nw { white-space: nowrap; }
 .cell__flag { display: inline-flex; color: var(--ink-2); }
 .cell__flag .ic { width: 16px; height: 16px; }
 .cell.is-done .cell__title { color: var(--ink-2); }
@@ -456,7 +486,7 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
   border-bottom: 1px solid var(--line);
 }
 .top__in { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "brand count" "tabs tabs"; align-items: center; column-gap: 12px; max-width: 1080px; margin: 0 auto; padding: 0 16px; }
-.top .brand { grid-area: brand; padding: 16px 4px 4px; }
+.top .brandmark { grid-area: brand; padding: 14px 4px 4px; }
 .count { grid-area: count; justify-self: end; margin-top: 10px; display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font: 700 14px/1 var(--ui); white-space: nowrap; }
 .count .ic { width: 16px; height: 16px; stroke-width: 2.4; }
 .tabs { grid-area: tabs; display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 6px; }
@@ -472,7 +502,7 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 @media (max-width: 380px) { .tab .ic { display: none; } }
 @media (min-width: 760px) {
   .top__in { grid-template-columns: auto 1fr auto; grid-template-areas: "brand tabs count"; padding: 0 24px; }
-  .top .brand { padding: 0; }
+  .top .brandmark { padding: 0; }
   .count { margin-top: 0; }
   .tabs { display: flex; justify-content: center; gap: 6px; margin-top: 0; }
   .tab { min-height: 64px; padding: 0 16px; }
@@ -510,13 +540,11 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 .streak { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px; background: rgba(255, 255, 255, .16); font: 650 14px/1 var(--ui); white-space: nowrap; }
 .streak .ic { width: 16px; height: 16px; color: #FFC774; }
 /* The road to race day: a track with a runner on it and a flag at the end */
-.road { position: relative; margin: 26px 0 0; padding: 0 14px 0 0; }
+.road { position: relative; margin: 26px 0 0; }
 .road__track { position: relative; height: 10px; border-radius: 5px; background: rgba(255, 255, 255, .2); }
 .road__fill { position: absolute; inset: 0 auto 0 0; border-radius: 5px; background: #fff; width: var(--p); transition: width .8s var(--ease); }
 .road__me { position: absolute; top: 50%; left: var(--p); translate: -50% -50%; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #fff; color: var(--grad-b); box-shadow: 0 4px 12px rgba(5, 10, 60, .35); transition: left .8s var(--ease); }
 .road__me .ic { width: 17px; height: 17px; stroke-width: 2.4; }
-.road__flag { position: absolute; right: -2px; top: 50%; translate: 0 -78%; color: #fff; }
-.road__flag .ic { width: 22px; height: 22px; }
 .road__labels { display: flex; justify-content: space-between; margin-top: 12px; font-size: 13.5px; color: rgba(255, 255, 255, .86); }
 .road__labels b { color: #fff; }
 .race-card__foot { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px; }
@@ -534,13 +562,15 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 .run-card__actions { display: grid; grid-template-columns: 1fr 1.7fr; gap: 12px; }
 .cheer { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: var(--r-md); background: var(--accent-soft); font-size: 16px; line-height: 1.45; }
 .cheer .ic { color: var(--accent); width: 20px; height: 20px; margin-top: 1px; }
-.stats3 { display: grid; grid-template-columns: 1fr 1fr 1.45fr; gap: 10px; }
+.stats3 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.stats3 .stat:last-child { grid-column: 1 / -1; }
+@media (min-width: 700px) { .stats3 { grid-template-columns: 1fr 1.15fr 1.35fr; } .stats3 .stat:last-child { grid-column: auto; } }
 .stat { display: flex; flex-direction: column; gap: 4px; min-width: 0; padding: 12px 14px; border-radius: var(--r-md); background: var(--surface-2); border: 1px solid var(--line); }
 .stat .ic { width: 18px; height: 18px; color: var(--c, var(--accent)); }
 .stat b { font: 750 20px/1.15 var(--ui); white-space: nowrap; }
 .stat b small { margin-left: 2px; font-size: 13px; font-weight: 500; color: var(--ink-2); }
 .stat > span { font-size: 13px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-@media (max-width: 380px) { .stats3 { grid-template-columns: 1fr 1fr; } .stat:last-child { grid-column: 1 / -1; } .run-card__actions { grid-template-columns: 1fr; } }
+@media (max-width: 380px) { .run-card__actions { grid-template-columns: 1fr; } }
 .rest-card { display: flex; gap: 16px; align-items: center; padding: 20px 22px; }
 .rest-card b { display: block; font-size: 17px; }
 .rest-card p { font-size: 15.5px; line-height: 1.45; color: var(--ink-2); }
@@ -617,6 +647,9 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 .legend2 .lg-line--soft { background: color-mix(in srgb, var(--accent) 38%, var(--surface)); }
 .chart__table summary { display: inline-flex; align-items: center; min-height: 44px; margin-top: 4px; color: var(--accent); font-weight: 600; font-size: 14.5px; cursor: pointer; list-style: none; border-radius: 8px; }
 .chart__table summary::-webkit-details-marker { display: none; }
+.chart__table[open] .t-show, .chart__table:not([open]) .t-hide { display: none; }
+.bar__race { position: absolute; left: 0; right: 0; top: 0; background: repeating-linear-gradient(135deg, var(--c-race) 0 3px, color-mix(in srgb, var(--c-race) 40%, var(--surface)) 3px 6px); }
+.legend2 .lg-race { width: 10px; height: 12px; border-radius: 3px 3px 0 0; background: repeating-linear-gradient(135deg, var(--c-race) 0 3px, color-mix(in srgb, var(--c-race) 40%, var(--surface)) 3px 6px); }
 .chart__table table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 4px; }
 .chart__table th, .chart__table td { padding: 8px 6px; text-align: right; border-bottom: 1px solid var(--line); }
 .chart__table th:first-child, .chart__table td:first-child { text-align: left; }
@@ -665,6 +698,11 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 .day7[aria-checked="true"] { background: var(--c); border-color: var(--c); color: #fff; }
 .day7[aria-checked="true"] b { color: #fff; }
 .day7[disabled] { opacity: .38; cursor: not-allowed; }
+/* Not editable: a faint hatch over the day picker */
+.locked { position: relative; padding: 8px; margin: -8px; border-radius: 16px; background: repeating-linear-gradient(135deg, var(--fill-2) 0 1.5px, transparent 1.5px 8px); }
+.locked .day7 { background: color-mix(in srgb, var(--surface) 75%, transparent); }
+.locked .day7[aria-checked="true"] { background: var(--c); border-color: var(--c); opacity: .8; }
+.lock-i .ic { width: 16px; height: 16px; vertical-align: -3px; margin-right: 6px; }
 .day7 .dot { position: absolute; bottom: 6px; width: 5px; height: 5px; border-radius: 50%; background: var(--ink-3); }
 .sheet__foot { padding: 14px 20px calc(env(safe-area-inset-bottom) + 14px); border-top: 1px solid var(--line); background: var(--bg); }
 .sheet--term .sheet__scroll { padding-bottom: calc(env(safe-area-inset-bottom) + 24px); }
@@ -874,14 +912,14 @@ function generate(p, startISO, units, overrides, moves) {
   if (rampLen > 1 && (peak - Ls) / (rampLen - 1) > D.inc) { peakEff = Ls + D.inc * (rampLen - 1); short = true; }
   if (rampLen === 1) { peakEff = Math.min(peak, Ls + D.inc); short = peakEff < peak; }
   if (rampLen === 0) { peakEff = Ls; short = Ls < peak; }
-  const taperFr = { '5k': [], '10k': [], 'hm': [.65], 'm': [.75, .55] }[dk];
+  const taperFr = { '5k': [], '10k': [], 'hm': [.55], 'm': [.65, .45] }[dk];   // long run in taper weeks, as a share of the peak
 
   const weeks = [], ctr = {};
   let longestSoFar = 0;
   for (let i = 0; i < N; i++) {
     const ws = addDays(w0, 7 * i), we = addDays(ws, 6);
     const isRaceWk = i === N - 1;
-    let phase, r = i - rampStart, cut = false, L;
+    let phase, r = i - rampStart, cut = false, L, ti = -1;
     if (i < rampStart) { phase = 'foundation'; cut = (i + 1) % 4 === 0; L = Ls * (cut ? .8 : 1); }
     else if (i < B) {
       phase = r < baseN ? 'base' : r < rampLen - peakN ? 'build' : 'peak';
@@ -890,7 +928,7 @@ function generate(p, startISO, units, overrides, moves) {
       L = lin * (cut ? .75 : 1);
     } else {
       phase = 'taper';
-      const ti = i - B;                                // 0-based taper week
+      ti = i - B;                                      // 0-based taper week
       L = isRaceWk ? 0 : peakEff * (taperFr[ti] ?? .6);
     }
     L = Math.max(2, r05(L));
@@ -900,7 +938,7 @@ function generate(p, startISO, units, overrides, moves) {
     const level = goal >= cur ? goal : cur + (goal - cur) * prog;
     const Z = zones(level, dk, goal);
     const [ef, emin, emax] = D.easy;
-    const E = clamp(r05(L * ef), emin, emax) * (phase === 'taper' ? .85 : 1);
+    const E = clamp(r05(L * ef), emin, emax) * (phase === 'taper' ? (dk === 'm' ? [.85, .7][ti] ?? .7 : .75) : cut ? .8 : 1);   // deloads ease every run, not just the long one
     const rw = fresh && L < 5 && i < 8 ? (i < 2 ? [2, 1] : i < 4 ? [3, 1] : [4, 1]) : null;
 
     const runs = [];
@@ -973,7 +1011,7 @@ function generate(p, startISO, units, overrides, moves) {
       if (!run) continue;
       const isB = buggy && !blocked;
       Object.assign(run, { date: di, id: di, dow, buggy: isB, canBuggy: run.canBuggy !== false, slot });
-      if (blocked) run.note = BUGGY_NOTE.blocked;
+      if (blocked && run.cat === 'speed') run.note = BUGGY_NOTE.blocked;
       if (isB) run.note = (run.note ? run.note + ' ' : '') + BUGGY_NOTE[run.cat === 'parkrun' ? 'parkrun' : (run.cat === 'speed' || run.cat === 'tempo') ? 'hard' : 'easy'];
       runs.push(run);
     }
@@ -1119,7 +1157,7 @@ const S = {
     };
   },
   parkrun(c, mode) {
-    const base = { cat: 'parkrun', km: 5, mins: 5 * mid(c.Z.easy) / 60 };
+    const base = { cat: 'parkrun', km: 5, mins: 5 * mid(c.Z.parkrun) / 60, canBuggy: false };
     if (mode === 'tt') return { ...base, kind: 'parkrun-tt', canBuggy: false, title: 'parkrun time trial', purpose: 'Fitness check', pace: 'interval', km: 6, mins: 40,
       steps: ['Warm up: 10 min easy jog before the start', 'Run the 5K as hard as you can hold: start a little steady, then push after halfway', 'Note your time. Seeing it fall is the best motivation'] };
     if (mode === 'tempo') return { ...base, kind: 'parkrun-tempo', title: 'parkrun tempo', purpose: 'Stamina', pace: 'tempo',
@@ -1287,14 +1325,22 @@ IC.shoe = '<path d="M3 15.5V9.8c0-.7.6-1.2 1.3-1l2.2.6 2-2.4 3 2.2 1.4-1.2 1.6 1
 IC.bulb = '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.8 10.6c.6.5 1 1.3 1 2.1V16h5.6v-.3c0-.8.4-1.6 1-2.1A6 6 0 0 0 12 3Z"/>';
 IC.move = '<path d="M8 7 4 11l4 4"/><path d="M4 11h11a5 5 0 0 1 0 10h-2"/>';
 IC.chart = '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>';
+IC.trend = '<path d="M3 6.5l6.5 6.5 4-4 7.5 7.5"/><path d="M15.5 17.5H21V12"/>';
+/* Version: each published update of Run plan is a release */
+const APP_VERSION = '0.6';
+/* Releases: 0.1 first plan · 0.2 app look · 0.3 web-app feel, chart, moving runs · 0.4 phase/total chart, safer saves ·
+   0.5 past runs fixed, clearer explained words · 0.6 logo, time ranges, race-week celebration, evidence-based taper */
+const versionHTML = () => `<p class="version">Run plan v${APP_VERSION} · Beta</p>`;
+const LOGO = '<span class="logo" aria-hidden="true"><svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#1A33F5"/><path fill="#F6F4EE" transform="translate(8.89 39.80) scale(0.02272)" d="M334.9 0V-572.9H27V-686.8H771.9V-572.9H464V0ZM1099.6 0 862.9 -686.8H1002.9L1151.6 -229.7Q1155.8 -218.7 1161.1 -200Q1166.3 -181.3 1172.1 -161.4Q1178 -141.6 1181.7 -125.8H1188.7Q1190.9 -137.8 1194.8 -152.1Q1198.7 -166.3 1202.3 -180.9Q1205.9 -195.5 1209.5 -208.3Q1213.1 -221 1215.6 -229.7L1351.9 -686.8H1530.2L1667 -229.7Q1670.5 -218.7 1675.5 -200.1Q1680.5 -181.5 1685.7 -161.5Q1690.9 -141.6 1693.6 -125.8H1700.6Q1704.1 -137.3 1708.1 -151.6Q1712.1 -165.8 1716.7 -180.1Q1721.3 -194.5 1724.9 -207.3Q1728.5 -220.2 1731.8 -229.7L1881.2 -686.8H2007.6L1770.2 0H1608.8L1465.9 -463.1Q1462.2 -476.2 1456.8 -494.9Q1451.4 -513.6 1447.1 -533.2Q1442.7 -552.8 1439.5 -568.1H1433.3Q1430.6 -552.6 1425.1 -532.5Q1419.6 -512.4 1414.6 -493.9Q1409.6 -475.4 1405.6 -463.1L1266.3 0Z"/></svg><i></i><i></i><i></i><i></i></span>';
+const BRAND = link => link ? `<a class="brandmark" href="/run/">${LOGO}<span class="brand">Run plan</span><span class="beta">Beta</span></a>` : `<span class="brandmark">${LOGO}<span class="brand">Run plan</span><span class="beta">Beta</span></span>`;
 const ic = (k, cls = '') => `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true">${IC[k] || ''}</svg>`;
 const CAT = { easy: 'Easy', long: 'Long run', speed: 'Speed', tempo: 'Stamina', parkrun: 'parkrun', race: 'Race day' };
 const DIST_ICON = { '5k': 'speed', '10k': 'tempo', 'hm': 'long', 'm': 'trophy' };
 const DIST_KIND = { '5k': 'k-speed', '10k': 'k-tempo', 'hm': 'k-long', 'm': 'k-race' };
 const EFF = { easy: [3, 4], long: [3, 4], steady: [5, 6], parkrun: [5, 6], prsteady: [6, 7], tempo: [6, 7], tenk: [7, 8], interval: [8, 8] };
 const RACE_EFF = { '5k': [8, 9], '10k': [7, 8], 'hm': [6, 7], 'm': [5, 6] };
-const PACE_KIND = { easy: 'k-easy', long: 'k-long', steady: 'k-parkrun', parkrun: 'k-parkrun', tempo: 'k-tempo', interval: 'k-speed', race: 'k-race' };
-const TERM_ICON = { conversational: 'easy', easy: 'easy', long: 'long', steady: 'parkrun', tempo: 'tempo', intervals: 'speed', strides: 'speed', fartlek: 'speed', hills: 'speed', racepace: 'race', parkrun: 'parkrun', taper: 'rest', cutback: 'heart', rest: 'rest', pace: 'pace', effort: 'pace', pb: 'trophy', runwalk: 'easy', warmup: 'clock', foundation: 'easy', base: 'heart', build: 'tempo', peak: 'speed' };
+const PACE_KIND = { easy: 'k-easy', long: 'k-long', steady: 'k-parkrun', parkrun: 'k-parkrun', prsteady: 'k-parkrun', tempo: 'k-tempo', tenk: 'k-speed', interval: 'k-speed', race: 'k-race' };
+const TERM_ICON = { conversational: 'easy', easy: 'easy', long: 'long', steady: 'parkrun', tempo: 'tempo', intervals: 'speed', strides: 'speed', fartlek: 'speed', hills: 'speed', racepace: 'race', parkrun: 'parkrun', taper: 'rest', cutback: 'trend', rest: 'rest', pace: 'pace', effort: 'pace', pb: 'trophy', runwalk: 'easy', warmup: 'clock', foundation: 'easy', base: 'heart', build: 'tempo', peak: 'speed' };
 const HARD = r => r.cat === 'speed' || r.cat === 'tempo' || r.cat === 'long' || r.kind === 'parkrun-tt' || r.kind === 'race';
 const TIPS = [
   ['Slow down to speed up', 'Most runners run their easy days too fast. Keeping them truly easy is what lets you run the hard days well.'],
@@ -1407,7 +1453,7 @@ function renderIntro() {
   app.innerHTML = `
   <section class="intro">
     <div class="intro__in">
-      <div class="intro__top"><span class="brand">Run plan</span><a href="/">tedw.co.uk</a></div>
+      <div class="intro__top">${BRAND(false)}<a href="/">tedw.co.uk</a></div>
       <div class="preview" aria-hidden="true">
         ${prev('k-easy', 'easy', 'Easy run', 'Tue · 5 km')}
         ${prev('k-speed', 'speed', 'Intervals', 'Thu · 6 × 400 m')}
@@ -1444,7 +1490,7 @@ function weeksUntil(dateISO, startISO) {
 }
 const longestMax = dk => ({ '5k': 10, '10k': 16, 'hm': 24, 'm': 36 })[dk];
 const longestLabel = v => v == 0 ? 'Just starting' : fmt(state.units).dist(v);
-const buggySlots = d => SLOTS[!!d.parkrun][d.runs];   // any day; speed and hill sessions stay solo
+const buggySlots = d => SLOTS[!!d.parkrun][d.runs].filter(s => s[1] !== 'pr');   // parkrun is always solo
 function runsHint(d) {
   const D = DIST[d.distance];
   return d.runs === 2 ? `Two works: your long run does the heavy lifting. Most ${D.name} plans use ${D.runs}.`
@@ -1510,7 +1556,8 @@ function renderSetup() {
         <div class="opt-more" id="buggy-days" ${d.buggy ? '' : 'hidden'}>
           <p id="l-buggy" style="font-weight:600;font-size:15px;margin-bottom:10px">Which runs?</p>
           <div class="chips" role="group" aria-labelledby="l-buggy" id="buggy-list"></div>
-          <p class="hint" style="margin:12px 0 0">Pick any days. Speed and hill sessions always stay solo (the buggy is challenge enough!), so your plan gets a mix.</p>
+          <div class="callout k-warn" id="buggy-warn" hidden></div>
+          <p class="hint" style="margin:12px 0 0">parkrun is always a solo run, so it isn’t listed.</p>
         </div>
       </div>
     </fieldset>`;
@@ -1558,6 +1605,10 @@ function syncSetup() {
     d.buggyDays = (d.buggyDays || []).filter(x => slots.some(s => s[0] === x));
     bl.innerHTML = slots.map(([dow, s]) => `<label class="chipbox"><input type="checkbox" value="${dow}" data-buggy-day ${d.buggyDays.includes(dow) ? 'checked' : ''}><span>${ic('check')}${DOW3[dow]} · ${SLOT_NAME[s]}</span></label>`).join('');
     $('#buggy-days').hidden = !d.buggy;
+    const q = slots.find(x => x[1] === 'q'), warn = $('#buggy-warn');
+    const on = q && d.buggyDays.includes(q[0]);
+    warn.hidden = !on;
+    if (on) warn.innerHTML = `${ic('info')}<p><b>Heads up: ${DOW[q[0]]} is your speed and hills day</b>Those sessions always stay solo (pushing a buggy is challenge enough!), so the buggy will only join on weeks when ${DOW[q[0]]} is an easier run.</p>`;
   }
   const go = $('#goal-out');
   if (go) {
@@ -1722,7 +1773,7 @@ function renderApp() {
   document.title = `${first(p.name)}’s ${DIST[p.distance].name} plan | Run plan`;
   app.innerHTML = `
     <header class="top"><div class="top__in">
-      <a class="brand" href="/run/">Run plan</a>
+      ${BRAND(true)}
       <nav class="tabs" aria-label="Sections">${TABS.map(([k, l, i]) => `<button class="tab" data-tab="${k}" ${k === tab ? 'aria-current="page"' : ''}>${ic(i)}<span>${l}</span></button>`).join('')}</nav>
       <span class="count" id="count"></span>
     </div></header>
@@ -1740,7 +1791,9 @@ function refresh(firstTime) {
     openWeeks = new Set([now.wkIdx < 0 ? (now.t < plan.weeks[0].start ? 0 : plan.weeks.length - 1) : now.wkIdx]);
     lastNow = now.ti;
   }
-  renderCount(now); renderToday(now); renderPlanTab(now); renderPaces(now); syncAdjust();
+  renderCount(now); renderToday(now);
+  const rw = $('#race-week'), key = `rw-${now.ti}`;
+  if (rw && !refresh[key] && tab === 'today') { refresh[key] = 1; setTimeout(() => burst(rw.querySelector('.race-week__emoji'), '#fff'), 400); } renderPlanTab(now); renderPaces(now); syncAdjust();
   if (sheetId && $('#run-sheet').open) fillRunSheet();
 }
 function renderCount(now) {
@@ -1764,12 +1817,22 @@ function statsHTML(r) {
   const F = fmt(state.units), P = PACE[r.pace];
   const [dv, du] = F.dist(r.km, r.exact).split(' ');
   const [pv, pu] = splitUnit(runPace(r));
-  const [tv, tu] = r.kind === 'race' ? [hms(state.profile.goal), ''] : durParts(r.mins);
+  const [tv, tu] = timeRange(r);
   return `<div class="stats3">
     <div class="stat">${ic('dist')}<b>${dv}<small>${du}</small></b><span>Distance</span></div>
-    <div class="stat">${ic('clock')}<b>${tv}<small>${tu}</small></b><span>${r.kind === 'race' ? 'Target' : 'About'}</span></div>
-    <div class="stat">${ic('pace')}<b>${pv}<small>${pu}</small></b><span>${T(P.term, esc(P.name))}</span></div>
+    <div class="stat">${ic('clock')}<b>${tv}<small>${tu}</small></b><span>${r.kind === 'race' ? 'Target time' : 'Time'}</span></div>
+    <div class="stat">${ic('pace')}<b>${pv}<small>${pu}</small></b><span>Pace</span></div>
   </div>`;
+}
+/* How long a run takes, as a range: the faster and slower ends of its pace */
+function timeRange(r) {
+  if (r.kind === 'race') return [hms(state.profile.goal), ''];
+  const wk = weekOf(r), pr = r.paceRange || (r.pace === 'race' ? null : (r.buggy ? scaleZ(wk.Z, 1.07) : wk.Z)[r.pace]);
+  let lo = r.mins, hi = r.mins;
+  if (pr) { const m = (pr[0] + pr[1]) / 2; lo = r.mins * pr[0] / m; hi = r.mins * pr[1] / m; }
+  const long = hi >= 59.5, f = x => { const t = Math.round(x); return long ? `${Math.floor(t / 60)}:${pad(t % 60)}` : String(t); };
+  const a = f(lo), b = f(hi);
+  return [a === b ? a : `${a}–${b}`, long ? 'hr' : 'min'];
 }
 function checkHTML(r) {
   const done = isDone(r);
@@ -1787,7 +1850,7 @@ function cell(r, now) {
       <span class="tile">${ic(r.cat)}</span>
       <span class="cell__text">
         <span class="cell__title">${esc(r.title)}${isToday ? '<span class="badge">Today</span>' : ''}${r.buggy ? `<span class="cell__flag" title="With the buggy">${ic('buggy')}<span class="sr-only">, with the buggy</span></span>` : ''}${r.moved ? `<span class="cell__flag" title="Moved">${ic('move')}<span class="sr-only">, moved from its usual day</span></span>` : ''}</span>
-        <span class="cell__sub">${DOW3[r.dow]} ${d.getDate()} ${MON3[d.getMonth()]} · ${F.dist(r.km, r.exact)} · ${runPace(r)}</span>
+        <span class="cell__sub"><span class="nw">${DOW3[r.dow]} ${d.getDate()} ${MON3[d.getMonth()]}</span> · <span class="nw">${F.dist(r.km, r.exact)}</span> · <span class="nw">${runPace(r)}</span></span>
       </span>
       ${ic('chevR', 'cell__chev')}<span class="sr-only">, show details</span>
     </button>
@@ -1833,7 +1896,6 @@ function renderToday(now) {
     </div>
     <div class="road" style="--p:${Math.max(4, Math.round(pct * 100))}%" role="img" aria-label="${Math.round(pct * 100)}% of runs done">
       <div class="road__track"><div class="road__fill"></div><div class="road__me">${ic('shoe')}</div></div>
-      <span class="road__flag">${ic('race')}</span>
     </div>
     <p class="road__labels"><span>${MILESTONE(pct)}</span><b>${Math.round(pct * 100)}%</b></p>
     <div class="race-card__foot">
@@ -1857,14 +1919,15 @@ function renderToday(now) {
       <article class="run-card k-good done-card"><div class="run-card__head"><span class="tile tile--lg tile--solid">${ic('check')}</span><div><p class="run-card__kicker">Done</p><h3 class="run-card__title">${esc(r.title)} complete</h3></div></div>
         <div class="cheer">${ic('sparkle')}<span>${pick(DONE_MSG, seedOf(r.id))(nm)} Now rest up and recover well.</span></div>
         <button class="btn btn--ghost btn--sm" data-open="${r.id}">${ic('info')}See today’s run</button></article>`;
-      if (nx) main += `<h2 class="sec-h">Up next <span class="eyebrow">${diffDays(now.t, parseISO(nx.date)) === 1 ? 'Tomorrow' : fmtShort(parseISO(nx.date))}</span></h2><ul class="card list">${cell(nx, now)}</ul>`;
+      if (nx) main += `<h2 class="sec-h">Up next</h2><ul class="card list">${cell(nx, now)}</ul>`;
     } else if (r) {
       main = `<h2 class="sec-h">Today’s run</h2>${runCardHTML(r, now)}`;
     } else {
       main = `<h2 class="sec-h">Today</h2>
       <div class="card rest-card k-rest"><span class="tile tile--lg moon">${ic('rest')}<i>z</i><i>z</i></span><div><b>Rest day</b><p>Recovery is when your body gets stronger, ${nm}. Put your feet up.</p></div></div>`;
-      if (nx) { const dd = diffDays(now.t, parseISO(nx.date)); main += `<h2 class="sec-h">${dd === 1 ? 'Tomorrow' : 'Next run'} <span class="eyebrow">${DOW[dowMon(parseISO(nx.date))]}</span></h2>${runCardHTML(nx, now)}`; }
+      if (nx) { const dd = diffDays(now.t, parseISO(nx.date)); main += `<h2 class="sec-h">${dd === 1 ? 'Tomorrow' : 'Next run'}</h2>${runCardHTML(nx, now)}`; }
     }
+    if (now.wkIdx === plan.N - 1) main = raceWeekHTML(now, days) + main;
     if (now.missed.length) main += `<div class="callout k-warn">${ic('heart')}<p><b>Missed ${now.missed.length === 1 ? 'a run' : `${now.missed.length} runs`}? No stress, ${nm}.</b>Don’t try to catch up. Just carry on from here. If you did run, tick it off in the list.</p></div>`;
   }
   const wk = plan.weeks[now.wkIdx];
@@ -1874,7 +1937,18 @@ function renderToday(now) {
       <ul class="card list">${wk.runs.map(x => cell(x, now)).join('') || '<li class="empty">No runs this week.</li>'}</ul>` : '')
     + `<div class="card tip k-tempo" style="margin-top:20px"><span class="tile">${ic('bulb')}</span><p><b>Tip of the day: ${tip[0]}</b>${tip[1]}</p></div>`;
   $('#s-today').innerHTML = `<div class="today-grid"><div class="col">${hero}${main}</div><div class="col">${side}
-    <p class="sign-off">Made with ${ic('heart')} for everyone lacing up for their first race 👟</p></div></div>`;
+    <p class="sign-off">Made with ${ic('heart')} for everyone lacing up for their first race 👟</p>${versionHTML()}</div></div>`;
+}
+
+const RACE_LIST = ['Pick up your race number (and safety pins)', 'Lay out your kit the night before', 'Plan your journey and aim to arrive early', 'Sleep well two nights before: race-eve nerves are normal', 'Eat familiar food. Nothing new on race day!'];
+function raceWeekHTML(now, days) {
+  const nm = first(state.profile.name), ev = state.profile.event ? esc(state.profile.event) : `your ${DIST[state.profile.distance].name}`;
+  const list = state.raceList || {};
+  const head = days === 0 ? ['🏅', `It’s race day, ${nm}!`, `Today you run ${ev}. Start steady, smile at the crowds, and enjoy every step. You’ve earned this.`]
+    : ['🎉', `It’s race week, ${nm}!`, `The hard work is done. This week is about arriving at ${ev} fresh, rested and excited. ${days === 1 ? 'Tomorrow’s the day!' : `${days} days to go.`}`];
+  return `<section class="race-week" id="race-week"><div class="race-week__emoji" aria-hidden="true">${head[0]}</div><h2>${head[1]}</h2><p>${head[2]}</p>
+    ${days > 0 ? `<div class="checklist" role="group" aria-label="Race-week checklist">${RACE_LIST.map((t, i) => `<button data-race-item="${i}" aria-pressed="${!!list[i]}"><span class="box">${ic('check')}</span><span>${t}</span></button>`).join('')}</div>` : ''}
+  </section>`;
 }
 
 /* ---------- Plan tab ---------- */
@@ -1897,7 +1971,7 @@ function chartReadout(i, now) {
   }
   const doneKm = w.runs.filter(isDone).reduce((s, r) => s + r.km, 0);
   return `<b>Week ${w.n}${isNow ? ' (this week)' : ''}</b><span>${PHASE[w.phase].name}${w.cut ? ' · deload' : ''} · ${fmtRangeDates(w.start, w.end)}</span>
-    <span><strong>${F.dist(w.km)}</strong> in total${doneKm ? ` · ${F.dist(doneKm)} done` : ''}</span><span>Long run <strong>${F.dist(longOf(w), w.runs.some(r => r.kind === 'race'))}</strong></span>`;
+    ${w.runs.some(r => r.kind === 'race') ? `<span><strong>${F.dist(w.km - longOf(w))}</strong> of runs + the <strong>${F.dist(longOf(w), true)}</strong> race</span>` : `<span><strong>${F.dist(w.km)}</strong> in total${doneKm ? ` · ${F.dist(doneKm)} done` : ''}</span>`}<span>Long run <strong>${F.dist(longOf(w), w.runs.some(r => r.kind === 'race'))}</strong></span>`;
 }
 const niceStep = v => [5, 10, 20, 25, 50, 100, 200, 250, 500, 1000].find(x => x >= v) || 1000;
 const chartTop = max => { const st = niceStep(max / 4); return [st, Math.ceil(max / st) * st]; };
@@ -1928,18 +2002,19 @@ function chartBody(now) {
     // Weekly distance coloured by training phase; solid = done
     plot = `${grid}<div class="chart__bars">${W.map((w, i) => {
       const h = toU(w.km) / top * 100, dk = w.runs.filter(isDone).reduce((s, r) => s + r.km, 0), dh = w.km ? dk / w.km * 100 : 0;
+      const rk = (w.runs.find(r => r.kind === 'race') || {}).km || 0, rh = w.km ? rk / w.km * 100 : 0;
       const mark = i === now.wkIdx ? '<span class="bar-col__mark">Now</span>' : i === n - 1 ? `<span class="bar-col__mark">${ic('race')}</span>` : '';
-      return `<button class="bar-col p-${w.phase} ${i === sel ? 'is-sel' : ''}" data-bar="${i}" aria-label="${label(w, i)}${w.cut ? ', deload week' : ''}" aria-pressed="${i === sel}"><span class="bar" style="height:${h}%"><span class="bar__done" style="height:${dh}%"></span></span>${mark}</button>`;
+      return `<button class="bar-col p-${w.phase} ${i === sel ? 'is-sel' : ''}" data-bar="${i}" aria-label="${label(w, i)}${w.cut ? ', deload week' : ''}" aria-pressed="${i === sel}"><span class="bar" style="height:${h}%"><span class="bar__done" style="height:${dh}%"></span>${rh ? `<span class="bar__race" style="height:${rh}%"></span>` : ''}</span>${mark}</button>`;
     }).join('')}</div>`;
   }
   const legend = chartMode === 'total'
     ? `<span><i class="lg-line"></i>Run so far</span><span><i class="lg-line lg-line--soft"></i>Planned</span>`
-    : phases.map(x => `<span class="p-${x.p}"><i class="lg-bar"></i>${PHASE[x.p].name}</span>`).join('') + `<span><i class="lg-bar lg-bar--soft" style="--c:var(--ink-3)"></i>Lighter = still to run</span>`;
+    : phases.map(x => `<span class="p-${x.p}"><i class="lg-bar"></i>${PHASE[x.p].name}</span>`).join('') + `<span><i class="lg-race"></i>Race</span><span><i class="lg-bar lg-bar--soft" style="--c:var(--ink-3)"></i>Lighter = still to run</span>`;
   return `<div class="chart"><div class="chart__plot">${plot}</div>
       <div class="chart__phases" aria-hidden="true">${phases.map(x => `<span class="p-${x.p}" style="flex:${x.c}">${PHASE[x.p].name}</span>`).join('')}</div></div>
     <div class="chart__readout" id="chart-readout" aria-live="polite">${chartReadout(sel, now)}</div>
     <div class="legend2">${legend}</div>
-    <details class="chart__table"><summary>Show as a table</summary>
+    <details class="chart__table"><summary><span class="t-show">Show as a table</span><span class="t-hide">Hide table</span></summary>
       <table><thead><tr><th scope="col">Week</th><th scope="col">Phase</th><th scope="col">Week total</th><th scope="col">Long run</th><th scope="col">Running total</th></tr></thead>
       <tbody>${W.map((w, i) => `<tr><td>${w.n}${w.cut ? ' (deload)' : ''}</td><td>${PHASE[w.phase].name}</td><td>${F.dist(w.km)}</td><td>${F.dist(longOf(w))}</td><td>${F.dist(cum[i].plan)}</td></tr>`).join('')}</tbody></table>
     </details>`;
@@ -1955,7 +2030,7 @@ function chartHTML(now) {
 }
 function renderPlanTab(now) {
   const p = state.profile, F = fmt(state.units), nm = first(p.name);
-  let h = `<div class="head"><p class="eyebrow">${plan.N} weeks · ${p.runs} runs a week${p.parkrun ? ' · parkrun' : ''}</p><h1 class="h1">Your plan</h1>
+  let h = `<div class="head"><p class="eyebrow">${plan.N} weeks · ${p.runs} runs a week</p><h1 class="h1">Your plan</h1>
     <p class="head__sub">Tap a run for the details, or to move it to another day. Tap the circle when it’s done.</p></div>`;
   h += chartHTML(now);
   if (plan.short) h += `<div class="callout k-warn">${ic('info')}<p><b>Time is a little tight</b>Your longest run will reach ${F.dist(plan.peakEff)} rather than the usual ${F.dist(plan.peak)}. That’s fine: you can still get round strongly.</p></div>`;
@@ -1965,7 +2040,8 @@ function renderPlanTab(now) {
     let note = '';
     if (all) note = `<div class="callout k-good">${ic('trophy')}<p><b>Week ${w.n} complete. Brilliant, ${nm}!</b></p></div>`;
     else if (w.firstOfPhase) note = `<div class="callout p-${w.phase}">${ic('info')}<p><b>${PHASE[w.phase].name} phase</b>${PHASE[w.phase].text}</p></div>`;
-    else if (w.cut) note = `<div class="callout k-warn">${ic('heart')}<p><b>Deload week, ${nm}</b>A ${T('cutback', 'deload')} eases off so your body can absorb the training. Enjoy it.</p></div>`;
+    else if (w.i === plan.N - 1) note = `<div class="callout k-race">${ic('race')}<p><b>Race week! 🎉</b>Short, easy runs to keep your legs fresh, then it’s your moment. Trust your training, ${nm}.</p></div>`;
+    else if (w.cut) note = `<div class="callout k-warn">${ic('trend')}<p><b>Deload week, ${nm}</b>A ${T('cutback', 'deload')} eases off so your body can absorb the training. Enjoy it.</p></div>`;
     return `<section class="week p-${w.phase} ${open ? 'is-open' : ''} ${isNow ? 'is-now' : ''}" id="wk-${w.n}">
       <button class="week__head" data-week="${w.i}" aria-expanded="${open}" aria-controls="wkb-${w.n}">
         ${miniRing(doneN, tot)}
@@ -1975,7 +2051,7 @@ function renderPlanTab(now) {
       </button>
       <div class="week__body" id="wkb-${w.n}" ${open ? '' : 'hidden'}>${note}<ul>${w.runs.map(r => cell(r, now)).join('') || '<li class="empty">No runs this week.</li>'}</ul></div>
     </section>`;
-  }).join('')}</div>`;
+  }).join('')}</div>${versionHTML()}`;
   $('#s-plan').innerHTML = h;
 }
 
@@ -1983,7 +2059,7 @@ function renderPlanTab(now) {
 function renderAdjust() {
   const p = state.profile, [a, b, st] = DIST[p.distance].range;
   $('#s-adjust').innerHTML = `
-  <div class="head"><p class="eyebrow">Changes apply instantly</p><h1 class="h1">Adjust</h1><p class="head__sub">Slide and the whole plan updates. Runs you’ve ticked off stay ticked.</p></div>
+  <div class="head"><p class="eyebrow">Your settings</p><h1 class="h1">Adjust</h1><p class="head__sub">Changes apply instantly. Your plan updates from today onwards, and runs you’ve already done stay exactly as they were.</p></div>
   <p class="eyebrow group-label" style="margin-top:4px">Goal</p>
   <div class="card pad">
     <div class="slider"><div class="slider__top"><label class="slider__label" for="t-goal">Target time</label><output class="slider__value" id="to-goal" for="t-goal">${hms(p.goal)}</output></div>
@@ -2018,7 +2094,7 @@ function renderAdjust() {
     ${Object.keys(state.moves || {}).length ? `<button class="row row--nav k-tempo" data-act="reset-moves"><span class="tile">${ic('move')}</span><span class="row__label">Put moved runs back<small>Return every run to its suggested day</small></span>${ic('chevR', 'chev')}</button>` : ''}
     <button class="row row--nav row--danger k-bad" data-act="reset"><span class="tile">${ic('trash')}</span><span class="row__label">Start a new plan</span>${ic('chevR', 'chev')}</button>
   </div>
-  <p class="footnote">Your plan, ticks and changes are saved on this device and carry over whenever the app is updated. Clearing your browser data removes them, so keep a backup link somewhere safe. Plans follow widely used training principles; they’re a guide, not medical advice. If something hurts, rest, and see a professional if it doesn’t settle. · <a href="/">tedw.co.uk</a></p>`;
+  <p class="footnote">Your plan, ticks and changes are saved on this device and carry over whenever the app is updated. Clearing your browser data removes them, so keep a backup link somewhere safe. Plans follow widely used training principles; they’re a guide, not medical advice. If something hurts, rest, and see a professional if it doesn’t settle. · <a href="/">tedw.co.uk</a></p>${versionHTML()}`;
   $$('#s-adjust .range').forEach(setFill);
 }
 function syncAdjust() {
@@ -2046,21 +2122,24 @@ function onTune(t) {
 function renderLearnStatic() {
   $('#s-learn').innerHTML = `
   <div class="head"><p class="eyebrow">Running, explained</p><h1 class="h1">Learn</h1><p class="head__sub">Everything in your plan, in plain English. Wherever you see a word in blue with an ⓘ, tap it for a quick explanation.</p></div>
-  <p class="eyebrow group-label" style="margin-top:4px">Your paces this week</p>
+  <p class="eyebrow group-label" style="margin-top:4px">Your paces</p>
   <ul class="card list" id="paces"></ul>
-  <p class="hint">They’ll get a little quicker as you get fitter. ${T('pace', 'What’s a pace?')} · ${T('effort', 'What’s effort out of 10?')}</p>
+  <p class="hint">Shown for this week, and where each one will be by your peak week as you get fitter. ${T('pace', 'What’s a pace?')} · ${T('effort', 'What’s effort out of 10?')}</p>
   <p class="eyebrow group-label">How your plan works</p>
   <div class="card list">${Object.entries(PHASE).map(([k, v]) => `<div class="row p-${k}"><span class="tile">${ic({ foundation: 'easy', base: 'heart', build: 'tempo', peak: 'speed', taper: 'rest' }[k])}</span><span class="row__label">${v.name}<small>${v.text}</small></span></div>`).join('')}</div>
-  <p class="sign-off">Keep going. Every runner started somewhere. 🏃</p>`;
+  <p class="sign-off">Keep going. Every runner started somewhere. 🏃</p>${versionHTML()}`;
 }
 function renderPaces(now) {
-  const F = fmt(state.units), wk = plan.weeks[Math.max(0, now.wkIdx)] || plan.weeks[0], dk = state.profile.distance;
-  const keys = ['easy', 'long', ...(state.profile.parkrun ? ['parkrun'] : ['steady']), 'tempo', 'interval', 'race'];
+  const F = fmt(state.units), dk = state.profile.distance, ci = Math.max(0, now.wkIdx), wk = plan.weeks[ci] || plan.weeks[0];
+  let pi = plan.weeks.length - 1; while (pi > 0 && plan.weeks[pi].phase === 'taper') pi--;   // paces reach the goal at the peak
+  const pk = plan.weeks[pi];
+  const keys = ['easy', 'long', 'steady', ...(state.profile.parkrun ? ['parkrun', 'prsteady'] : []), 'tempo', 'tenk', 'interval', 'race'];
   $('#paces').innerHTML = keys.map(k => {
     const P = PACE[k], e = k === 'race' ? RACE_EFF[dk] : EFF[k];
     const [v, u] = splitUnit(k === 'race' ? F.pace(goalPace()) : F.range(wk.Z[k]));
+    const later = k !== 'race' && pi > ci ? F.range(pk.Z[k]) : '';
     return `<li class="row ${PACE_KIND[k]}"><span class="tile tile--txt" role="img" aria-label="Effort ${e[0]} to ${e[1]} out of 10">${e[0] === e[1] ? e[0] : `${e[0]}–${e[1]}`}</span>
-      <span class="row__label">${T(P.term, esc(P.name))}<small>${P.feel.replace(/^Effort [^.]*\.\s*/, '')}</small></span>
+      <span class="row__label">${esc(P.name)}<small>${P.feel.replace(/^Effort [^.]*\.\s*/, '')}${later && later !== F.range(wk.Z[k]) ? `<br><span class="nw">By week ${pk.n}: ${later}</span>` : ''}</small></span>
       <span class="row__value">${v}<small>${u}</small></span></li>`;
   }).join('');
 }
@@ -2069,8 +2148,12 @@ function renderPaces(now) {
 function openRun(id) { sheetId = id; fillRunSheet(); openSheet($('#run-sheet')); }
 function moverHTML(r) {
   const p = state.profile, wk = weekOf(r), start = parseISO(state.start), race = parseISO(p.date);
-  if (r.frozen || r.history || r.date < iso(today()) && isDone(r)) return `<p class="hint" style="margin:0">This run is in the past, so it stays where it was.</p>`;
-  if (r.cat === 'parkrun') return `<p class="hint" style="margin:0">parkrun is always on Saturday morning, so this one stays put.</p>`;
+  const lockMsg = r.frozen || r.history || (r.date < iso(today()) && isDone(r)) ? 'This run is in the past, so it stays where it was.' : r.cat === 'parkrun' ? 'parkrun is always on Saturday morning, so this one can’t move.' : '';
+  if (lockMsg) {
+    const wk0 = weekOf(r);
+    return `<div class="days7 locked" aria-hidden="true">${Array.from({ length: 7 }, (_, i) => { const d = addDays(wk0.start, i); return `<span class="day7" ${iso(d) === r.date ? 'aria-checked="true"' : ''} disabled>${DOW3[i]}<b>${d.getDate()}</b></span>`; }).join('')}</div>
+      <p class="hint" style="margin:14px 2px 0"><span class="lock-i">${ic('info')}</span>${lockMsg}</p>`;
+  }
   const others = new Set(wk.runs.filter(x => x !== r).map(x => x.date));
   const btns = Array.from({ length: 7 }, (_, i) => {
     const d = addDays(wk.start, i), di = iso(d), cur = di === r.date;
@@ -2171,6 +2254,15 @@ document.addEventListener('click', e => {
     r.value = +r.value + (+nudge.dataset.dir) * (+r.step);
     r.dispatchEvent(new Event('input', { bubbles: true }));
     haptic();
+    return;
+  }
+  const ri = e.target.closest('[data-race-item]');
+  if (ri) {
+    state.raceList = state.raceList || {};
+    const i = ri.dataset.raceItem, on = !state.raceList[i];
+    if (on) state.raceList[i] = 1; else delete state.raceList[i];
+    ri.setAttribute('aria-pressed', on); save(); haptic();
+    if (on) burst(ri.querySelector('.box'), '#fff');
     return;
   }
   const tk = e.target.closest('[data-tick]');
