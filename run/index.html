@@ -147,11 +147,12 @@ b, strong { font-weight: 650; }
 
 /* An explained word: tap for a short definition */
 .term {
-  display: inline; padding: 0; margin: 0; border: 0; background: none; cursor: help;
-  font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; text-align: inherit;
-  text-decoration: underline dotted var(--accent); text-decoration-thickness: 2px; text-underline-offset: 3px;
-  border-radius: 4px;
+  display: inline; padding: 0; margin: 0; border: 0; background: none; cursor: pointer;
+  font: inherit; font-weight: 650; color: var(--accent); white-space: nowrap; letter-spacing: inherit; text-transform: inherit; text-align: inherit;
+  text-decoration: none; border-radius: 4px;
 }
+.term__i { display: inline-block; width: .95em; height: .95em; margin-left: .22em; vertical-align: -.12em; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; transition: transform .2s var(--ease); }
+@media (hover: hover) { .term:hover { color: var(--accent-2); } .term:hover .term__i { transform: scale(1.15); } }
 
 /* 3. ICONS & TILES ----------------------------------------------------------- */
 .ic { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -1017,7 +1018,7 @@ function fmt(units) {
 const dur = mins => mins < 60 ? `${Math.max(5, Math.round(mins / 5) * 5)} min` : `${Math.floor(mins / 60)} h ${pad(Math.round((mins % 60) / 5) * 5 % 60)}`;
 
 /* Session builders. Each returns a run: what, why, how far, how fast */
-const T = (t, w) => `<button type="button" class="term" data-term="${t}">${w}</button>`;
+const T = (t, w) => `<button type="button" class="term" data-term="${t}">${w}<svg class="term__i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.6"/><path d="M8 7.3v3.9M8 4.9v.1"/></svg><span class="sr-only"> (what does this mean?)</span></button>`;
 const WU = 'Warm up: 10 min easy jog';
 const CD = 'Cool down: 10 min easy jog';
 const S = {
@@ -1623,9 +1624,10 @@ function finishSetup() {
   const p = draft;
   if (!p.buggy) p.buggyDays = [];
   const wasNew = !state.profile;
+  if (!wasNew) freezePast();
   state.profile = p;
   if (!state.start || wasNew) state.start = iso(today());
-  if (wasNew) { state.done = {}; state.buggy = {}; state.moves = {}; }
+  if (wasNew) { state.done = {}; state.buggy = {}; state.moves = {}; state.frozen = null; }
   save(true);
   view = 'plan'; editing = false; if (wasNew) tab = 'today';
   render(); window.scrollTo(0, 0);
@@ -1641,7 +1643,30 @@ const isDone = r => !!state.done[r.id];
 const goalPace = () => state.profile.goal / DIST[state.profile.distance].km;
 const TABS = [['today', 'Today', 'today'], ['plan', 'Plan', 'plan'], ['adjust', 'Adjust', 'adjust'], ['learn', 'Learn', 'learn']];
 
-function regen() { plan = generate(state.profile, state.start, state.units, state.buggy, state.moves); applyHistory(); return plan; }
+function regen() { plan = generate(state.profile, state.start, state.units, state.buggy, state.moves); applyFrozen(); applyHistory(); return plan; }
+/* Changing runs per week, the goal, PBs or any detail rebuilds the plan from
+   today onwards only. Everything before today is frozen exactly as it was. */
+function freezePast() {
+  if (!plan || !state.profile) return;
+  const ti = iso(today());
+  const runs = allRuns().filter(r => r.date < ti).map(r => {
+    const wk = weekOf(r), Z = r.buggy ? scaleZ(wk.Z, 1.07) : wk.Z;
+    return { id: r.id, date: r.date, dow: r.dow, title: r.title, km: r.km, cat: r.cat, kind: r.kind, pace: r.pace, purpose: r.purpose, mins: r.mins,
+      steps: r.steps, note: r.note || '', buggy: !!r.buggy, slot: r.slot, exact: !!r.exact, history: !!r.history,
+      paceRange: r.paceRange || (r.pace === 'race' ? null : Z[r.pace]) };
+  });
+  state.frozen = { until: ti, runs };
+}
+function applyFrozen() {
+  const f = state.frozen;
+  if (!f || !f.until || !f.runs) return;
+  const ids = new Set(f.runs.map(r => r.id));
+  plan.weeks.forEach(w => {
+    const past = f.runs.filter(r => { const d = parseISO(r.date); return d >= w.start && d <= w.end; })
+      .map(r => ({ ...r, frozen: true, canMove: false, canBuggy: false }));
+    w.runs = past.concat(w.runs.filter(r => r.date >= f.until && !ids.has(r.id))).sort((a, b) => a.date < b.date ? -1 : 1);
+  });
+}
 const snapshotOf = r => ({ d: r.date, t: r.title, k: r.km, c: r.cat, m: Math.round(r.mins), b: r.buggy ? 1 : 0 });
 const KIND_OF = { easy: ['easy', 'easy'], long: ['long', 'long'], speed: ['intervals', 'interval'], tempo: ['tempo', 'tempo'], parkrun: ['parkrun-easy', 'parkrun'], race: ['race', 'race'] };
 function historyRun(rec, id) {
@@ -1686,6 +1711,7 @@ function streak(now) {
   return n;
 }
 function runPace(r) {
+  if (r.paceRange) return fmt(state.units).range(r.paceRange);
   const F = fmt(state.units), wk = weekOf(r), Z = r.buggy ? scaleZ(wk.Z, 1.07) : wk.Z;
   return r.pace === 'race' ? F.pace(goalPace()) : F.range(Z[r.pace]);
 }
@@ -1848,7 +1874,7 @@ function renderToday(now) {
       <ul class="card list">${wk.runs.map(x => cell(x, now)).join('') || '<li class="empty">No runs this week.</li>'}</ul>` : '')
     + `<div class="card tip k-tempo" style="margin-top:20px"><span class="tile">${ic('bulb')}</span><p><b>Tip of the day: ${tip[0]}</b>${tip[1]}</p></div>`;
   $('#s-today').innerHTML = `<div class="today-grid"><div class="col">${hero}${main}</div><div class="col">${side}
-    <p class="sign-off">Made with ${ic('heart')} for everyone lacing up for their first race</p></div></div>`;
+    <p class="sign-off">Made with ${ic('heart')} for everyone lacing up for their first race 👟</p></div></div>`;
 }
 
 /* ---------- Plan tab ---------- */
@@ -2003,6 +2029,7 @@ function syncAdjust() {
 let tuneRaf;
 function onTune(t) {
   const k = t.dataset.tune, p = state.profile;
+  freezePast();
   if (t.classList.contains('range')) setFill(t);
   if (k === 'goal') { p.goal = +t.value; $('#to-goal').textContent = hms(p.goal); t.setAttribute('aria-valuetext', hms(p.goal)); }
   if (k === 'runs') p.runs = +t.value;
@@ -2018,15 +2045,13 @@ function onTune(t) {
 /* ---------- Learn tab ---------- */
 function renderLearnStatic() {
   $('#s-learn').innerHTML = `
-  <div class="head"><p class="eyebrow">Running, explained</p><h1 class="h1">Learn</h1><p class="head__sub">Everything in your plan, in plain English.</p></div>
+  <div class="head"><p class="eyebrow">Running, explained</p><h1 class="h1">Learn</h1><p class="head__sub">Everything in your plan, in plain English. Wherever you see a word in blue with an ⓘ, tap it for a quick explanation.</p></div>
   <p class="eyebrow group-label" style="margin-top:4px">Your paces this week</p>
   <ul class="card list" id="paces"></ul>
   <p class="hint">They’ll get a little quicker as you get fitter. ${T('pace', 'What’s a pace?')} · ${T('effort', 'What’s effort out of 10?')}</p>
   <p class="eyebrow group-label">How your plan works</p>
   <div class="card list">${Object.entries(PHASE).map(([k, v]) => `<div class="row p-${k}"><span class="tile">${ic({ foundation: 'easy', base: 'heart', build: 'tempo', peak: 'speed', taper: 'rest' }[k])}</span><span class="row__label">${v.name}<small>${v.text}</small></span></div>`).join('')}</div>
-  <p class="eyebrow group-label">Jargon buster</p>
-  <div class="card list acc">${Object.entries(TERMS).filter(([k]) => !PHASE[k]).map(([, t]) => `<details><summary>${esc(t[0])}${ic('chevD')}</summary><p>${esc(t[1])}</p></details>`).join('')}</div>
-  <p class="sign-off">Keep going. Every runner started somewhere.</p>`;
+  <p class="sign-off">Keep going. Every runner started somewhere. 🏃</p>`;
 }
 function renderPaces(now) {
   const F = fmt(state.units), wk = plan.weeks[Math.max(0, now.wkIdx)] || plan.weeks[0], dk = state.profile.distance;
@@ -2044,6 +2069,7 @@ function renderPaces(now) {
 function openRun(id) { sheetId = id; fillRunSheet(); openSheet($('#run-sheet')); }
 function moverHTML(r) {
   const p = state.profile, wk = weekOf(r), start = parseISO(state.start), race = parseISO(p.date);
+  if (r.frozen || r.history || r.date < iso(today()) && isDone(r)) return `<p class="hint" style="margin:0">This run is in the past, so it stays where it was.</p>`;
   if (r.cat === 'parkrun') return `<p class="hint" style="margin:0">parkrun is always on Saturday morning, so this one stays put.</p>`;
   const others = new Set(wk.runs.filter(x => x !== r).map(x => x.date));
   const btns = Array.from({ length: 7 }, (_, i) => {
