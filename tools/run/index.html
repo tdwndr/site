@@ -233,6 +233,9 @@ b, strong { font-weight: 650; }
   background: color-mix(in srgb, var(--c, var(--accent)) 14%, var(--surface)); color: var(--c, var(--accent));
 }
 .tile .ic { width: 21px; height: 21px; }
+/* parkrun: the official logo fills the tile instead of an icon */
+.tile:has(> .pr-logo) { background: none; padding: 0; overflow: hidden; }
+.pr-logo { display: block; width: 100%; height: 100%; border-radius: inherit; object-fit: cover; }
 .tile--lg { width: 52px; height: 52px; border-radius: 15px; }
 .tile--lg .ic { width: 27px; height: 27px; }
 .tile--solid { background: var(--c); color: #fff; }
@@ -771,16 +774,15 @@ body[data-view="setup"] .toast { bottom: calc(env(safe-area-inset-bottom) + 100p
 .building { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 24px; color: #fff; overflow: hidden;
   background: radial-gradient(120% 60% at 85% 0%, rgba(255, 255, 255, .18), transparent 60%), linear-gradient(165deg, var(--grad-a), var(--grad-b) 70%); animation: fade .3s ease; }
 .building__in { width: min(340px, 100%); text-align: center; }
-.orb { display: block; width: min(250px, 72vw); height: auto; margin: 0 auto 8px; overflow: visible; }
-.orb circle, .orb ellipse { transform-box: fill-box; transform-origin: center; }
-.b-glow { fill: rgba(255, 255, 255, .16); animation: b-glow 1.8s ease-in-out infinite; }
-.b-track { fill: none; stroke: rgba(255, 255, 255, .18); stroke-width: 3; }
-.b-arc { fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transform: rotate(-90deg); animation: b-arc 3.5s cubic-bezier(.45, .05, .3, 1) .35s forwards; }
-.b-orbit { fill: none; stroke: rgba(255, 255, 255, .4); stroke-width: 1.3; stroke-dasharray: 1; stroke-dashoffset: 1; animation: b-arc 1.4s var(--ease) .2s forwards; }
-.b-sat { fill: #fff; opacity: 0; animation: b-in .4s ease 1.1s forwards; }
-.b-dot { fill: #fff; opacity: 0; transform: scale(0); animation: b-pop .45s var(--ease) var(--d) forwards; }
+.scene { display: block; width: min(320px, 88vw); height: auto; margin: 0 auto 14px; overflow: visible; }
+.b-ground { stroke: rgba(255, 255, 255, .22); stroke-width: 2.4; stroke-linecap: round; fill: none; }
+.b-ground--drawn { stroke: #fff; stroke-dasharray: 1; stroke-dashoffset: .681; animation: b-ground 3.4s linear .35s forwards; }
+.b-run { animation: b-run 3.4s linear .35s forwards; }
+.b-hop { transform-box: fill-box; transform-origin: 50% 100%; animation: b-hop .36s ease-in-out .35s infinite; }
+.b-shoe { fill: none; stroke: #fff; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.b-speed { fill: none; stroke: rgba(255, 255, 255, .7); stroke-width: 2.2; stroke-linecap: round; animation: b-speed .24s steps(2) .35s infinite; }
+.b-dot { fill: #fff; opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0); animation: b-pop .45s var(--ease) var(--d) forwards; }
 .b-dot--race { fill: #FFD98A; }
-.b-core { transform-box: view-box; transform-origin: 0 0; animation: b-core 3.9s cubic-bezier(.2, .8, .2, 1) forwards; }
 .building h2 { font: 750 24px/1.2 var(--ui); letter-spacing: -.02em; }
 .building__line { margin-top: 8px; min-height: 26px; font-size: 16.5px; color: rgba(255, 255, 255, .88); opacity: 0; }
 .building__line.in { animation: b-line .45s var(--ease) forwards; }
@@ -788,11 +790,11 @@ body[data-view="setup"] .toast { bottom: calc(env(safe-area-inset-bottom) + 100p
 .building.flood { background: transparent; animation: none; }
 .building.flood .building__in { opacity: 0; transition: opacity .25s; }
 .building.flood .building__flood { transform: scale(420); transition: transform .65s cubic-bezier(.5, 0, .2, 1); }
-@keyframes b-arc { to { stroke-dashoffset: 0; } }
-@keyframes b-in { to { opacity: 1; } }
-@keyframes b-pop { 0% { opacity: 0; transform: scale(0); } 70% { opacity: 1; transform: scale(1.5); } 100% { opacity: 1; transform: scale(1); } }
-@keyframes b-glow { 50% { transform: scale(1.22); opacity: .7; } }
-@keyframes b-core { 0% { transform: scale(0); } 18% { transform: scale(1.12); } 28% { transform: scale(1); } 60% { transform: scale(1.06); } 100% { transform: scale(1.1); } }
+@keyframes b-ground { to { stroke-dashoffset: 0; } }
+@keyframes b-run { to { transform: translateX(182px); } }
+@keyframes b-hop { 0%, 100% { transform: translateY(0) rotate(0deg); } 45% { transform: translateY(-12px) rotate(-7deg); } 75% { transform: translateY(-3px) rotate(3deg); } }
+@keyframes b-speed { 0% { opacity: .2; } 100% { opacity: .85; } }
+@keyframes b-pop { 0% { opacity: 0; transform: scale(0); } 70% { opacity: 1; transform: scale(1.6); } 100% { opacity: 1; transform: scale(1); } }
 @keyframes b-line { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .confetti { position: fixed; inset: 0; z-index: 80; overflow: hidden; pointer-events: none; }
 .confetti i { position: absolute; top: -20px; width: 9px; height: 14px; border-radius: 2px; opacity: .95; animation: fall var(--d) cubic-bezier(.25, .6, .4, 1) var(--w) forwards; }
@@ -1486,7 +1488,6 @@ const IC = {
   long: '<circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H16a3.5 3.5 0 0 0 0-7H8a3.5 3.5 0 0 1 0-7h7.5"/>',
   speed: '<path d="M13 2.5 4.5 13.5H11L10 21.5l8.5-11H12l1-8Z"/>',
   tempo: '<path d="M12 21.5c4.2 0 7.3-2.9 7.3-7 0-3.6-2.2-5.7-3.8-8.6-.9 1.8-2 2.8-3.5 3.1-.1-2.6-1.4-4.9-3.6-6.5.2 4.5-4.4 6.8-4.4 12 0 4.1 3.4 7 8 7Z"/>',
-  parkrun: '<path d="M12 2.5 7 9h2.6L5.5 14.5h3.2L4.5 19.5h15l-4.2-5h3.2L14.4 9H17l-5-6.5Z"/><path d="M12 19.5v2.5"/>',
   race: '<path d="M5 21.5V4"/><path d="M5 4h13l-2.6 4.5L18 13H5"/>',
   rest: '<path d="M20.5 13.8A8.5 8.5 0 1 1 10.2 3.5a6.6 6.6 0 0 0 10.3 10.3Z"/>',
   buggy: '<circle cx="8" cy="19.5" r="2"/><circle cx="17" cy="19.5" r="2"/><path d="M2.5 4.5h2.2l1.8 10h12"/><path d="M6 11.5h13.5a8 8 0 0 0-8-8v8"/>',
@@ -1525,7 +1526,7 @@ IC.move = '<path d="M8 7 4 11l4 4"/><path d="M4 11h11a5 5 0 0 1 0 10h-2"/>';
 IC.chart = '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>';
 IC.trend = '<path d="M3 6.5l6.5 6.5 4-4 7.5 7.5"/><path d="M15.5 17.5H21V12"/>';
 /* Version: each published update of Run plan is a release */
-const APP_VERSION = '0.13';
+const APP_VERSION = '0.14';
 /* Releases: 0.1 first plan · 0.2 app look · 0.3 web-app feel, chart, moving runs · 0.4 phase/total chart, safer saves ·
    0.5 past runs fixed, clearer explained words · 0.6 logo, time ranges, race-week celebration, evidence-based taper ·
    0.7 parkrun buggy runs, "How this plan is built" (methodology and sources) ·
@@ -1535,14 +1536,16 @@ const APP_VERSION = '0.13';
         parkrun as alternate-week hard session; build animation; PB auto-format ·
    0.11 in-app confirm, backup and restore trays (no browser pop-ups) ·
    0.12 new TW logo: the W's last stroke as a light-blue slash ·
-   0.13 clearer date errors, orb build animation, tighter run descriptions, slowest-first paces, shorter backup links */
+   0.13 clearer date errors, orb build animation, tighter run descriptions, slowest-first paces, shorter backup links ·
+   0.14 parkrun logo on parkrun runs, running-shoe build animation */
 const versionHTML = () => `<p class="version">Run plan v${APP_VERSION} · Beta</p>`;
 /* TW mark: the favicon's letters, with the W's last stroke cut free as a light-blue slash.
    Tuned for 24-32px: the gap is the narrowest that still separates the slash cleanly, and the slash is a touch heavier than the W's own stroke. */
 let logoN = 0;
 const logoSvg = () => { const id = 'twc' + (logoN++); return `<span class="logo" aria-hidden="true"><svg viewBox="0 0 64 64"><defs><clipPath id="${id}"><polygon points="0,-900 1775.9,-900 1453.8,100 0,100"/></clipPath></defs><rect width="64" height="64" rx="12" fill="#1A33F5"/><g transform="translate(7.08 40.41) scale(0.0245)"><path fill="#F6F4EE" d="M334.9 0V-572.9H27V-686.8H771.9V-572.9H464V0Z"/><path fill="#F6F4EE" clip-path="url(#${id})" d="M1099.6 0 862.9 -686.8H1002.9L1151.6 -229.7Q1155.8 -218.7 1161.1 -200Q1166.3 -181.3 1172.1 -161.4Q1178 -141.6 1181.7 -125.8H1188.7Q1190.9 -137.8 1194.8 -152.1Q1198.7 -166.3 1202.3 -180.9Q1205.9 -195.5 1209.5 -208.3Q1213.1 -221 1215.6 -229.7L1351.9 -686.8H1530.2L1667 -229.7Q1670.5 -218.7 1675.5 -200.1Q1680.5 -181.5 1685.7 -161.5Q1690.9 -141.6 1693.6 -125.8H1700.6Q1704.1 -137.3 1708.1 -151.6Q1712.1 -165.8 1716.7 -180.1Q1721.3 -194.5 1724.9 -207.3Q1728.5 -220.2 1731.8 -229.7L1881.2 -686.8H2007.6L1770.2 0H1608.8L1465.9 -463.1Q1462.2 -476.2 1456.8 -494.9Q1451.4 -513.6 1447.1 -533.2Q1442.7 -552.8 1439.5 -568.1H1433.3Q1430.6 -552.6 1425.1 -532.5Q1419.6 -512.4 1414.6 -493.9Q1409.6 -475.4 1405.6 -463.1L1266.3 0Z"/><polygon fill="#B4C1FF" points="1636,0 1770.2,0 2007.6,-686.8 1857.2,-686.8"/></g></svg></span>`; };
 const BRAND = link => link ? `<a class="brandmark" href="/tools/run/">${logoSvg()}<span class="brand">Run plan</span><span class="beta">Beta</span></a>` : `<span class="brandmark">${logoSvg()}<span class="brand">Run plan</span><span class="beta">Beta</span></span>`;
-const ic = (k, cls = '') => `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true">${IC[k] || ''}</svg>`;
+const PR_LOGO = 'data:image/webp;base64,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';   // parkrun logo, supplied by the site owner
+const ic = (k, cls = '') => k === 'parkrun' ? `<img class="pr-logo ${cls}" src="${PR_LOGO}" alt="" width="40" height="40">` : `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true">${IC[k] || ''}</svg>`;
 const CAT = { easy: 'Easy', long: 'Long run', speed: 'Speed', tempo: 'Stamina', parkrun: 'parkrun', race: 'Race day' };
 const TAG = { easy: 'Easy', strides: 'Easy + form', long: 'Endurance', fastfinish: 'Endurance', fartlek: 'Speed play', hills: 'Strength', intervals: 'Speed',
   tempo: 'Stamina', racepace: 'Race practice', sharpen: 'Race practice', shakeout: 'Recovery', 'parkrun-easy': 'parkrun', parkrun: 'Speed endurance', 'parkrun-steady': 'Race practice',
@@ -1951,21 +1954,25 @@ function buildingScreen(p, then) {
   if (reduceMotion()) return then();
   const nm = first(p.name), D = DIST[p.distance], wk = weeksUntil(p.date, null), N = clamp(wk, 6, 26);
   const lines = ['Reading your race times', 'Setting your paces', `Planning ${wk} weeks of runs`, 'Adding rest and deload weeks', `Ready for your ${D.name}!`];
-  const R = 92, step = 3.2 / N;
-  const dots = Array.from({ length: N }, (_, i) => { const a = (-90 + i * 360 / N) * Math.PI / 180, last = i === N - 1;
-    return `<circle class="b-dot${last ? ' b-dot--race' : ''}" cx="${(Math.cos(a) * R).toFixed(1)}" cy="${(Math.sin(a) * R).toFixed(1)}" r="${last ? 5 : 3.2}" style="--d:${(.45 + i * step).toFixed(2)}s"/>`; }).join('');
-  const sat = (rot, dur, delay) => `<g transform="rotate(${rot})"><ellipse class="b-orbit" rx="66" ry="25" pathLength="1"/><circle class="b-sat" r="4"><animateMotion dur="${dur}s" begin="${delay}s" repeatCount="indefinite" path="M-66 0a66 25 0 1 0 132 0a66 25 0 1 0 -132 0"/></circle></g>`;
+  const RUN = 3.4, X0 = 98, SPAN = 182;                      // the shoe's front runs from x=98 to x=280 in 3.4s
+  const ticks = Array.from({ length: N }, (_, i) => { const f = N > 1 ? i / (N - 1) : 0, last = i === N - 1;
+    return `<circle class="b-dot${last ? ' b-dot--race' : ''}" cx="${(X0 + f * SPAN).toFixed(1)}" cy="111" r="${last ? 4.2 : 2.8}" style="--d:${(.4 + f * RUN).toFixed(2)}s"/>`; }).join('');
   const o = document.createElement('div');
   o.className = 'building'; o.setAttribute('role', 'status');
   o.innerHTML = `<div class="building__in">
-    <svg class="orb" viewBox="-110 -110 220 220" aria-hidden="true">
-      <defs><radialGradient id="orbg" cx=".36" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".42" stop-color="#D5DCFF"/><stop offset="1" stop-color="#6A84FF"/></radialGradient></defs>
-      <circle class="b-glow" r="52"/>
-      <circle class="b-track" r="${R}"/>
-      <circle class="b-arc" r="${R}" pathLength="1"/>
-      ${sat(28, 3.1, 0)}${sat(-34, 4.2, -1)}
-      ${dots}
-      <g class="b-core"><circle r="31" fill="url(#orbg)"/><ellipse cx="-10" cy="-12" rx="11" ry="7" fill="#fff" opacity=".55" transform="rotate(-30 -10 -12)"/></g>
+    <svg class="scene" viewBox="0 0 300 124" aria-hidden="true">
+      <line class="b-ground" x1="12" y1="100" x2="282" y2="100"/>
+      <line class="b-ground b-ground--drawn" x1="12" y1="100" x2="282" y2="100" pathLength="1"/>
+      ${ticks}
+      <g transform="translate(24 63.4)"><g class="b-run">
+        <path class="b-speed" d="M-18 13 H-6 M-25 24 H-10 M-16 34 H-4"/>
+        <g class="b-hop"><g transform="scale(.62)" class="b-shoe">
+          <path d="M10 45 L8 27 C8 23 11 21 15 22 L28 26 C32 27 35 25 37 21 L40 14 C41 12 43 12 44 14 L49 24 C52 29 58 31 64 32 C80 34 94 38 102 44 C106 47 110 48 112 50"/>
+          <path d="M10 45 L10 54 C10 57 12 59 15 59 L88 59 C98 59 106 57 112 50"/>
+          <path d="M10 45 H103 C107 45 110 47 112 50"/>
+          <path d="M51 26 L57 22 M56 30 L62 26 M62 32 L68 28"/>
+          <path d="M26 40 C42 40 58 37 74 34"/>
+        </g></g></g></g>
     </svg>
     <h2>Building your plan, ${nm}</h2><p class="building__line" id="b-line">${lines[0]}</p></div><span class="building__flood"></span>`;
   document.body.appendChild(o);
