@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Run plan: a free, personal training plan for your next race</title>
-<meta name="description" content="Answer a few questions and get a personal running plan for a 5K, 10K, half marathon or marathon, with every run explained. Free, no sign-up, saved on your device.">
+<meta name="description" content="Answer a few questions and get a personal running plan for a 5K, 10K, Half Marathon or marathon, with every run explained. Free, no sign-up, saved on your device.">
 <meta name="theme-color" content="#F4F5F9" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0B0C11" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="light dark">
@@ -727,6 +727,8 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 .profile svg { display: block; width: 100%; height: 52px; overflow: visible; }
 .profile .fill { fill: color-mix(in srgb, var(--c) 14%, transparent); }
 .profile .line { fill: none; stroke: var(--c); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.profile__main { margin-bottom: 8px; font-size: 14px; font-weight: 650; color: var(--ink); }
+.profile__ends { display: flex; justify-content: space-between; gap: 12px; margin-top: 6px; font-size: 12.5px; color: var(--ink-2); }
 .profile__labels { display: grid; gap: 6px; margin-top: 8px; font-size: 12.5px; line-height: 1.35; color: var(--ink-2); }
 .profile__labels span { min-width: 0; }
 .profile__labels span:first-child:not(:only-child), .profile__labels span:nth-child(3) { white-space: nowrap; }
@@ -770,6 +772,22 @@ body[data-view="setup"] .toast { bottom: calc(env(safe-area-inset-bottom) + 100p
 .toast .ic { width: 20px; height: 20px; color: var(--c-tempo); }
 
 /* 14. CHARM & MOTION ---------------------------------------------------------- */
+.building { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 24px; color: #fff;
+  background: radial-gradient(120% 60% at 85% 0%, rgba(255, 255, 255, .18), transparent 60%), linear-gradient(165deg, var(--grad-a), var(--grad-b) 70%);
+  animation: fade .3s ease; transition: opacity .45s ease; }
+.building.out { opacity: 0; }
+.building__in { width: min(360px, 100%); }
+.building h2 { margin-top: 28px; font: 750 26px/1.2 var(--ui); letter-spacing: -.02em; }
+.building ul { display: grid; gap: 12px; margin-top: 20px; }
+.building li { display: flex; align-items: center; gap: 12px; font-size: 16.5px; opacity: 0; transform: translateY(6px); animation: build-in .4s var(--ease) forwards; animation-delay: calc(.25s + var(--i) * .42s); }
+.building li .ic { width: 20px; height: 20px; padding: 3px; border-radius: 50%; background: rgba(255, 255, 255, .2); stroke-width: 3; }
+.building__road { position: relative; height: 8px; border-radius: 4px; background: rgba(255, 255, 255, .2); }
+.building__road::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 4px; background: #fff; animation: build-road 2.3s cubic-bezier(.5, 0, .3, 1) .15s forwards; }
+.building__shoe { position: absolute; top: 50%; left: 0; translate: -50% -50%; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #fff; color: var(--grad-b); animation: build-shoe 2.3s cubic-bezier(.5, 0, .3, 1) .15s forwards; }
+.building__shoe .ic { width: 19px; height: 19px; }
+@keyframes build-in { to { opacity: 1; transform: none; } }
+@keyframes build-road { to { width: 100%; } }
+@keyframes build-shoe { to { left: 100%; } }
 .confetti { position: fixed; inset: 0; z-index: 80; overflow: hidden; pointer-events: none; }
 .confetti i { position: absolute; top: -20px; width: 9px; height: 14px; border-radius: 2px; opacity: .95; animation: fall var(--d) cubic-bezier(.25, .6, .4, 1) var(--w) forwards; }
 @keyframes fall { 0% { transform: translate(0, 0) rotate(0); } 100% { transform: translate(var(--x), 110vh) rotate(var(--r)); opacity: .9; } }
@@ -878,7 +896,7 @@ function parseTime(str, km) {
 const DIST = {
   '5k': { km: 5, label: '5K', name: '5K', rec: 8, min: 4, ramp: 10, taper: 1, goal: 35 * 60, range: [15 * 60, 55 * 60, 15], peak: [8, 7, 6], inc: .5, easy: [.75, 2, 5], runs: '3' },
   '10k': { km: 10, label: '10K', name: '10K', rec: 10, min: 6, ramp: 12, taper: 1, goal: 75 * 60, range: [32 * 60, 115 * 60, 30], peak: [13, 12, 10], inc: 1, easy: [.6, 3, 8], runs: '3 or 4' },
-  'hm': { km: 21.0975, label: 'Half marathon', name: 'half marathon', rec: 12, min: 8, ramp: 16, taper: 2, goal: 150 * 60, range: [70 * 60, 210 * 60, 60], peak: [20, 18, 16], inc: 1.5, easy: [.55, 3, 10], runs: '3 or 4' },
+  'hm': { km: 21.0975, label: 'Half Marathon', name: 'Half Marathon', rec: 12, min: 8, ramp: 16, taper: 2, goal: 150 * 60, range: [70 * 60, 210 * 60, 60], peak: [20, 18, 16], inc: 1.5, easy: [.55, 3, 10], runs: '3 or 4' },
   'm': { km: 42.195, label: 'Marathon', name: 'marathon', rec: 18, min: 12, ramp: 20, taper: 3, goal: 315 * 60, range: [150 * 60, 420 * 60, 60], peak: [32, 32, 30], inc: 2, easy: [.5, 5, 13], runs: '4 or 5' },
 };
 const PBD = { '5k': 5, '10k': 10, 'hm': 21.0975 };
@@ -953,7 +971,7 @@ function zones(T, dk, goal) {
   const D = DIST[dk].km, p5 = T * Math.pow(5 / D, 1.06) / 5, g = goal / D;
   return {
     easy: [p5 * 1.2, p5 * 1.32], long: [p5 * 1.22, p5 * 1.35], steady: [p5 * 1.11, p5 * 1.17],
-    tempo: [p5 * 1.05, p5 * 1.09], parkrun: [p5 * 1.06, p5 * 1.11], prrelax: [p5 * 1.17, p5 * 1.23], prsteady: [p5 * 1.02, p5 * 1.06], tenk: [p5 * 1.025, p5 * 1.05], interval: [p5 * .98, p5 * 1.01], race: [g - 3, g + 3],
+    tempo: [p5 * 1.03, p5 * 1.07], parkrun: [p5 * 1.03, p5 * 1.07], prrelax: [p5 * 1.15, p5 * 1.2], prsteady: [p5 * 1.08, p5 * 1.12], tenk: [p5 * 1.02, p5 * 1.05], interval: [p5 * .96, p5 * 1], race: [g - 3, g + 3],
   };
 }
 const scaleZ = (Z, f) => Object.fromEntries(Object.entries(Z).map(([k, v]) => [k, v.map(x => x * f)]));
@@ -996,34 +1014,41 @@ function generate(p, startISO, units, overrides, moves) {
   let peak = D.peak[goal / D.km < 300 ? 0 : goal / D.km < 375 ? 1 : 2];
   if (dk === 'm') peak = Math.min(peak, Math.max(26, 210 * 60 / mid(goalZ.long)));
   const Ls = clamp(r05((p.longest || 0) * .8), 2, r05(peak * .85));   // start a little below your longest run, not at it
-  let peakEff = peak, short = false;
-  if (rampLen > 1 && (peak - Ls) / (rampLen - 1) > D.inc) { peakEff = Ls + D.inc * (rampLen - 1); short = true; }
-  if (rampLen === 1) { peakEff = Math.min(peak, Ls + D.inc); short = peakEff < peak; }
-  if (rampLen === 0) { peakEff = Ls; short = Ls < peak; }
+  const GROW = 1.14;                                   // at most ~14% longer each week, so two weeks stay under ~30% (novice injury research)
+  const Lf = rampStart > 0 ? Math.min(Math.max(Ls, peak * .45), Ls * Math.pow(1.07, rampStart)) : Ls;   // foundation builds gently
+  const L0 = Math.max(Ls, Lf);                          // where the main build starts
+  const capL = [L0];                                    // the fastest safe build, week by week
+  for (let r = 1; r < Math.max(rampLen, 1); r++) { const pv = capL[r - 1]; capL.push(pv + Math.min(D.inc, Math.max(.5, pv * (GROW - 1)))); }
+  let peakEff = rampLen ? Math.min(peak, capL[rampLen - 1] + (rampLen === 1 ? Math.min(D.inc, Math.max(.5, L0 * (GROW - 1))) : 0)) : L0;
+  peakEff = Math.max(L0, Math.round(peakEff * 2) / 2);
+  peak = Math.round(peak * 2) / 2;
+  const short = peakEff < peak - .25;
   const taperFr = { '5k': [], '10k': [], 'hm': [.55], 'm': [.65, .45] }[dk];   // long run in taper weeks, as a share of the peak
 
   const weeks = [], ctr = {};
-  let longestSoFar = 0;
+  let longestSoFar = 0, lastFull = 0;
   for (let i = 0; i < N; i++) {
     const ws = addDays(w0, 7 * i), we = addDays(ws, 6);
     const isRaceWk = i === N - 1;
     let phase, r = i - rampStart, cut = false, L, ti = -1;
-    if (i < rampStart) { phase = 'foundation'; cut = (i + 1) % 4 === 0; L = Ls * (cut ? .8 : 1); }
+    if (i < rampStart) { phase = 'foundation'; cut = (i + 1) % 4 === 0; L = Math.min(Lf, Ls * Math.pow(1.07, i)) * (cut ? .8 : 1); }
     else if (i < B) {
       phase = r < baseN ? 'base' : r < rampLen - peakN ? 'build' : 'peak';
       cut = r > 0 && (r + 1) % 4 === 0 && r < rampLen - peakN - (peakN ? 0 : 1);   // never in the peak weeks
-      const lin = rampLen > 1 ? Ls + (peakEff - Ls) * r / (rampLen - 1) : peakEff;
-      L = lin * (cut ? .75 : 1);
+      const lin = rampLen > 1 ? L0 + (peakEff - L0) * r / (rampLen - 1) : peakEff;
+      L = Math.min(lin, capL[r] ?? lin) * (cut ? .75 : 1);
     } else {
       phase = 'taper';
       ti = i - B;                                      // 0-based taper week
       L = isRaceWk ? 0 : peakEff * (taperFr[ti] ?? .6);
     }
-    L = Math.max(2, r05(L));
+    L = Math.max(2, L < 8 ? Math.round(L * 10) / 10 : r05(L));
 
     // Paces move from today's fitness towards the goal as the weeks go by
     const prog = B > 1 ? clamp(i / (B - 1), 0, 1) : 1;
-    const level = goal >= cur ? goal : cur + (goal - cur) * prog;
+    const capImp = Math.min(.12, .006 * N + .01);       // same realistic-improvement limit as the goal check
+    const target = goal >= cur ? cur : Math.max(goal, cur * (1 - capImp));
+    const level = cur + (target - cur) * prog;
     const Z = zones(level, dk, goal);
     const [ef, emin, emax] = D.easy;
     const E = clamp(r05(L * ef), emin, emax) * (phase === 'taper' ? (dk === 'm' ? [.85, .7][ti] ?? .7 : .75) : cut ? .8 : 1);   // deloads ease every run, not just the long one
@@ -1031,6 +1056,13 @@ function generate(p, startISO, units, overrides, moves) {
 
     const runs = [];
     let easyCount = 0;
+    const late = phase === 'build' || phase === 'peak';
+    let prHard = false, prMode = 'easy';
+    if (p.parkrun && !isRaceWk && phase !== 'foundation' && phase !== 'taper' && (late || !fresh)) {
+      if (cut) { prHard = late; prMode = late ? 'tt' : 'easy'; }                       // time trial in build/peak deloads
+      else if (n === 2) { prHard = true; prMode = late ? ((ctr.pr2 = (ctr.pr2 || 0) + 1) % 2 ? 'tempo' : 'brisk') : 'steady'; }
+      else if ((ctr.prw = (ctr.prw || 0) + 1) % 2 === 1) { prHard = true; prMode = late && (ctr.prb = (ctr.prb || 0) + 1) % 2 === 0 ? 'brisk' : 'steady'; }
+    }
     for (const [dow, slot] of slots) {
       const d = addDays(ws, dow), di = iso(d);
       if (d < start || d > race) continue;
@@ -1044,14 +1076,14 @@ function generate(p, startISO, units, overrides, moves) {
       let run = null;
       if (isRaceWk) {
         if (daysToRace === 1) { if (slot === 'pr') run = S.parkrun(ctx, 'shake'); }
-        else if (slot === 'q') run = daysToRace >= 3 ? S.sharpen(ctx) : S.shakeout(ctx);
+        else if (slot === 'q') run = daysToRace >= 3 && peakEff >= 5 ? S.sharpen(ctx) : S.shakeout(ctx);
         else if (slot === 'pr') run = S.parkrun(ctx, 'easy');
-        else if (slot === 'easy' || slot === 'tempo') run = daysToRace === 2 ? S.shakeout(ctx) : S.easy(ctx, Math.min(E, dk === 'm' ? 8 : 5), { short: true });
+        else if (slot === 'easy' || slot === 'tempo') run = daysToRace === 2 ? S.shakeout(ctx) : S.easy(ctx, Math.max(2, Math.min(E * .6, dk === 'm' ? 8 : 5)), { short: true });
       } else {
         const k = t => { const v = ctr[t] || 0; if (!cut) ctr[t] = v + 1; return cut ? Math.max(0, v - 1) : v; };
         switch (slot) {
           case 'long': {
-            const ff = (phase === 'peak' || (phase === 'build' && r >= rampLen - peakN - 2)) && !cut && (dk === 'hm' || dk === 'm') && (k('ff') % 2 === 0);
+            const ff = (phase === 'peak' || (phase === 'build' && r >= rampLen - peakN - 2)) && !cut && !prHard && (dk === 'hm' || dk === 'm') && (k('ff') % 2 === 0);
             run = ff ? S.fastFinish(ctx, L) : S.long(ctx, L);
             if (!cut && L > longestSoFar) { run.newLongest = longestSoFar > 0; longestSoFar = L; }
             break;
@@ -1063,28 +1095,28 @@ function generate(p, startISO, units, overrides, moves) {
           case 'q': {
             let t;
             const sep = slots.some(s => s[1] === 'tempo');
-            if (phase === 'foundation') t = ['strides', 'fartlek'][(ctr.fq = (ctr.fq || 0) + 1) % 2];
-            else if (phase === 'base') t = fresh && r < 2 ? 'strides' : ['fartlek', 'hills'][(ctr.bq = (ctr.bq || 0) + 1) % 2];
+            if (phase === 'foundation') t = 'strides';           // foundation: easy running only
+            else if (phase === 'base') t = fresh && (r < 2 || L < 5) ? 'strides' : ['fartlek', 'hills'][(ctr.bq = (ctr.bq || 0) + 1) % 2];   // new runners build continuous running first
             else if (phase === 'build') t = sep ? 'intervals' : ['intervals', 'tempo'][(ctr.uq = (ctr.uq || 0) + 1) % 2];
             else if (phase === 'peak') t = (dk === '5k' || dk === '10k') ? (sep ? 'intervals' : ['intervals', 'tempo'][(ctr.uq = (ctr.uq || 0) + 1) % 2]) : (sep ? 'intervals' : ['racepace', 'intervals'][(ctr.pq = (ctr.pq || 0) + 1) % 2]);
             else t = (dk === 'hm' || dk === 'm') ? 'taperpace' : 'sharpen';
-            if (p.parkrun && cut && (phase === 'build' || phase === 'peak')) t = 'strides';
+            if (prHard && n <= 4) t = 'strides';                 // parkrun is this week's harder session
+            // speed work grows with the runner: strides until you can run ~4 km, gentle speed play until ~6 km
+            if (L < 4) t = 'strides';
+            else if (L < 6 && ['intervals', 'tempo', 'racepace', 'taperpace'].includes(t)) t = (ctr.lq = (ctr.lq || 0) + 1) % 2 ? 'fartlek' : 'hills';
             run = t === 'strides' ? S.strides(ctx, E) : t === 'taperpace' ? S.racepace(ctx, 0) : t === 'sharpen' ? S.sharpen(ctx) : S[t](ctx, k(t));
             break;
           }
           case 'tempo': {
-            if (phase === 'foundation' || phase === 'base') run = S.strides(ctx, E * .9);
+            if (prHard || L < 6) run = L < 6 && !prHard ? S.strides(ctx, E * .9) : S.easy(ctx, E * .9);
+            else if (phase === 'foundation' || phase === 'base') run = S.strides(ctx, E * .9);
             else if (phase === 'taper') run = S.easy(ctx, E * .85);
             else if (phase === 'peak' && (dk === 'hm' || dk === 'm') && (ctr.tp = (ctr.tp || 0) + 1) % 2 === 0) run = S.racepace(ctx, k('racepace'));
             else run = S.tempo(ctx, k('tempo'));
             break;
           }
           case 'pr': {
-            const late = phase === 'build' || phase === 'peak';
-            const hard = late && cut;                                   // time trial in deload weeks
-            const role = n === 2 && late && !cut;                       // with 2 runs, parkrun is the quality session
-            const brisk = late && !cut && !role && (ctr.prb = (ctr.prb || 0) + 1) % 2 === 1;   // every other week
-            run = hard ? S.parkrun(ctx, 'tt') : role ? S.parkrun(ctx, 'tempo') : brisk ? S.parkrun(ctx, 'brisk') : S.parkrun(ctx, 'easy');
+            run = S.parkrun(ctx, prMode);
             break;
           }
         }
@@ -1093,10 +1125,10 @@ function generate(p, startISO, units, overrides, moves) {
       };
       // Speed and hill sessions are never buggy runs: build those solo instead
       const snap = JSON.stringify(ctr), ls0 = longestSoFar, ec0 = easyCount;
-      let run = make(ctx), blocked = false;
+      let run = make(ctx), blocked = false, usedCtx = ctx;
       if (run && buggy && run.canBuggy === false) {
         Object.keys(ctr).forEach(x => delete ctr[x]); Object.assign(ctr, JSON.parse(snap)); longestSoFar = ls0; easyCount = ec0;
-        run = make({ ...ctx, Z, buggy: false }); blocked = true;
+        usedCtx = { ...ctx, Z, buggy: false }; run = make(usedCtx); blocked = true;
       }
       if (!run) continue;
       const isB = buggy && !blocked;
@@ -1104,7 +1136,29 @@ function generate(p, startISO, units, overrides, moves) {
       run.blocks = blocksOf(run, isB ? scaleZ(Z, 1.07) : Z, dk, goal);
       if (blocked) run.note = run.kind === 'parkrun-tt' ? BUGGY_NOTE.trial : BUGGY_NOTE.blocked;
       if (isB) run.note = (run.note ? run.note + ' ' : '') + BUGGY_NOTE[run.cat === 'parkrun' ? 'parkrun' : (run.cat === 'speed' || run.cat === 'tempo') ? 'hard' : 'easy'];
+      Object.defineProperty(run, '_c', { value: usedCtx, enumerable: false });
       runs.push(run);
+    }
+    // Weekly volume: grow at most ~15% on the last full week, and make every deload at least 15% lighter.
+    // Only easy runs are resized, so key sessions and the long run keep their shape.
+    {
+      const vk = runs.reduce((a, x) => a + x.km, 0), full = ws >= start;
+      if (full && lastFull && phase !== 'taper' && !isRaceWk) {
+        const target = cut ? lastFull * .85 : lastFull * 1.14;
+        let excess = vk - target;
+        if (excess > .25) {
+          runs.filter(x => x.kind === 'easy' || x.kind === 'strides').forEach(x => {
+            if (excess <= .25) return;
+            const base = x.kind === 'strides' ? x.km - .5 : x.km, nk = Math.max(2, r05(base - excess));
+            if (nk >= base) return;
+            const nr = x.kind === 'strides' ? S.strides(x._c, nk) : S.easy(x._c, nk, { short: x.title === 'Short easy run' });
+            excess -= x.km - nr.km;
+            Object.assign(x, { km: nr.km, steps: nr.steps, mins: nr.mins, title: nr.title });
+            x.blocks = blocksOf(x, x._c.Z, dk, goal);
+          });
+        }
+      }
+      if (full && !cut && phase !== 'taper' && !isRaceWk) lastFull = runs.reduce((a, x) => a + x.km, 0);
     }
     if (isRaceWk && race >= start) { const rr = Object.assign(S.race(p, goal, F, dk), { date: raceISO, id: raceISO, dow: dowMon(race), buggy: false, canBuggy: false, slot: 'race' }); rr.blocks = blocksOf(rr, Z, dk, goal); runs.push(rr); }
     // Hard parkrun the day before the long run: say so
@@ -1145,8 +1199,9 @@ function blocksOf(r, Z, dk, goal) {
     case 'fastfinish': add(1, (r.km - sp.ff) * mid(Z.long) / 60); add(2.2, sp.ff * g / 60); break;
     case 'parkrun-tempo': add(1, mid(Z.easy) / 60); add(2, 3 * mid(Z.tempo) / 60); add(1, mid(Z.easy) / 60); break;
     case 'parkrun-tt': add(1, 10); add(3, 5 * mid(Z.interval) / 60); break;
-    case 'parkrun': add(1.8, 5 * mid(Z.parkrun) / 60); break;
-    case 'parkrun-easy': add(1.2, 5 * mid(Z.prrelax) / 60); break;
+    case 'parkrun': add(2.3, 5 * mid(Z.parkrun) / 60); break;
+    case 'parkrun-steady': add(1.9, 5 * mid(Z.prsteady) / 60); break;
+    case 'parkrun-easy': add(1.3, 5 * mid(Z.prrelax) / 60); break;
     case 'race': add(dk === '5k' ? 3 : dk === '10k' ? 2.6 : 2.2, goal / 60); break;
     default: add(1, r.mins);
   }
@@ -1281,14 +1336,14 @@ const S = {
       steps: ['Warm up: 10 min easy jog before the start', 'Run the 5K as hard as you can hold: start a little steady, then push after halfway', 'Note your time. Seeing it fall is the best motivation'] };
     if (mode === 'tempo') return { ...base, kind: 'parkrun-tempo', title: 'parkrun tempo', purpose: 'Stamina', pace: 'tempo',
       steps: ['First 1 km easy', `Middle 3 km at ${T('tempo', 'tempo pace')}: ${c.F.range(c.Z.tempo)}`, 'Last 1 km easy, and cheer people in'] };
-    if (mode === 'steady') return { ...base, kind: 'parkrun', title: 'Steady parkrun', purpose: 'Race practice', pace: 'prsteady',
-      steps: ['Start near the middle of the pack so you’re not swept off too fast', `Settle into a strong, steady pace: ${c.F.range(c.Z.prsteady)}`, 'Finish strong if you feel good, then thank a marshal'] };
+    if (mode === 'steady') return { ...base, kind: 'parkrun-steady', mins: 5 * mid(c.Z.prsteady) / 60, title: 'Steady parkrun', purpose: 'Race practice', pace: 'prsteady',
+      steps: ['Start near the middle of the pack so you’re not swept off too fast', `Settle into a strong, steady pace, around marathon effort: ${c.F.range(c.Z.prsteady)}`, 'Finish strong if you feel good, then thank a marshal'] };
     if (mode === 'shake') return { ...base, kind: 'parkrun-shake', title: 'parkrun (optional, very easy)', purpose: 'Freshen up', pace: 'easy', km: 5,
       steps: ['Jog it very gently, or volunteer instead and cheer everyone on', 'No racing today. Save it for tomorrow'] };
     if (mode === 'brisk') return { ...base, kind: 'parkrun', title: 'Brisk parkrun', purpose: 'Speed endurance', pace: 'parkrun', mins: 5 * mid(c.Z.parkrun) / 60,
       steps: ['Start near the middle of the pack so you’re not swept off too fast', `Run at a brisk, controlled pace: ${c.F.range(c.Z.parkrun)}`, 'Keep a little in reserve. This isn’t a race (yet!)'] };
     return { ...base, kind: 'parkrun-easy', title: 'parkrun', purpose: 'Miles with company', pace: 'prrelax', mins: 5 * mid(c.Z.prrelax) / 60,
-      steps: ['Start near the middle or back so you settle in calmly', `Run it relaxed, a touch quicker than your easy runs: ${c.F.range(c.Z.prrelax)}`, 'You should be able to chat. Enjoy the company'] };
+      steps: ['Start near the middle so you settle in calmly', `Run it relaxed, at the top end of easy: ${c.F.range(c.Z.prrelax)}`, 'You should still be able to chat. Your harder session is midweek'] };
   },
   race(p, goal, F, dk) {
     const D = DIST[dk], g = goal / D.km;
@@ -1318,8 +1373,9 @@ const WHY = {
   racepace: n => `Practising your ${T('racepace', 'goal race pace')} teaches your body, and your brain, exactly how it feels. On race day it will feel familiar rather than frightening.`,
   sharpen: n => `A short, sharp session keeps your legs feeling quick while you rest up. This is the ${T('taper', 'taper')}: less running, same intensity.`,
   shakeout: n => `A short, very easy run loosens your legs and settles the nerves before the big day.`,
-  'parkrun-easy': n => `Your weekly ${T('parkrun', 'parkrun')} gets you used to start lines, crowds and race-day nerves. Most weeks it’s relaxed, so it adds miles with company without eating into your recovery.`,
-  parkrun: n => `On alternate weeks in the build and peak phases, ${T('parkrun', 'parkrun')} is brisk: a little quicker than your easy running. It builds speed endurance, and running with others helps you hold a steady pace.`,
+  'parkrun-easy': n => `Your weekly ${T('parkrun', 'parkrun')} gets you used to start lines, crowds and race-day nerves. This week it’s relaxed because your harder session is midweek, which keeps most of your running easy.`,
+  'parkrun-steady': n => `This week ${T('parkrun', 'parkrun')} is your harder session: a strong, steady effort, around marathon effort. Holding an even pace in a crowd is great race practice. Your midweek run is easy to balance it.`,
+  parkrun: n => `This week ${T('parkrun', 'parkrun')} is your harder session: brisk, close to your 10K effort. It builds speed endurance, and running with others helps you hold the pace. Your midweek run is easy to balance it.`,
   'parkrun-shake': n => `Keep it very gentle: a relaxed jog loosens your legs and settles the nerves, and volunteering is just as good.`,
   'parkrun-tempo': n => `Using ${T('parkrun', 'parkrun')} for a ${T('tempo', 'tempo')} effort: the crowd helps you hold a comfortably hard pace.`,
   'parkrun-tt': n => `Every few weeks, running ${T('parkrun', 'parkrun')} hard shows you how much fitter you’re getting. Set a new 5K PB? Add it in “Tune your plan” and your paces will update.`,
@@ -1332,15 +1388,15 @@ const PACE = {
   tempo: { name: 'Tempo', term: 'tempo', feel: 'Effort 6–7 out of 10. “Comfortably hard”: you can say a few words at a time.' },
   tenk: { name: '10K effort', term: 'intervals', feel: 'Effort 7–8 out of 10. Hard, but controlled.' },
   interval: { name: '5K effort', term: 'intervals', feel: 'Effort 8 out of 10. Hard: you could only manage a word or two.' },
-  prrelax: { name: 'parkrun (relaxed)', term: 'parkrun', feel: 'Effort 4 out of 10. Comfortable: you can still chat.' },
-  parkrun: { name: 'Brisk parkrun', term: 'parkrun', feel: 'Effort 5–6 out of 10. Brisk but controlled: you could manage a short sentence.' },
-  prsteady: { name: 'Steady parkrun', term: 'steady', feel: 'Effort 6–7 out of 10. Strong and purposeful, a notch below racing.' },
+  prrelax: { name: 'parkrun (relaxed)', term: 'parkrun', feel: 'Effort 4 out of 10. The top end of easy: you can still chat.' },
+  parkrun: { name: 'Brisk parkrun', term: 'parkrun', feel: 'Effort 6–7 out of 10. Comfortably hard, close to your 10K effort.' },
+  prsteady: { name: 'Steady parkrun', term: 'steady', feel: 'Effort 5–6 out of 10. Strong and steady, around marathon effort.' },
   race: { name: 'Goal race pace', term: 'racepace', feel: 'Your target pace for race day. Should feel controlled, as if you could hold it a long time.' },
 };
 const PHASE = {
-  foundation: { name: 'Foundation', text: 'Building the habit. Easy running only, so your muscles, tendons and joints get used to regular running before the real training starts.' },
-  base: { name: 'Base', text: 'Laying the foundations: mostly easy running, a long run that grows each week, and a little light speed play.' },
-  build: { name: 'Build', text: 'Harder sessions arrive (intervals and tempo runs) while your long run keeps growing. This is where fitness is made.' },
+  foundation: { name: 'Foundation', text: 'Building the habit. Easy running only (with a few relaxed strides), so your muscles, tendons and joints get used to regular running before the real training starts.' },
+  base: { name: 'Base', text: 'Laying the foundations: mostly easy running, a long run that grows each week, and gentle speed work like fartlek and hills.' },
+  build: { name: 'Build', text: 'The harder sessions step up: fartlek and hills make way for intervals and tempo runs, while your long run keeps growing. This is where fitness is made.' },
   peak: { name: 'Peak', text: 'Your biggest weeks. The long run reaches its longest and you practise race pace, so race day holds no surprises.' },
   taper: { name: 'Taper', text: 'Less running so you arrive at the start line fresh. You won’t lose fitness in a couple of weeks, so trust it and rest.' },
 };
@@ -1449,24 +1505,26 @@ IC.move = '<path d="M8 7 4 11l4 4"/><path d="M4 11h11a5 5 0 0 1 0 10h-2"/>';
 IC.chart = '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>';
 IC.trend = '<path d="M3 6.5l6.5 6.5 4-4 7.5 7.5"/><path d="M15.5 17.5H21V12"/>';
 /* Version: each published update of Run plan is a release */
-const APP_VERSION = '0.9';
+const APP_VERSION = '0.10';
 /* Releases: 0.1 first plan · 0.2 app look · 0.3 web-app feel, chart, moving runs · 0.4 phase/total chart, safer saves ·
    0.5 past runs fixed, clearer explained words · 0.6 logo, time ranges, race-week celebration, evidence-based taper ·
    0.7 parkrun buggy runs, "How this plan is built" (methodology and sources) ·
    0.8 long-run day, session diagrams, clearer run tags, smoother sheets, race confetti ·
-   0.9 simpler diagrams, smoother pull-to-close, tray closes when marked done */
+   0.9 simpler diagrams, smoother pull-to-close, tray closes when marked done ·
+   0.10 model review: paces from current fitness, Daniels-aligned bands, 15% long-run growth cap,
+        parkrun as alternate-week hard session; build animation; PB auto-format */
 const versionHTML = () => `<p class="version">Run plan v${APP_VERSION} · Beta</p>`;
 const LOGO = '<span class="logo" aria-hidden="true"><svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#1A33F5"/><path fill="#F6F4EE" transform="translate(8.89 39.80) scale(0.02272)" d="M334.9 0V-572.9H27V-686.8H771.9V-572.9H464V0ZM1099.6 0 862.9 -686.8H1002.9L1151.6 -229.7Q1155.8 -218.7 1161.1 -200Q1166.3 -181.3 1172.1 -161.4Q1178 -141.6 1181.7 -125.8H1188.7Q1190.9 -137.8 1194.8 -152.1Q1198.7 -166.3 1202.3 -180.9Q1205.9 -195.5 1209.5 -208.3Q1213.1 -221 1215.6 -229.7L1351.9 -686.8H1530.2L1667 -229.7Q1670.5 -218.7 1675.5 -200.1Q1680.5 -181.5 1685.7 -161.5Q1690.9 -141.6 1693.6 -125.8H1700.6Q1704.1 -137.3 1708.1 -151.6Q1712.1 -165.8 1716.7 -180.1Q1721.3 -194.5 1724.9 -207.3Q1728.5 -220.2 1731.8 -229.7L1881.2 -686.8H2007.6L1770.2 0H1608.8L1465.9 -463.1Q1462.2 -476.2 1456.8 -494.9Q1451.4 -513.6 1447.1 -533.2Q1442.7 -552.8 1439.5 -568.1H1433.3Q1430.6 -552.6 1425.1 -532.5Q1419.6 -512.4 1414.6 -493.9Q1409.6 -475.4 1405.6 -463.1L1266.3 0Z"/></svg><i></i><i></i><i></i><i></i></span>';
 const BRAND = link => link ? `<a class="brandmark" href="/run/">${LOGO}<span class="brand">Run plan</span><span class="beta">Beta</span></a>` : `<span class="brandmark">${LOGO}<span class="brand">Run plan</span><span class="beta">Beta</span></span>`;
 const ic = (k, cls = '') => `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true">${IC[k] || ''}</svg>`;
 const CAT = { easy: 'Easy', long: 'Long run', speed: 'Speed', tempo: 'Stamina', parkrun: 'parkrun', race: 'Race day' };
 const TAG = { easy: 'Easy', strides: 'Easy + form', long: 'Endurance', fastfinish: 'Endurance', fartlek: 'Speed play', hills: 'Strength', intervals: 'Speed',
-  tempo: 'Stamina', racepace: 'Race practice', sharpen: 'Race practice', shakeout: 'Recovery', 'parkrun-easy': 'parkrun', parkrun: 'parkrun',
+  tempo: 'Stamina', racepace: 'Race practice', sharpen: 'Race practice', shakeout: 'Recovery', 'parkrun-easy': 'parkrun', parkrun: 'Speed endurance', 'parkrun-steady': 'Race practice',
   'parkrun-tempo': 'parkrun', 'parkrun-tt': 'Fitness check', 'parkrun-shake': 'parkrun', race: 'Race day' };
 const tagOf = r => TAG[r.kind] || CAT[r.cat];
 const DIST_ICON = { '5k': 'speed', '10k': 'tempo', 'hm': 'long', 'm': 'trophy' };
 const DIST_KIND = { '5k': 'k-speed', '10k': 'k-tempo', 'hm': 'k-long', 'm': 'k-race' };
-const EFF = { easy: [3, 4], long: [3, 4], steady: [5, 6], prrelax: [4, 4], parkrun: [5, 6], prsteady: [6, 7], tempo: [6, 7], tenk: [7, 8], interval: [8, 8] };
+const EFF = { easy: [3, 4], long: [3, 4], steady: [5, 6], prrelax: [4, 4], parkrun: [6, 7], prsteady: [5, 6], tempo: [6, 7], tenk: [7, 8], interval: [8, 8] };
 const RACE_EFF = { '5k': [8, 9], '10k': [7, 8], 'hm': [6, 7], 'm': [5, 6] };
 const PACE_KIND = { easy: 'k-easy', long: 'k-long', steady: 'k-parkrun', prrelax: 'k-parkrun', parkrun: 'k-parkrun', prsteady: 'k-parkrun', tempo: 'k-tempo', tenk: 'k-speed', interval: 'k-speed', race: 'k-race' };
 const TERM_ICON = { conversational: 'easy', easy: 'easy', long: 'long', steady: 'parkrun', tempo: 'tempo', intervals: 'speed', strides: 'speed', fartlek: 'speed', hills: 'speed', racepace: 'race', parkrun: 'parkrun', taper: 'rest', cutback: 'trend', rest: 'rest', pace: 'pace', effort: 'pace', pb: 'trophy', runwalk: 'easy', warmup: 'clock', foundation: 'easy', base: 'heart', build: 'tempo', peak: 'speed' };
@@ -1616,7 +1674,7 @@ function renderIntro() {
       <p class="intro__lede">Five quick questions, then a week-by-week running plan that fits your life, with every run explained.</p>
       <ul class="feats">
         <li><span class="tile">${ic('shield')}</span><span>Built on proven training principles</span></li>
-        <li><span class="tile">${ic('learn')}</span><span>Made for beginners, with every term explained</span></li>
+        <li><span class="tile">${ic('learn')}</span><span>Friendly for first-timers: no jargon, no guesswork</span></li>
         <li><span class="tile">${ic('phone')}</span><span>Saved on your device. No sign-up</span></li>
       </ul>
       <div class="intro__cta">
@@ -1688,10 +1746,11 @@ function renderSetup() {
       <p class="field__label" style="margin:0 2px 10px">Your ${T('pb', 'PBs')} <small>(optional)</small></p>
       <div class="pbs">
         ${[['5k', '5K', 'mm:ss'], ['10k', '10K', 'mm:ss'], ['hm', 'Half', 'h:mm:ss']].map(([k, l, ph]) => `
-        <div class="field"><label class="field__label" for="pb-${k}">${l}</label><input class="input input--time" id="pb-${k}" data-pb="${k}" inputmode="decimal" placeholder="${ph}" value="${d.pbs[k] ? hms(d.pbs[k]) : ''}" aria-describedby="pb-${k}-err"></div>`).join('')}
+        <div class="field"><label class="field__label" for="pb-${k}">${l}</label><input class="input input--time" id="pb-${k}" data-pb="${k}" inputmode="numeric" placeholder="${ph}" value="${d.pbs[k] ? hms(d.pbs[k]) : ''}" aria-describedby="pb-${k}-err"></div>`).join('')}
       </div>
       ${['5k', '10k', 'hm'].map(k => `<p class="err" id="pb-${k}-err" hidden>That doesn’t look like a ${DIST[k].label} time. Try something like ${k === 'hm' ? '2:15:00' : k === '10k' ? '58:30' : '29:45'}.</p>`).join('')}
-      <p class="hint">Your best recent time is most useful. Type 27:45 or 27.45.</p>
+      <p class="hint">Just type the numbers and we’ll add the colons: 2745 becomes 27:45. Your best recent time is most useful.</p>
+      <div class="callout k-warn" id="ready-hint" hidden></div>
       <div class="card pad" style="margin-top:28px">
         <div class="slider"><div class="slider__top"><label class="slider__label" for="r-longest">Longest run in the last month</label><output class="slider__value" id="o-longest" for="r-longest">${longestLabel(d.longest)}</output></div>
           ${sliderRow('r-longest', d.longest, 0, longestMax(d.distance), .5, 'Longest run in the last month')}</div>
@@ -1755,6 +1814,12 @@ function syncSetup() {
     : wk < D.rec ? `${wk} weeks to go. A little shorter than the usual ${D.rec}, but very doable.`
     : `${wk} weeks to go. Plenty of time${wk > D.ramp + D.taper ? ', so we’ll start with some easy foundation weeks' : ''}.`;
   const rh = $('#runs-hint'); if (rh) rh.textContent = runsHint(d);
+  const rdy = $('#ready-hint');
+  if (rdy) {
+    const need = { '5k': 8, '10k': 12, 'hm': 18, 'm': 26 }[d.distance], show = isNewRunner(d) && wk && wk < need;
+    rdy.hidden = !show;
+    if (show) rdy.innerHTML = `${ic('info')}<p><b>Starting from scratch? That’s brilliant.</b>${wk} weeks is short to build up to a ${D.name} from the very start, so your long runs will grow carefully and may not reach the usual distance. We’d suggest about ${need} weeks if you can find a later race.</p>`;
+  }
   const ldEl = $('#long-days');
   if (ldEl) {
     if (d.longDay == null) d.longDay = 6;
@@ -1774,7 +1839,7 @@ function syncSetup() {
     const q = slots.find(x => x[1] === 'q'), warn = $('#buggy-warn');
     const on = q && d.buggyDays.includes(q[0]);
     warn.hidden = !on;
-    if (on) warn.innerHTML = `${ic('info')}<p><b>Heads up: ${DOW[q[0]]} is your speed and hills day</b>Those sessions always stay solo (pushing a buggy is challenge enough!), so the buggy will only join on weeks when ${DOW[q[0]]} is an easier run.</p>`;
+    if (on) warn.innerHTML = `${ic('info')}<p><b>Heads up: ${DOW[q[0]]} is usually your speed or hills day</b>Speed and hill sessions are always solo runs (pushing a buggy is challenge enough!). In weeks when ${DOW[q[0]]} is an easy run instead, the buggy comes too.</p>`;
   }
   const go = $('#goal-out');
   if (go) {
@@ -1834,10 +1899,26 @@ function onSetupInput(t) {
   if (t.hasAttribute('data-buggy-day')) d.buggyDays = $$('[data-buggy-day]:checked').map(x => +x.value);
   if (t.id === 'r-longest') { d.longest = +t.value; $('#o-longest').textContent = longestLabel(d.longest); }
   if (t.id === 'r-goal') { d.goal = +t.value; goalTouched = true; }
+  if (t.hasAttribute('data-pb')) {
+    const dg = t.value.replace(/\D/g, '').slice(0, 6);
+    t.value = dg.length <= 2 ? dg : dg.length <= 4 ? `${dg.slice(0, -2)}:${dg.slice(-2)}` : `${dg.slice(0, -4)}:${dg.slice(-4, -2)}:${dg.slice(-2)}`;
+  }
   if (t.hasAttribute('data-pb')) { const s = parseTime(t.value, PBD[t.dataset.pb]); if (s) d.pbs[t.dataset.pb] = s; else delete d.pbs[t.dataset.pb]; if (!goalTouched) d.goal = defaultGoal(d); }
   syncSetup();
 }
 
+/* A short full-screen moment while the plan is "built" (2.5 s; skipped with reduced motion) */
+function buildingScreen(p, then) {
+  if (reduceMotion()) return then();
+  const nm = first(p.name), D = DIST[p.distance], wk = weeksUntil(p.date, null);
+  const lines = ['Reading your race times', 'Setting your paces', `Planning ${wk} weeks of runs`, 'Adding rest and deload weeks', `Ready for your ${D.name}!`];
+  const o = document.createElement('div');
+  o.className = 'building'; o.setAttribute('role', 'status');
+  o.innerHTML = `<div class="building__in"><div class="building__road"><span class="building__shoe">${ic('shoe')}</span></div>
+    <h2>Building your plan, ${nm}</h2><ul>${lines.map((l, i) => `<li style="--i:${i}">${ic('check')}<span>${l}</span></li>`).join('')}</ul></div>`;
+  document.body.appendChild(o);
+  setTimeout(() => { then(); o.classList.add('out'); setTimeout(() => o.remove(), 500); }, 2600);
+}
 function finishSetup() {
   const p = draft;
   if (!p.buggy) p.buggyDays = [];
@@ -1847,8 +1928,8 @@ function finishSetup() {
   if (!state.start || wasNew) state.start = iso(today());
   if (wasNew) { state.done = {}; state.buggy = {}; state.moves = {}; state.frozen = null; }
   save(true);
-  view = 'plan'; editing = false; if (wasNew) tab = 'today';
-  render(); window.scrollTo(0, 0);
+  const go = () => { view = 'plan'; editing = false; if (wasNew) tab = 'today'; render(); window.scrollTo(0, 0); };
+  if (wasNew) buildingScreen(p, go); else go();
   toast(wasNew ? `Your plan’s ready, ${first(p.name)}. Let’s do this!` : `Plan updated, ${first(p.name)}.`, wasNew ? 'sparkle' : 'check');
 }
 
@@ -2086,13 +2167,13 @@ function renderToday(now) {
       <article class="run-card k-good done-card"><div class="run-card__head"><span class="tile tile--lg tile--solid">${ic('check')}</span><div><p class="run-card__kicker">Done</p><h3 class="run-card__title">${esc(r.title)} complete</h3></div></div>
         <div class="cheer">${ic('sparkle')}<span>${pick(DONE_MSG, seedOf(r.id))(nm)} Now rest up and recover well.</span></div>
         <button class="btn btn--ghost btn--sm" data-open="${r.id}">${ic('info')}See today’s run</button></article>`;
-      if (nx) main += `<h2 class="sec-h">Up next</h2><ul class="card list">${cell(nx, now)}</ul>`;
+      if (nx) { const dd = diffDays(now.t, parseISO(nx.date)); main += `<h2 class="sec-h">Up next <span class="eyebrow">${dd === 1 ? 'Tomorrow' : `In ${dd} days`}</span></h2><ul class="card list">${cell(nx, now)}</ul>`; }
     } else if (r) {
       main = `<h2 class="sec-h">Today’s run</h2>${runCardHTML(r, now)}`;
     } else {
       main = `<h2 class="sec-h">Today</h2>
       <div class="card rest-card k-rest"><span class="tile tile--lg moon">${ic('rest')}<i>z</i><i>z</i></span><div><b>Rest day</b><p>Recovery is when your body gets stronger, ${nm}. Put your feet up.</p></div></div>`;
-      if (nx) { const dd = diffDays(now.t, parseISO(nx.date)); main += `<h2 class="sec-h">${dd === 1 ? 'Tomorrow' : 'Next run'}</h2>${runCardHTML(nx, now)}`; }
+      if (nx) { const dd = diffDays(now.t, parseISO(nx.date)); main += `<h2 class="sec-h">${dd === 1 ? 'Tomorrow' : 'Next run'}${dd > 1 ? ` <span class="eyebrow">In ${dd} days</span>` : ''}</h2>${runCardHTML(nx, now)}`; }
     }
     if (now.wkIdx === plan.N - 1) main = raceWeekHTML(now, days) + main;
     if (now.missed.length) main += `<div class="callout k-warn">${ic('heart')}<p><b>Missed ${now.missed.length === 1 ? 'a run' : `${now.missed.length} runs`}? No stress, ${nm}.</b>Don’t try to catch up. Just carry on from here. If you did run, tick it off in the list.</p></div>`;
@@ -2310,7 +2391,7 @@ function renderPaces(now) {
   const F = fmt(state.units), dk = state.profile.distance, ci = Math.max(0, now.wkIdx), wk = plan.weeks[ci] || plan.weeks[0];
   let pi = plan.weeks.length - 1; while (pi > 0 && plan.weeks[pi].phase === 'taper') pi--;
   const pk = plan.weeks[Math.max(pi, ci)];
-  const keys = ['easy', 'long', 'steady', ...(state.profile.parkrun ? ['prrelax', 'parkrun'] : []), 'tempo', 'tenk', 'interval', 'race'];
+  const keys = ['easy', 'long', 'steady', ...(state.profile.parkrun ? ['prrelax', 'prsteady', 'parkrun'] : []), 'tempo', 'tenk', 'interval', 'race'];
   $('#paces').innerHTML = keys.map(k => {
     const P = PACE[k], e = k === 'race' ? RACE_EFF[dk] : EFF[k];
     // from this week's slower end to the peak week's faster end
@@ -2356,7 +2437,7 @@ function principle(title, evidence, rule, level, refs, checked) {
 function methodHTML() {
   const short = { '5k': '5K', '10k': '10K', 'hm': 'Half', 'm': 'Marathon' };
   const pk = Object.entries(DIST).map(([k, d]) => `<tr><td>${short[k]}</td><td>${d.rec} (${d.min}+)</td><td>${d.peak[2]}–${d.peak[0]} km</td><td>${d.inc} km</td><td>${{ '5k': 'Race wk', '10k': 'Race wk', 'hm': '2 wks', 'm': '3 wks' }[k]}</td></tr>`).join('');
-  const zones = [['Easy', '120–132%'], ['Long run', '122–135%'], ['parkrun (relaxed)', '117–123%'], ['Steady', '111–117%'], ['Brisk parkrun', '106–111%'], ['Tempo', '105–109%'], ['10K effort', '102.5–105%'], ['5K effort', '98–101%']]
+  const zones = [['Easy', '120–132%'], ['Long run', '122–135%'], ['parkrun (relaxed)', '115–120%'], ['Steady', '111–117%'], ['Steady parkrun', '108–112%'], ['Brisk parkrun', '103–107%'], ['Tempo', '103–107%'], ['10K effort', '102–105%'], ['5K effort (intervals)', '96–100%']]
     .map(z => `<tr><td>${z[0]}</td><td>${z[1]}</td></tr>`).join('');
   return `<div class="sheet__scroll">
     <div class="sheet__grab" aria-hidden="true"></div>
@@ -2380,51 +2461,55 @@ function methodHTML() {
     <p class="eyebrow group-label">The principles</p>
     ${principle('1. Mostly easy running',
       'Endurance athletes do most of their training at low intensity, with a small amount of hard work, and this mix improves fitness at least as well as training that is mostly moderate or hard. Most of these studies are in trained athletes rather than beginners.',
-      'aims for at least 80% of your running time to be easy. Most weeks have one harder session (two in the build and peak phases if you run five or six times a week). If you do parkrun, it’s relaxed most weeks and brisk on alternate weeks in the build and peak phases. In a time-trial week, the time trial replaces the midweek hard session.',
-      'moderate', src(1, 2), 'across every combination of settings, 79–92% of running time is easy (average 85%).')}
+      'aims for at least 80% of your running time to be easy. Most weeks have one harder session (two in the build and peak phases if you run five or six times a week).',
+      'moderate', src(1, 2), 'across 216 test plans, 77–97% of running time is easy (average 88%), and no week has more than two harder sessions if you run four times a week or less.')}
     ${principle('2. Start where you are',
-      'New runners get injured more often than experienced ones. Run/walk intervals are a proven, widely used way into running.',
-      'makes your first long run about 80% of your longest run from the last month (at least 2 km, and no more than 85% of the usual peak). If you have no race times and your longest run is under 5 km, early runs use run/walk (2 min run / 1 min walk, building to 4 / 1).',
+      'New runners get injured more often than experienced ones. Run/walk, as used by the NHS Couch to 5K programme, is a proven way to build up to continuous running.',
+      'makes your first long run about 80% of your longest run from the last month (at least 2 km). If you’re brand new, early runs use run/walk (2 min run / 1 min walk, building to 4 / 1). Speed work grows with you: only relaxed strides until your long run reaches about 4 km, and no intervals or tempo runs until about 6 km.',
       'moderate', src(8, 14))}
     ${principle('3. Build gradually',
-      'Large jumps in weekly distance have been linked to some injuries in novice runners. But the popular “10% rule” has not been shown to be safer than a slightly faster build, so research gives no single safe number.',
-      `grows the long run along a steady line to its peak, by up to ${Object.entries(DIST).map(([k, d]) => `${d.inc} km (${short[k]})`).join(', ')} a week. After a deload week it rejoins that line rather than starting again. Other runs scale with the long run, within set limits. If there isn’t time to reach the usual peak safely, the plan peaks lower and tells you. The exact step sizes are our choice.`,
-      'moderate', src(6, 7))}
+      'In novice runners, increasing weekly distance by more than about 30% over two weeks has been linked to some injuries. But the popular “10% rule” hasn’t been shown to be safer than a slightly faster build, so there’s no single safe number.',
+      `grows the long run by at least 0.5 km and at most about 14% a week (and never more than ${Object.entries(DIST).map(([k, d]) => `${d.inc} km for ${short[k]}`).join(', ')}). Your total weekly distance also grows by no more than about 14% on your last full week: if it would, easy runs are trimmed first. If there isn’t time to reach the usual peak safely, the plan peaks lower and tells you.`,
+      'moderate', src(6, 7), 'the biggest two-week increase in any test plan is 33% (average 20%). The highest figures are in the smallest plans, where a 0.5 km step on a 2 km run is a big percentage but a small amount of running.')}
     ${principle('4. Phases: base, build, peak, taper',
       'Organising training into phases that move from general fitness to race-specific work (periodisation) is a long-standing principle in sports science and coaching.',
-      'turns extra weeks at the start into easy “foundation” weeks. The rest is about 45% base (easy running, a little speed play), then build (intervals and tempo runs), then one or two peak weeks (the longest long runs and race-pace practice), then the taper.',
+      'turns extra weeks at the start into “foundation” weeks of easy running, where the long run builds gently. Then comes base (about 45% of the build-up: easy running plus gentle speed play like fartlek and hills), build (intervals and tempo runs), one or two peak weeks (the longest long runs and race-pace practice), and the taper.',
       'convention', src(5, 11))}
     ${principle('5. A deload every fourth week',
       'Fitness improves during recovery, and regular lighter weeks are a standard part of periodised training. Research doesn’t fix the exact rhythm or size.',
-      'eases off every fourth week: the long run drops to about 75% and other runs to about 80%, with easier versions of the harder sessions.',
-      'convention', src(5), 'once the build is under way, deload weeks are 11–27% lighter than the week before. The first deload in a plan can be much smaller, because early runs are already at their shortest. Deloads never fall in the peak weeks.')}
+      'eases off every fourth week, aiming for at least 15% less running: a shorter long run, shorter easy runs and gentler versions of the harder sessions. Deloads never fall in the peak weeks.',
+      'convention', src(5), 'deload weeks are typically 10–22% lighter than the week before (median 16%). In the smallest plans, where runs are already at their shortest, the drop can be much smaller.')}
     ${principle('6. Taper before race day',
       'A meta-analysis of tapering studies found the best results come from cutting training volume by about 40–60% over roughly two weeks, while keeping some intensity. Typical gains are around 3% (ranging from about 0.5% to 6%).',
-      'tapers over two weeks for a half marathon (long run about 55% of peak and other runs about 75% in the first week, then a short, easy race week with a few race-pace efforts) and three weeks for a marathon (long runs at 65% then 45% of peak). 5K and 10K plans taper in race week.',
-      'strong', src(3, 4), 'for a half marathon, the first taper week is 25–45% below your peak week and race week is 60–75% below (not counting the race), so the two weeks together fall within the researched range.')}
-    ${principle('7. Paces from your race times',
-      'Riegel’s formula is the standard way to predict race times across distances. Recreational runners tend to slow more over longer distances than it assumes. Daniels’ widely used method sets training paces relative to current race fitness.',
-      'estimates your fitness from the PB closest to your race distance (time × distance ratio<sup>1.06</sup>, or 1.07 when predicting a longer race, to be more cautious). Training paces are set as percentages of the matching 5K pace (table below) and move gradually from today’s fitness towards your goal.',
-      'moderate', src(9, 10, 11))}
+      'tapers over two weeks for a Half Marathon (long run about 55% of peak and other runs about 75% in the first week, then a short race week with shorter easy runs and a few race-pace efforts) and three weeks for a marathon (long runs at 65% then 45% of peak). 5K and 10K plans taper in race week.',
+      'strong', src(3, 4), 'for runners with a base, the first Half Marathon taper week is typically 28–43% below the peak week and race week 50–77% below (not counting the race), which averages out within the researched range. Marathon tapers step down 22–34%, 39–53% and 67–84%.')}
+    ${principle('7. Paces from your current fitness',
+      'Riegel’s formula is the standard way to predict race times across distances, and recreational runners tend to slow more over longer distances than it assumes. Daniels’ widely used method sets training paces from your current race fitness, not your goal, and updates them as you improve.',
+      'estimates your fitness from the PB closest to your race distance (time × distance ratio<sup>1.06</sup>, or 1.07 when predicting a longer race). Training paces come from that fitness, as shares of your 5K pace that match Daniels’ tables (see below). If your goal is faster, paces improve gradually through the plan, but never by more than the realistic improvement used in the goal check. Your goal still sets your race pace.',
+      'moderate', src(9, 10, 11), 'for a 22:00 5K runner, easy runs come out at 5:21–5:54/km, tempo at 4:36–4:47/km and intervals at 4:17–4:28/km, in line with Daniels’ tables for that fitness.')}
     ${principle('8. Effort and the talk test',
       'Perceived exertion and the talk test are well-researched, simple ways to judge intensity, and they adjust naturally for hills, heat, tiredness and pushing a buggy.',
       'gives every run an effort level out of 10 and a plain-English description, such as “you can chat in full sentences”.',
       'strong', src(12, 13))}
     ${principle('9. Spacing hard days',
-      'Coaches alternate hard and easy days so you recover between demanding sessions. It is part of every established training method, but has rarely been tested on its own.',
-      'puts the long run on the day you choose, keeps parkrun on Saturday, and places the harder session as far as possible from both. Easy runs fill the gaps.',
-      'convention', src(11))}
-    ${principle('10. Checking your goal',
+      'Coaches alternate hard and easy days so you recover between demanding sessions. It’s part of every established training method, though rarely tested on its own.',
+      'puts the long run on the day you choose, keeps parkrun on Saturday, and places the harder session as far as possible from both. There’s no fast-finish long run the day after a hard parkrun.',
+      'convention', src(11), 'none of the 216 test plans has two harder sessions on consecutive days.')}
+    ${principle('10. parkrun',
+      'There’s no research on parkrun itself, but it fits the principles above: a harder effort counts towards your weekly hard work, and a relaxed one counts as easy running.',
+      'treats parkrun as one of your weekly runs. On alternate weeks it’s your harder session (steady around marathon effort, or brisk in the build and peak phases) and the midweek run is easy. In the other weeks it’s relaxed, at the top end of easy, and the midweek session is the hard one. Some deload weeks swap in a time trial. Brand-new runners keep parkrun relaxed until the build phase.',
+      'estimate', '')}
+    ${principle('11. Checking your goal',
       'Beginners often improve quickly, but there’s no research-based limit for how fast an individual can improve.',
       'compares your goal with your predicted time today and calls it comfortable, realistic, stretch or very ambitious, allowing about 0.6% improvement a week plus 1% (up to 12%).',
       'estimate', '')}
-    ${principle('11. Buggy runs',
+    ${principle('12. Buggy runs',
       'There is very little research on running with a buggy.',
       'eases buggy-run paces by about 7% and keeps speed sessions, hill reps and parkrun time trials solo, for safety and so those sessions keep their quality.',
       'estimate', '')}
 
     <section class="sheet__sec"><h3>Did we follow our own rules?</h3>
-      <p>We generated a plan for every combination of distance, runs per week, parkrun and starting point (80 plans), measured each one against the principles above, and changed the plan wherever it fell short. Changing the description instead wasn’t an option. The figures above marked “Checked” come from that test.</p></section>
+      <p>We generated 216 test plans covering every distance, short, usual and long plan lengths, three starting points (brand new, returning and experienced), three to five runs a week, with and without parkrun. Then we measured each plan against the principles above. Wherever a plan fell short, we changed how plans are made; changing the description instead wasn’t an option. The “Checked” figures come from that test.</p></section>
 
     <section class="sheet__sec"><h3>The exact numbers</h3>
       <details><summary><span class="t-show">Show the tables</span><span class="t-hide">Hide the tables</span>${ic('chevD')}</summary>
@@ -2457,41 +2542,39 @@ function openRun(id) { sheetId = id; fillRunSheet(); openSheet($('#run-sheet'));
    Hills slope up and back down; intervals step up and down. */
 function profileHTML(r) {
   const B = r.blocks;
-  if (!B || B.length < 2 || !B.some(b => b.l >= 2)) return '';
-  // Show the pattern, not every minute: easy ends get a fixed short width, and the middle shows up to four reps
-  let lead = B[0].l < 1.5 ? B[0] : null, trail = B.length > 1 && B[B.length - 1].l < 1.5 ? B[B.length - 1] : null;
+  if (!B || B.length < 2 || !B.some(b => b.l >= 1.8)) return '';
+  const tot = B.reduce((a, b) => a + b.m, 0);
+  const lead = B[0].l < 1.5 ? B[0] : null, trail = B[B.length - 1].l < 1.5 && B.length > 2 ? B[B.length - 1] : null;
   let midB = B.slice(lead ? 1 : 0, trail ? -1 : undefined);
-  const hardN = midB.filter(b => b.l >= 1.5).length;
-  if (hardN > 4) { let seen = 0; midB = midB.filter(b => (b.l >= 1.5 ? ++seen : seen) <= 4 && !(b.l < 1.5 && seen >= 4)); }
-  const ends = (lead ? 1 : 0) + (trail ? 1 : 0), endW = ends === 2 ? 17 : ends === 1 ? 30 : 0;
-  const midW = 100 - endW * ends, midTot = midB.reduce((a, b) => a + b.m, 0) || 1;
-  const y = l => l < 1.5 ? 30 : l < 2.5 ? 18 : 8, ramp = 1.6;
-  const pts = []; let x = 0, prevY = 30, lastUp = false;
-  const seg = (w, b) => {
-    const x1 = x + w, ty = y(b.l);
-    if (b.s === 'up') { pts.push([x, prevY], [x1, y(3)]); prevY = y(3); lastUp = true; }
-    else if (b.s === 'down') { pts.push([x, prevY], [x1, 30]); prevY = 30; lastUp = false; }
-    else { const r0 = lastUp ? Math.min(7, w / 3) : Math.min(ramp, w / 3); pts.push([x + (pts.length ? r0 : 0), ty], [x1, ty]); prevY = ty; lastUp = false; }
-    x = x1;
+  const midMin = midB.reduce((a, b) => a + b.m, 0);
+  // widths follow real time; inside the main set, draw at most five reps so the pattern stays readable
+  let seen = 0; const shown = midB.filter(b => (b.l >= 1.5 ? ++seen : seen) <= 5 && !(b.l < 1.5 && seen >= 5));
+  const lw = lead ? lead.m / tot * 100 : 0, tw = trail ? trail.m / tot * 100 : 0, mw = 100 - lw - tw;
+  const shownMin = shown.reduce((a, b) => a + b.m, 0) || 1;
+  const y = l => 34 - l * 8.5, pts = [];
+  let x = 0;
+  const step = (x0, x1, l, up) => {
+    const rr = Math.min(1.4, (x1 - x0) / 4);
+    if (up) pts.push([x0 + rr, y(2.6)], [x1 - rr * .3, y(3.2)]);      // hill: effort rises as you climb
+    else pts.push([x0 + (pts.length ? rr : 0), y(l)], [x1, y(l)]);
   };
-  if (lead) seg(endW, lead);
-  midB.forEach(b => seg(b.m / midTot * midW, b));
-  if (trail) seg(endW, trail);
+  if (lead) { step(0, lw, lead.l); x = lw; }
+  shown.forEach(b => { const w = b.m / shownMin * mw; step(x, x + w, b.s === 'down' ? 1 : b.l, b.s === 'up'); x += w; });
+  if (trail) step(x, 100, trail.l);
   const line = pts.map(p => p.map(v => +v.toFixed(2)).join(',')).join(' ');
-  const area = `0,40 ${line} 100,40`;
   const sp = r.spec || {}, F = fmt(state.units);
-  const main = { intervals: () => `${sp.reps} × ${F.rep(sp.m)}, jog ${sp.rest} s`, hills: () => `${sp.reps} × 45 s uphill, jog down`, fartlek: () => `${sp.reps} × 1 min quicker`,
+  const main = { intervals: () => `${sp.reps} × ${F.rep(sp.m)}, ${sp.rest} s jog between`, hills: () => `${sp.reps} × 45 s uphill, jog back down`, fartlek: () => `${sp.reps} × 1 min quicker`,
     tempo: () => sp.split ? `2 × ${sp.mins / 2} min tempo` : `${sp.mins} min tempo`, racepace: () => `${sp.reps > 1 ? `${sp.reps} × ` : ''}${F.dist(sp.rk)} at race pace`,
-    sharpen: () => sp.long ? '3 × 1 km at race pace' : '4 × 400 m at race pace', strides: () => '6 × 20 s strides', shakeout: () => '4 short strides',
-    fastfinish: () => `Last ${F.dist(sp.ff)} at race pace`, 'parkrun-tempo': () => '3 km tempo', 'parkrun-tt': () => '5K hard' }[r.kind];
+    sharpen: () => sp.long ? '3 × 1 km at race pace' : '4 × 400 m at race pace', strides: () => 'Easy run, then 6 × 20 s strides', shakeout: () => 'Very easy, then 4 strides',
+    fastfinish: () => `Easy, then the last ${F.dist(sp.ff)} at race pace`, 'parkrun-tempo': () => 'Easy, 3 km tempo, easy', 'parkrun-tt': () => 'Warm up, then 5K hard' }[r.kind];
   const mid = main ? main() : '';
-  const wu = lead && lead.m === 10 && trail && trail.m === 10;
-  const cols = ends === 2 ? 'auto 1fr auto' : ends === 1 && lead ? 'auto 1fr' : '1fr';
-  const labels = ends === 2 ? `<span>${wu ? 'Warm up' : 'Easy'}</span><span>${mid}</span><span>${wu ? 'Cool down' : 'Easy'}</span>`
-    : ends === 1 && lead ? `<span>Easy</span><span>${mid}</span>` : `<span>${mid}</span>`;
-  return `<figure class="profile" role="img" aria-label="Session shape: ${wu ? 'warm up, ' : ''}${mid}${wu ? ', cool down' : ''}.">
-    <svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><polygon class="fill" points="${area}"/><polyline class="line" points="${line}"/></svg>
-    <div class="profile__labels" style="grid-template-columns:${cols}" aria-hidden="true">${labels}</div></figure>`;
+  const m = x => `${Math.round(x)} min`;
+  const ends = lead && trail ? `<span>${lead.m === 10 ? 'Warm up' : 'Easy'} · ${m(lead.m)}</span><span>${trail.m === 10 ? 'Cool down' : 'Easy'} · ${m(trail.m)}</span>`
+    : lead ? `<span>${r.kind === 'parkrun-tt' ? 'Warm up' : 'Easy'} · ${m(lead.m)}</span><span>${{ fastfinish: 'Race pace', strides: 'Strides', shakeout: 'Strides', 'parkrun-tt': '5K hard' }[r.kind] || 'Harder'} · ${m(midMin)}</span>` : '';
+  return `<figure class="profile" role="img" aria-label="Session shape: ${mid}. About ${Math.round(tot)} minutes.">
+    <p class="profile__main">${mid}</p>
+    <svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><polygon class="fill" points="0,40 ${line} 100,40"/><polyline class="line" points="${line}"/></svg>
+    ${ends ? `<div class="profile__ends" aria-hidden="true">${ends}</div>` : ''}</figure>`;
 }
 function moverHTML(r) {
   const p = state.profile, wk = weekOf(r), start = parseISO(state.start), race = parseISO(p.date);
