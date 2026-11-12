@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Typography · TW/ds</title>
+<meta name="description" content="Meet the faces, and how they work together.">
+<meta name="theme-color" content="#FAF8F3">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/tools/ds/fonts/schibsted-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/tools/ds/fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/tools/ds/tokens.css">
+<link rel="stylesheet" href="/tools/ds/components.css">
+<link rel="stylesheet" href="/tools/ds/templates.css">
+<link rel="stylesheet" href="/tools/ds/docs.css">
+<link rel="stylesheet" href="/tools/ds/docs-v4.css">
+<link rel="stylesheet" href="/tools/ds/docs-v4b.css">
+<link rel="stylesheet" href="/tools/ds/docs-v5.css">
+<link rel="stylesheet" href="/tools/ds/docs-v6.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('tw-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body data-context="content" data-scope>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="rail" id="index" aria-label="Site">
+    <a class="rail__close" href="#main" aria-label="Close index"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></a>
+    <a class="mark" href="/tools/ds/" aria-label="TW/ds home"><span class="reg"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i><span class="mono mark__t">TW<span class="mark__s">/</span>ds</span></span></a>
+    <p class="rail__ver mono">v0.2 · draft · <a href="/tools/ds/llms.txt">plain text</a></p>
+    <button class="rail__search" type="button" data-cmdk><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span><kbd>⌘K</kbd></button>
+    <nav aria-label="Pages"><ol class="rail__list"><li><a href="/tools/ds/"><span class="mono">00</span>Overview</a></li><li><a href="/tools/ds/principles/"><span class="mono">01</span>Principles</a></li><li><a href="/tools/ds/character/"><span class="mono">02</span>Character</a></li><li><a href="/tools/ds/type/" aria-current="page"><span class="mono">03</span>Typography</a><ol class="rail__sub"><li><a href="#the-cast">The cast</a></li><li><a href="#so-what">So what</a></li><li><a href="#in-practice">In practice</a></li><li><a href="#for-ai">For AI</a></li></ol></li><li><a href="/tools/ds/colour/"><span class="mono">04</span>Colour</a></li><li><a href="/tools/ds/space/"><span class="mono">05</span>Space and layout</a></li><li><a href="/tools/ds/imagery/"><span class="mono">06</span>Imagery and ornament</a></li><li><a href="/tools/ds/motion/"><span class="mono">07</span>Motion</a></li><li><a href="/tools/ds/voice/"><span class="mono">08</span>Voice</a></li><li><a href="/tools/ds/patterns/"><span class="mono">09</span>Patterns</a></li></ol></nav>
+    <div class="rail__foot">
+      <a href="https://github.com/tdwndr/site/tree/main/tools/ds">GitHub</a>
+      <button type="button" class="rail__theme mono" data-theme-toggle aria-label="Colour theme">Theme: system</button>
+    </div>
+  </aside>
+  <main id="main" tabindex="-1">
+    <header class="band" data-context="marketing"><div class="band__in"><span class="band__no mono">03</span><span class="eyebrow"><b>Stop 3 of 9</b> · Typography</span><h1>A small cast, each with a <span class="pen">part<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 6c14-6 22 4 36-1s24 3 38-1 18 2 25-1"/></svg></span></h1><p class="band__belief">A sans that speaks, a sans that reads, a mono for detail and a serif for quotes.</p><p class="band__why">I’d rather have a few faces that each do one thing well. Usually three on a screen is plenty.</p><i class="band__reg tl"></i><i class="band__reg br"></i></div></header>
+    <div class="page">
+<section class="story" id="the-cast" data-nav="The cast">
+  <span class="kicker">Belief</span>
+  <h2 id="meet-the-cast">Meet the cast<a class="anchor" href="#meet-the-cast" aria-label="Link to this section">#</a></h2>
+  <div class="cast">
+    <figure style="background:var(--accent);color:#FAF8F3"><span class="eyebrow">Headlines</span><b>Schibsted Grotesk</b><em>Editorial, with a bit of bite.</em><span class="glyph" style="font-family:var(--font-display);font-weight:500;letter-spacing:-.04em">Rg</span></figure>
+    <figure style="background:var(--paper-2)"><span class="eyebrow">Reading</span><b>IBM Plex Sans</b><em>The workhorse. Stays out of the way.</em><span class="glyph" style="font-family:var(--font-body)">Rg</span></figure>
+    <figure style="background:var(--ink);color:var(--paper)"><span class="eyebrow">Detail</span><b>Geist Mono</b><em>Labels, numbers, code.</em><span class="glyph" style="font-family:var(--font-mono)">R1</span></figure>
+    <figure style="background:var(--highlighter);color:#2A211B"><span class="eyebrow">Quotes</span><b>Newsreader</b><em>Quiet and exact. The classic voice.</em><span class="glyph" style="font-family:var(--font-serif);font-style:italic">Rg</span></figure>
+  </div>
+</section>
+
+<section class="story" id="so-what" data-nav="So what">
+  <span class="kicker">So what</span>
+  <h2 id="how-they-work-together">How they work together<a class="anchor" href="#how-they-work-together" aria-label="Link to this section">#</a></h2>
+  <ul class="notes">
+    <li><b>Schibsted for headlines,</b><span>in sentence case, usually medium weight.</span></li>
+    <li><b>Plex for reading,</b><span>with room between the lines.</span></li>
+    <li><b>Newsreader for a whole quote or heading,</b><span>never a single word dropped into a sans headline.</span></li>
+    <li><b>The underline for emphasis.</b><span>Drawn, not typed. No handwriting fonts.</span></li>
+  </ul>
+</section>
+
+<section class="story" id="in-practice" data-nav="In practice">
+  <span class="kicker">In practice</span>
+  <h2 id="try-the-scale">Try the scale<a class="anchor" href="#try-the-scale" aria-label="Link to this section">#</a></h2>
+  <p class="lead">Big, clear steps between sizes, so a page reads in the right order. On the front door, headlines can go poster-sized.</p>
+  <div class="versions versions--soft">
+    <figure class="version"><div class="version__stage scaler" data-ratio="1.2"><p class="s4">Page title</p><p class="s2">Section heading</p><p class="s1">A lede to set things up</p><p>Body text.</p></div><figcaption>1.2 · gentle</figcaption></figure>
+    <figure class="version"><div class="version__stage scaler" data-ratio="1.333"><p class="s4">Page title</p><p class="s2">Section heading</p><p class="s1">A lede to set things up</p><p>Body text.</p></div><figcaption>1.333 <span class="tedtag">my usual</span></figcaption></figure>
+    <figure class="version"><div class="version__stage scaler" data-ratio="1.5"><p class="s4">Page title</p><p class="s2">Section heading</p><p class="s1">A lede to set things up</p><p>Body text.</p></div><figcaption>1.5 · dramatic</figcaption></figure>
+  </div>
+  <div class="exs" style="margin-top:var(--space-7)">
+    <figure class="ex ex--do"><div class="ex__stage"><p style="font:500 var(--step-3)/1.05 var(--font-display);letter-spacing:-.025em">Making big things <span class="pen">happen<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 6c14-6 22 4 36-1s24 3 38-1 18 2 25-1"/></svg></span></p></div><figcaption>Emphasis with the underline.</figcaption></figure>
+    <figure class="ex ex--dont"><div class="ex__stage"><p style="font:500 var(--step-3)/1.05 var(--font-display);letter-spacing:-.025em">Making <span style="font-family:var(--font-serif);font-style:italic;font-weight:400">big</span> things happen</p></div><figcaption>A serif word dropped into a sans headline.</figcaption></figure>
+  </div>
+</section>
+
+<section class="story" id="for-ai" data-nav="For AI">
+  <span class="kicker">For AI</span>
+  <h2 id="the-fine-print-for-the-machines">The fine print, for the machines<a class="anchor" href="#the-fine-print-for-the-machines" aria-label="Link to this section">#</a></h2>
+  <div class="aifile"><div class="aifile__bar"><span class="aifile__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="mono">ai/type.md</span><a class="aifile__raw mono" href="/tools/ds/ai/type.md">raw</a></div><p class="aifile__purpose">Set type exactly as Ted expects, with the CSS to do it and the checks that catch common mistakes.</p><pre class="code aifile__md"><code><span class="m-h"># Typography: exact build guide</span>
+
+Purpose: Set type exactly as Ted expects, with the CSS to do it and the checks that catch common mistakes.
+
+If the brief specifies typefaces or a brand, follow the brief and keep only the behaviours below (roles, hierarchy, details).
+
+<span class="m-h">## Faces, files and fallbacks</span>
+Self-hosted woff2 files live in <span class="m-c">`/tools/ds/fonts/`</span> (Latin subsets, SIL OFL). Load them with <span class="m-c">`@font-face`</span> (already in <span class="m-c">`components.css`</span>) and preload the two you need above the fold:
+
+<span class="m-fence">```html</span>
+<span class="m-code">&lt;link rel=&quot;preload&quot; href=&quot;/tools/ds/fonts/schibsted-grotesk.woff2&quot; as=&quot;font&quot; type=&quot;font/woff2&quot; crossorigin&gt;</span>
+<span class="m-code">&lt;link rel=&quot;preload&quot; href=&quot;/tools/ds/fonts/ibm-plex-sans.woff2&quot; as=&quot;font&quot; type=&quot;font/woff2&quot; crossorigin&gt;</span>
+<span class="m-fence">```</span>
+
+Outside this site, the same families are free on Google Fonts. Never substitute Inter, Roboto or a system font as the headline face.
+
+<span class="m-h">## Role map</span>
+<span class="m-li">-</span> Page title (marketing, portfolio): Schibsted Grotesk 500, <span class="m-c">`font-size: var(--h1-poster)`</span>, <span class="m-c">`line-height: 1`</span>, <span class="m-c">`letter-spacing: -0.035em`</span>, max ~14ch.
+<span class="m-li">-</span> Page title (content, app): Schibsted Grotesk 500, <span class="m-c">`var(--step-4)`</span> content, <span class="m-c">`var(--step-3)`</span> app.
+<span class="m-li">-</span> Section heading: Schibsted 500, <span class="m-c">`var(--step-3)`</span>, <span class="m-c">`letter-spacing: -0.02em`</span>.
+<span class="m-li">-</span> Subheading: Schibsted 500, <span class="m-c">`var(--step-2)`</span>.
+<span class="m-li">-</span> Lede: Plex 400, <span class="m-c">`var(--step-1)`</span>, <span class="m-c">`line-height: 1.45`</span>, max ~40ch, often in <span class="m-c">`--muted`</span>.
+<span class="m-li">-</span> Reading text: Plex 400, <span class="m-c">`1rem`</span> to <span class="m-c">`1.06rem`</span>, <span class="m-c">`line-height: 1.8`</span>, max <span class="m-c">`70ch`</span>.
+<span class="m-li">-</span> Interface text: Plex 400 or 500, <span class="m-c">`line-height: 1.5`</span>.
+<span class="m-li">-</span> Label / eyebrow: class <span class="m-c">`.eyebrow`</span> (Plex 500, 0.75rem, uppercase, <span class="m-c">`letter-spacing: 0.22em`</span>, <span class="m-c">`--muted`</span>).
+<span class="m-li">-</span> Data, metadata, code, tokens: Geist Mono 400; figures <span class="m-c">`tabular-nums`</span>; right-aligned in tables (<span class="m-c">`.table .n`</span>).
+<span class="m-li">-</span> Pull quote: class <span class="m-c">`.quote`</span> (Newsreader italic, <span class="m-c">`var(--step-2)`</span>, accent left rule). A whole quote or a whole heading can be Newsreader; a single word inside a sans heading cannot.
+<span class="m-li">-</span> Long-form article title: Newsreader 400 roman, <span class="m-c">`var(--step-4)`</span>, <span class="m-c">`line-height: 1.08`</span>.
+<span class="m-li">-</span> Emphasis in a headline: one drawn underline (<span class="m-c">`.pen`</span>) under a single word. Never set a word in Newsreader inside a Schibsted headline; never mix serif and sans in any heading.
+
+<span class="m-h">## Rules that are easy to get wrong</span>
+<span class="m-li">-</span> Usually no more than three faces on a screen. Display and body are always present; choose mono or serif for the third. If you need both mono and serif on one screen, drop one.
+<span class="m-li">-</span> Sentence case everywhere. Labels are uppercase via CSS (<span class="m-c">`text-transform`</span>), never typed in capitals in the HTML.
+<span class="m-li">-</span> Never use a handwriting or script font. Hand-drawn marks are SVG.
+<span class="m-li">-</span> Headlines: <span class="m-c">`text-wrap: balance`</span>. Paragraphs: <span class="m-c">`text-wrap: pretty`</span>.
+<span class="m-li">-</span> Use <span class="m-c">`font-weight: 500`</span> for Schibsted headings, not 700. Bold body emphasis is 600.
+<span class="m-li">-</span> Emphasis inside text is <span class="m-c">`&lt;mark&gt;`</span> (highlighter) or <span class="m-c">`&lt;strong&gt;`</span>. Do not use colour alone or italics for emphasis in body copy.
+<span class="m-li">-</span> Inline code and token names use <span class="m-c">`&lt;code&gt;`</span>; it renders as a tinted chip.
+<span class="m-li">-</span> Typographic marks: ’ “ ” – − × … (apostrophe, quotes, en dash for ranges, minus, multiply, ellipsis).
+
+<span class="m-h">## Scale</span>
+Ratio 1.333 (perfect fourth) from 1rem: <span class="m-c">`--step--1`</span> 0.75, <span class="m-c">`--step-0`</span> 1, <span class="m-c">`--step-1`</span> 1.333, <span class="m-c">`--step-2`</span> 1.777, <span class="m-c">`--step-3`</span> 2.369, <span class="m-c">`--step-4`</span> 3.157, <span class="m-c">`--step-5`</span> 4.209 (rem). Poster: <span class="m-c">`--h1-poster`</span> (fluid clamp up to about 5.9rem). Use <span class="m-c">`clamp()`</span> for any custom large sizes so type scales fluidly.
+
+<span class="m-h">## Snippet</span>
+<span class="m-fence">```html</span>
+<span class="m-code">&lt;header data-context=&quot;marketing&quot;&gt;</span>
+<span class="m-code">  &lt;span class=&quot;eyebrow&quot;&gt;Design practice · London&lt;/span&gt;</span>
+<span class="m-code">  &lt;h1 style=&quot;font-size:var(--h1-poster)&quot;&gt;Making big things &lt;span class=&quot;pen&quot;&gt;happen&lt;svg viewBox=&quot;0 0 100 10&quot; preserveAspectRatio=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;&lt;path pathLength=&quot;1&quot; d=&quot;M1 6c14-6 22 4 36-1s24 3 38-1 18 2 25-1&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/h1&gt;</span>
+<span class="m-code">  &lt;p class=&quot;lede&quot;&gt;Connecting product, design and strategy to make sense of the chaos.&lt;/p&gt;</span>
+<span class="m-code">&lt;/header&gt;</span>
+<span class="m-fence">```</span>
+
+<span class="m-h">## Check before you finish</span>
+<span class="m-li">-</span> Count the families rendered on the screen: three or fewer.
+<span class="m-li">-</span> No headline in Title Case or all caps.
+<span class="m-li">-</span> No straight quotes or hyphen-minus in visible copy.
+<span class="m-li">-</span> Reading text lines are not wider than ~70 characters.</code></pre></div>
+</section>
+
+    </div>
+    <a class="next" href="/tools/ds/colour/"><span><span class="eyebrow">Next stop · 04</span><b>Colour</b><span class="next__teaser">The palette, and how loud to turn it.</span></span><span class="next__arrow" aria-hidden="true">→</span></a>
+    <footer class="foot">
+      <span class="mono">TW/ds v0.2 · 2026-11-11</span>
+      <a href="/tools/ds/llms.txt">Plain-text version for AI</a>
+      <a href="https://github.com/tdwndr/site/tree/main/tools/ds">Source on GitHub</a>
+    </footer>
+  </main>
+</div>
+<nav class="pillbar" aria-label="Quick">
+  <a href="/tools/ds/"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span class="sr-only">Overview</span></a>
+  <a href="#index"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg><span>Index</span></a>
+  <button type="button" data-cmdk><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span></button>
+</nav>
+<dialog class="cmdk" id="cmdk" aria-label="Search">
+  <form method="dialog" class="cmdk__box">
+    <div class="cmdk__bar"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="cmdk-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search pages, tokens, rules" aria-label="Search"><kbd>esc</kbd></div>
+    <ul class="cmdk__list" id="cmdk-list" role="listbox"></ul>
+  </form>
+</dialog>
+<script src="/tools/ds/ds.js" defer></script>
+</body>
+</html>

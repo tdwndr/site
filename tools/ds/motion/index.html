@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Motion · TW/ds</title>
+<meta name="description" content="Set pieces, feedback and restraint.">
+<meta name="theme-color" content="#FAF8F3">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/tools/ds/fonts/schibsted-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/tools/ds/fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/tools/ds/tokens.css">
+<link rel="stylesheet" href="/tools/ds/components.css">
+<link rel="stylesheet" href="/tools/ds/templates.css">
+<link rel="stylesheet" href="/tools/ds/docs.css">
+<link rel="stylesheet" href="/tools/ds/docs-v4.css">
+<link rel="stylesheet" href="/tools/ds/docs-v4b.css">
+<link rel="stylesheet" href="/tools/ds/docs-v5.css">
+<link rel="stylesheet" href="/tools/ds/docs-v6.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('tw-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body data-context="content" data-scope>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="rail" id="index" aria-label="Site">
+    <a class="rail__close" href="#main" aria-label="Close index"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></a>
+    <a class="mark" href="/tools/ds/" aria-label="TW/ds home"><span class="reg"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i><span class="mono mark__t">TW<span class="mark__s">/</span>ds</span></span></a>
+    <p class="rail__ver mono">v0.2 · draft · <a href="/tools/ds/llms.txt">plain text</a></p>
+    <button class="rail__search" type="button" data-cmdk><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span><kbd>⌘K</kbd></button>
+    <nav aria-label="Pages"><ol class="rail__list"><li><a href="/tools/ds/"><span class="mono">00</span>Overview</a></li><li><a href="/tools/ds/principles/"><span class="mono">01</span>Principles</a></li><li><a href="/tools/ds/character/"><span class="mono">02</span>Character</a></li><li><a href="/tools/ds/type/"><span class="mono">03</span>Typography</a></li><li><a href="/tools/ds/colour/"><span class="mono">04</span>Colour</a></li><li><a href="/tools/ds/space/"><span class="mono">05</span>Space and layout</a></li><li><a href="/tools/ds/imagery/"><span class="mono">06</span>Imagery and ornament</a></li><li><a href="/tools/ds/motion/" aria-current="page"><span class="mono">07</span>Motion</a><ol class="rail__sub"><li><a href="#so-what">So what</a></li><li><a href="#in-practice">In practice</a></li><li><a href="#for-ai">For AI</a></li></ol></li><li><a href="/tools/ds/voice/"><span class="mono">08</span>Voice</a></li><li><a href="/tools/ds/patterns/"><span class="mono">09</span>Patterns</a></li></ol></nav>
+    <div class="rail__foot">
+      <a href="https://github.com/tdwndr/site/tree/main/tools/ds">GitHub</a>
+      <button type="button" class="rail__theme mono" data-theme-toggle aria-label="Colour theme">Theme: system</button>
+    </div>
+  </aside>
+  <main id="main" tabindex="-1">
+    <header class="band" data-context="marketing"><div class="band__in"><span class="band__no mono">07</span><span class="eyebrow"><b>Stop 7 of 9</b> · Motion</span><h1>Take your time, then get out of the <span class="pen">way<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 6c14-6 22 4 36-1s24 3 38-1 18 2 25-1"/></svg></span></h1><p class="band__belief">A little drama where it earns it.</p><p class="band__why">I like motion that feels deliberate: content rising into place, a line drawing itself. It should never stand between someone and what they came for.</p><i class="band__reg tl"></i><i class="band__reg br"></i></div></header>
+    <div class="page">
+<section class="story" id="so-what" data-nav="So what">
+  <span class="kicker">So what</span>
+  <h2 id="slow-for-the-moments-quick-for-the-clicks">Slow for the moments, quick for the clicks<a class="anchor" href="#slow-for-the-moments-quick-for-the-clicks" aria-label="Link to this section">#</a></h2>
+  <ul class="notes">
+    <li><b>Set pieces can take their time.</b><span>Reveals and drawn lines, mostly on the front door.</span></li>
+    <li><b>Feedback is quick.</b><span>Hover and press answer straight away.</span></li>
+    <li><b>Nothing waits on animation.</b><span>The page works without it, and stays still for anyone who asks.</span></li>
+  </ul>
+</section>
+
+<section class="story" id="in-practice" data-nav="In practice">
+  <span class="kicker">In practice</span>
+  <h2 id="three-paces">Three paces<a class="anchor" href="#three-paces" aria-label="Link to this section">#</a></h2>
+  <p style="margin-bottom:var(--space-4)"><button class="btn btn--quiet" type="button" data-replay="#mv1" data-replay-all="#mv2,#mv3">Replay all three</button></p>
+  <div class="movers">
+    <figure class="version"><div class="version__stage play-reveal mover" id="mv1" data-speed="quick"><span class="eyebrow">Design practice</span><p style="font:500 var(--step-2)/1.05 var(--font-display);letter-spacing:-.02em">Making big things happen</p><p class="muted">Product, design and strategy.</p></div><figcaption>Quick · 0.3s</figcaption></figure>
+    <figure class="version"><div class="version__stage play-reveal mover" id="mv2" data-speed="ted"><span class="eyebrow">Design practice</span><p style="font:500 var(--step-2)/1.05 var(--font-display);letter-spacing:-.02em">Making big things happen</p><p class="muted">Product, design and strategy.</p></div><figcaption>Unhurried · 1.1s <span class="tedtag">my usual</span></figcaption></figure>
+    <figure class="version"><div class="version__stage play-reveal mover" id="mv3" data-speed="slow"><span class="eyebrow">Design practice</span><p style="font:500 var(--step-2)/1.05 var(--font-display);letter-spacing:-.02em">Making big things happen</p><p class="muted">Product, design and strategy.</p></div><figcaption>Slow · 2s</figcaption></figure>
+  </div>
+  <div class="exs" style="margin-top:var(--space-7)">
+    <figure class="ex"><div class="ex__stage ex__stage--center" data-context="marketing"><a class="cta" href="#">Hover this</a></div><figcaption>The underline draws.</figcaption></figure>
+    <figure class="ex"><div class="ex__stage ex__stage--center" data-context="app"><button class="btn" type="button">Press this</button></div><figcaption>It turns blue and presses in.</figcaption></figure>
+  </div>
+</section>
+
+<section class="story" id="for-ai" data-nav="For AI">
+  <span class="kicker">For AI</span>
+  <h2 id="the-fine-print-for-the-machines">The fine print, for the machines<a class="anchor" href="#the-fine-print-for-the-machines" aria-label="Link to this section">#</a></h2>
+  <div class="aifile"><div class="aifile__bar"><span class="aifile__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="mono">ai/motion.md</span><a class="aifile__raw mono" href="/tools/ds/ai/motion.md">raw</a></div><p class="aifile__purpose">Add motion that feels deliberate and a little dramatic, without ever hiding content or ignoring reduced-motion settings.</p><pre class="code aifile__md"><code><span class="m-h"># Motion: timings and safe patterns</span>
+
+Purpose: Add motion that feels deliberate and a little dramatic, without ever hiding content or ignoring reduced-motion settings.
+
+<span class="m-h">## Timings</span>
+<span class="m-li">-</span> Set pieces (reveals, drawn strokes): <span class="m-c">`--dur-set`</span> 1.1s with <span class="m-c">`--ease-out`</span> <span class="m-c">`cubic-bezier(.16,1,.3,1)`</span>. Stagger related items by about 0.1s.
+<span class="m-li">-</span> Feedback (hover, press, focus, field labels): <span class="m-c">`--dur-micro`</span> 0.25s with <span class="m-c">`--ease-ui`</span> <span class="m-c">`cubic-bezier(.2,.7,.2,1)`</span>.
+<span class="m-li">-</span> Ambient movement: slow and subtle; one element at a time; pause it under reduced motion.
+
+<span class="m-h">## Where, by context</span>
+<span class="m-li">-</span> Marketing and portfolio: scroll reveals, drawn strokes, an ambient detail.
+<span class="m-li">-</span> Content, app, data: feedback only, plus a line drawing in on a chart if it helps.
+
+<span class="m-h">## The safe reveal pattern</span>
+Content is visible in the HTML. Script adds the motion only when it&#x27;s allowed:
+<span class="m-fence">```html</span>
+<span class="m-code">&lt;script&gt;document.documentElement.classList.add(&#x27;js&#x27;)&lt;/script&gt;</span>
+<span class="m-fence">```</span>
+<span class="m-fence">```css</span>
+<span class="m-code">@media (prefers-reduced-motion: no-preference) {</span>
+<span class="m-code">  .js .reveal { opacity: 0; transform: translateY(14px); }</span>
+<span class="m-code">  .js .reveal.is-in { opacity: 1; transform: none;</span>
+<span class="m-code">    transition: opacity var(--dur-set) var(--ease-out), transform var(--dur-set) var(--ease-out); }</span>
+<span class="m-code">}</span>
+<span class="m-fence">```</span>
+<span class="m-fence">```js</span>
+<span class="m-code">if (!matchMedia(&#x27;(prefers-reduced-motion: reduce)&#x27;).matches &amp;&amp; &#x27;IntersectionObserver&#x27; in window) {</span>
+<span class="m-code">  const els = document.querySelectorAll(&#x27;.reveal&#x27;);</span>
+<span class="m-code">  const io = new IntersectionObserver(es =&gt; es.forEach(e =&gt; { if (e.isIntersecting) { e.target.classList.add(&#x27;is-in&#x27;); io.unobserve(e.target); } }), { rootMargin: &#x27;0px 0px -8% 0px&#x27; });</span>
+<span class="m-code">  els.forEach(el =&gt; io.observe(el));</span>
+<span class="m-code">  setTimeout(() =&gt; els.forEach(el =&gt; el.classList.add(&#x27;is-in&#x27;)), 4000); // never leave content hidden</span>
+<span class="m-code">}</span>
+<span class="m-fence">```</span>
+
+<span class="m-h">## Drawn strokes</span>
+Give the path <span class="m-c">`pathLength=&quot;1&quot;`</span>, then animate <span class="m-c">`stroke-dashoffset`</span> from 1 to 0 with <span class="m-c">`--dur-set`</span> and <span class="m-c">`--ease-out`</span>, inside the same reduced-motion guard.
+
+<span class="m-h">## Don&#x27;t</span>
+<span class="m-li">-</span> Hide content until an animation finishes, or rely on JavaScript to make text visible.
+<span class="m-li">-</span> Scroll-jacking, parallax that fights the scroll, or bouncy springs.
+<span class="m-li">-</span> Animate layout properties (width, height, top) when transform and opacity will do.
+<span class="m-li">-</span> Animate anything when reduced motion is requested.</code></pre></div>
+</section>
+
+    </div>
+    <a class="next" href="/tools/ds/voice/"><span><span class="eyebrow">Next stop · 08</span><b>Voice</b><span class="next__teaser">How I write, shown on a real post.</span></span><span class="next__arrow" aria-hidden="true">→</span></a>
+    <footer class="foot">
+      <span class="mono">TW/ds v0.2 · 2026-11-11</span>
+      <a href="/tools/ds/llms.txt">Plain-text version for AI</a>
+      <a href="https://github.com/tdwndr/site/tree/main/tools/ds">Source on GitHub</a>
+    </footer>
+  </main>
+</div>
+<nav class="pillbar" aria-label="Quick">
+  <a href="/tools/ds/"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span class="sr-only">Overview</span></a>
+  <a href="#index"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg><span>Index</span></a>
+  <button type="button" data-cmdk><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span></button>
+</nav>
+<dialog class="cmdk" id="cmdk" aria-label="Search">
+  <form method="dialog" class="cmdk__box">
+    <div class="cmdk__bar"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="cmdk-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search pages, tokens, rules" aria-label="Search"><kbd>esc</kbd></div>
+    <ul class="cmdk__list" id="cmdk-list" role="listbox"></ul>
+  </form>
+</dialog>
+<script src="/tools/ds/ds.js" defer></script>
+</body>
+</html>
