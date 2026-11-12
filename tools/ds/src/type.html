@@ -1,0 +1,43 @@
+<!--title: Typography | order: 3 | h1: A small cast, each with a <span class="pen">part{{pen}}</span> | belief: A sans that speaks, a sans that reads, a mono for detail and a serif for quotes. | why: I’d rather have a few faces that each do one thing well. Usually three on a screen is plenty. | summary: Meet the faces, and how they work together.-->
+<section class="story" id="the-cast" data-nav="The cast">
+  <span class="kicker">Belief</span>
+  <h2>Meet the cast</h2>
+  <div class="cast">
+    <figure style="background:var(--accent);color:#FAF8F3"><span class="eyebrow">Headlines</span><b>Schibsted Grotesk</b><em>Editorial, with a bit of bite.</em><span class="glyph" style="font-family:var(--font-display);font-weight:500;letter-spacing:-.04em">Rg</span></figure>
+    <figure style="background:var(--paper-2)"><span class="eyebrow">Reading</span><b>IBM Plex Sans</b><em>The workhorse. Stays out of the way.</em><span class="glyph" style="font-family:var(--font-body)">Rg</span></figure>
+    <figure style="background:var(--ink);color:var(--paper)"><span class="eyebrow">Detail</span><b>Geist Mono</b><em>Labels, numbers, code.</em><span class="glyph" style="font-family:var(--font-mono)">R1</span></figure>
+    <figure style="background:var(--highlighter);color:#2A211B"><span class="eyebrow">Quotes</span><b>Newsreader</b><em>Quiet and exact. The classic voice.</em><span class="glyph" style="font-family:var(--font-serif);font-style:italic">Rg</span></figure>
+  </div>
+</section>
+
+<section class="story" id="so-what" data-nav="So what">
+  <span class="kicker">So what</span>
+  <h2>How they work together</h2>
+  <ul class="notes">
+    <li><b>Schibsted for headlines,</b><span>in sentence case, usually medium weight.</span></li>
+    <li><b>Plex for reading,</b><span>with room between the lines.</span></li>
+    <li><b>Newsreader for a whole quote or heading,</b><span>never a single word dropped into a sans headline.</span></li>
+    <li><b>The underline for emphasis.</b><span>Drawn, not typed. No handwriting fonts.</span></li>
+  </ul>
+</section>
+
+<section class="story" id="in-practice" data-nav="In practice">
+  <span class="kicker">In practice</span>
+  <h2>Try the scale</h2>
+  <p class="lead">Big, clear steps between sizes, so a page reads in the right order. On the front door, headlines can go poster-sized.</p>
+  <div class="versions versions--soft">
+    <figure class="version"><div class="version__stage scaler" data-ratio="1.2"><p class="s4">Page title</p><p class="s2">Section heading</p><p class="s1">A lede to set things up</p><p>Body text.</p></div><figcaption>1.2 · gentle</figcaption></figure>
+    <figure class="version"><div class="version__stage scaler" data-ratio="1.333"><p class="s4">Page title</p><p class="s2">Section heading</p><p class="s1">A lede to set things up</p><p>Body text.</p></div><figcaption>1.333 <span class="tedtag">my usual</span></figcaption></figure>
+    <figure class="version"><div class="version__stage scaler" data-ratio="1.5"><p class="s4">Page title</p><p class="s2">Section heading</p><p class="s1">A lede to set things up</p><p>Body text.</p></div><figcaption>1.5 · dramatic</figcaption></figure>
+  </div>
+  <div class="exs" style="margin-top:var(--space-7)">
+    <figure class="ex ex--do"><div class="ex__stage"><p style="font:500 var(--step-3)/1.05 var(--font-display);letter-spacing:-.025em">Making big things <span class="pen">happen{{pen}}</span></p></div><figcaption>Emphasis with the underline.</figcaption></figure>
+    <figure class="ex ex--dont"><div class="ex__stage"><p style="font:500 var(--step-3)/1.05 var(--font-display);letter-spacing:-.025em">Making <span style="font-family:var(--font-serif);font-style:italic;font-weight:400">big</span> things happen</p></div><figcaption>A serif word dropped into a sans headline.</figcaption></figure>
+  </div>
+</section>
+
+<section class="story" id="for-ai" data-nav="For AI">
+  <span class="kicker">For AI</span>
+  <h2>The fine print, for the machines</h2>
+  {{ai:type}}
+</section>

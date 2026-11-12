@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>@@TITLE@@</title>
+<meta name="description" content="@@DESC@@">
+<meta name="theme-color" content="#FAF8F3">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/tools/ds/fonts/schibsted-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/tools/ds/fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/tools/ds/tokens.css">
+<link rel="stylesheet" href="/tools/ds/components.css">
+<link rel="stylesheet" href="/tools/ds/templates.css">
+<link rel="stylesheet" href="/tools/ds/docs.css">
+<link rel="stylesheet" href="/tools/ds/docs-v4.css">
+<link rel="stylesheet" href="/tools/ds/docs-v4b.css">
+<link rel="stylesheet" href="/tools/ds/docs-v5.css">
+<link rel="stylesheet" href="/tools/ds/docs-v6.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('tw-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body data-context="@@CTX@@" data-scope>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="rail" id="index" aria-label="Site">
+    <a class="rail__close" href="#main" aria-label="Close index">@@ICON_CLOSE@@</a>
+    <a class="mark" href="/tools/ds/" aria-label="TW/ds home"><span class="reg"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i><span class="mono mark__t">TW<span class="mark__s">/</span>ds</span></span></a>
+    <p class="rail__ver mono">v@@VERSION@@ · draft · <a href="/tools/ds/llms.txt">plain text</a></p>
+    <button class="rail__search" type="button" data-cmdk>@@ICON_SEARCH@@<span>Search</span><kbd>⌘K</kbd></button>
+    <nav aria-label="Pages"><ol class="rail__list">@@NAV@@</ol></nav>
+    <div class="rail__foot">
+      <a href="@@REPO@@">GitHub</a>
+      <button type="button" class="rail__theme mono" data-theme-toggle aria-label="Colour theme">Theme: system</button>
+    </div>
+  </aside>
+  <main id="main" tabindex="-1">
+    @@HEADER@@
+    <div class="page">
+@@BODY@@
+    </div>
+    @@PAGER@@
+    <footer class="foot">
+      <span class="mono">TW/ds v@@VERSION@@ · @@DATE@@</span>
+      <a href="/tools/ds/llms.txt">Plain-text version for AI</a>
+      <a href="@@REPO@@">Source on GitHub</a>
+    </footer>
+  </main>
+</div>
+<nav class="pillbar" aria-label="Quick">
+  <a href="/tools/ds/">@@ICON_HOME@@<span class="sr-only">Overview</span></a>
+  <a href="#index">@@ICON_MENU@@<span>Index</span></a>
+  <button type="button" data-cmdk>@@ICON_SEARCH@@<span>Search</span></button>
+</nav>
+<dialog class="cmdk" id="cmdk" aria-label="Search">
+  <form method="dialog" class="cmdk__box">
+    <div class="cmdk__bar">@@ICON_SEARCH@@<input id="cmdk-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search pages, tokens, rules" aria-label="Search"><kbd>esc</kbd></div>
+    <ul class="cmdk__list" id="cmdk-list" role="listbox"></ul>
+  </form>
+</dialog>
+<script src="/tools/ds/ds.js" defer></script>
+</body>
+</html>

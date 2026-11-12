@@ -1,0 +1,203 @@
+/* TW/ds components. Reads tokens.css. Plain CSS, no build step, works without JavaScript.
+   Conventions: names say what a thing is, not how it looks. Colour comes from tokens only.
+   Motion is an enhancement inside prefers-reduced-motion: no-preference. */
+
+@font-face { font-family: "Schibsted Grotesk"; src: url(/tools/ds/fonts/schibsted-grotesk.woff2) format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans"; src: url(/tools/ds/fonts/ibm-plex-sans.woff2) format("woff2"); font-weight: 400 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Geist Mono"; src: url(/tools/ds/fonts/geist-mono.woff2) format("woff2"); font-weight: 400 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Newsreader"; src: url(/tools/ds/fonts/newsreader-normal.woff2) format("woff2"); font-weight: 400 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Newsreader"; src: url(/tools/ds/fonts/newsreader-italic.woff2) format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+
+/* Contexts: the same system, dialled for the kind of page. Set data-context on any container. */
+[data-context="marketing"] { --lh: var(--lh-ui); --section: var(--space-8); --control-h: 3rem; }
+[data-context="content"]   { --lh: var(--lh-read); --section: var(--space-7); --control-h: 2.75rem; }
+[data-context="app"]       { --lh: var(--lh-ui); --section: var(--space-5); --control-h: 2.75rem; }
+[data-context="data"]      { --lh: var(--lh-ui); --section: var(--space-5); --control-h: 2.5rem; }
+
+/* Base */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font: 400 var(--step-0)/var(--lh, var(--lh-ui)) var(--font-body);
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  font-variant-numeric: lining-nums;
+}
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
+::selection { background: var(--highlighter); color: #2A211B; }
+img, svg { max-width: 100%; }
+p, ul, ol, dl, figure, blockquote { margin: 0; }
+h1, h2, h3, h4 { margin: 0; font-family: var(--font-display); font-weight: 500; letter-spacing: -0.02em; line-height: var(--lh-tight); text-wrap: balance; }
+h1 { font-size: var(--h1, var(--step-4)); }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-2); letter-spacing: -0.015em; }
+h4 { font-size: var(--step-1); letter-spacing: -0.01em; }
+a { color: inherit; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 0.22em; transition: text-decoration-thickness var(--dur-micro) var(--ease-ui); }
+a:hover { text-decoration-thickness: 2px; }
+strong, b { font-weight: 600; }
+mark { background: linear-gradient(transparent 55%, color-mix(in srgb, var(--highlighter) 85%, transparent) 55% 92%, transparent 92%); color: inherit; padding: 0 0.1em; }
+code, kbd, samp { font-family: var(--font-mono); font-size: 0.9em; }
+:not(pre) > code { background: var(--wash); border-radius: calc(var(--radius) * 0.5); padding: 0.1em 0.4em; }
+kbd { border: 1px solid var(--rule-strong); border-radius: 4px; padding: 0.05em 0.4em; font-size: 0.8em; background: var(--paper); }
+hr { border: 0; border-top: 0; margin: var(--space-6) 0; height: 0; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Type roles */
+.eyebrow { display: block; font: 500 var(--step--1)/1.3 var(--font-body); letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+.mono { font-family: var(--font-mono); }
+.muted { color: var(--muted); }
+.lede { font-size: var(--step-1); line-height: 1.5; max-width: 46ch; text-wrap: pretty; }
+.prose { max-width: var(--measure); line-height: var(--lh-read); }
+.prose > * + * { margin-top: 1.1em; }
+.prose h2 { margin-top: var(--space-7); }
+.prose h3 { margin-top: var(--space-6); }
+.prose h2 + *, .prose h3 + * { margin-top: var(--space-3); }
+.prose ul, .prose ol { padding-left: 1.25em; }
+.prose li + li { margin-top: 0.4em; }
+.prose li::marker { color: var(--accent); }
+.serif-word { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: 0; }
+.quote { font-family: var(--font-serif); font-style: italic; font-size: var(--step-2); line-height: 1.25; max-width: 34ch; border-left: 2px solid var(--accent); padding-left: var(--space-4); }
+.num { font-family: var(--font-serif); font-size: var(--step-4); line-height: 0.9; color: var(--accent); font-weight: 400; font-variant-numeric: lining-nums; }
+.stamp { font: 500 var(--step--1)/1 var(--font-mono); color: var(--muted); }
+
+/* Call to action in marketing and content: a display-type link. Underline draws on hover. */
+.cta {
+  display: inline-flex; align-items: baseline; gap: 0.5em; padding-bottom: 0.15em;
+  font-family: var(--font-display); font-weight: 500; font-size: var(--step-2); letter-spacing: -0.015em; line-height: 1.1;
+  color: var(--ink); text-decoration: none;
+  background: linear-gradient(var(--accent), var(--accent)) left bottom / 0 2px no-repeat;
+  transition: background-size var(--dur-micro) var(--ease-ui);
+}
+.cta::after { content: "→"; color: var(--accent); transition: transform var(--dur-micro) var(--ease-ui); }
+.cta:hover { background-size: 100% 2px; text-decoration: none; }
+.cta:hover::after { transform: translateX(4px); }
+
+/* Primary button in app UI: a solid ink pill. The pill is the one fully round shape (tags aside). */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5em;
+  min-height: var(--control-h, 2.75rem); padding: 0 1.5rem; border: 0; border-radius: var(--radius-pill);
+  font: 500 var(--step-0)/1 var(--font-body); letter-spacing: 0.005em; text-decoration: none;
+  background: var(--ink); color: var(--paper); cursor: pointer;
+  transition: background var(--dur-micro) var(--ease-ui), color var(--dur-micro) var(--ease-ui), transform var(--dur-micro) var(--ease-ui);
+}
+.btn:hover { background: var(--accent); color: var(--on-accent); text-decoration: none; }
+.btn:active { transform: scale(0.98); }
+.btn--quiet { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--rule-strong); }
+.btn--quiet:hover { background: var(--wash); color: var(--ink); }
+.btn[disabled], .btn[aria-disabled="true"] { opacity: 0.4; pointer-events: none; }
+
+/* Fields: floating label. The label sits inside until there is a value. Requires placeholder=" ". */
+.field { position: relative; display: block; }
+.field input, .field textarea, .field select {
+  width: 100%; min-height: calc(var(--control-h, 2.75rem) + 0.5rem); padding: 1.45rem 0.9rem 0.45rem;
+  font: 400 var(--step-0)/1.3 var(--font-body); color: var(--ink);
+  background: var(--paper); border: 1px solid var(--rule-strong); border-radius: var(--radius);
+  transition: border-color var(--dur-micro) var(--ease-ui), box-shadow var(--dur-micro) var(--ease-ui);
+}
+.field textarea { min-height: 7rem; resize: vertical; }
+.field label {
+  position: absolute; left: 0.9rem; top: 0.95rem; color: var(--muted); font-size: var(--step-0); line-height: 1; pointer-events: none;
+  transform-origin: left top; transition: transform var(--dur-micro) var(--ease-ui), color var(--dur-micro) var(--ease-ui);
+}
+.field input:focus + label, .field input:not(:placeholder-shown) + label,
+.field textarea:focus + label, .field textarea:not(:placeholder-shown) + label { transform: translateY(-0.55rem) scale(0.75); }
+.field input:focus, .field textarea:focus { outline: 0; border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.field input:focus + label, .field textarea:focus + label { color: var(--ink); }
+.field__hint { display: block; margin-top: 0.4rem; font-size: var(--step--1); color: var(--muted); }
+.field[aria-invalid="true"] input { border-color: var(--bad); }
+.field[aria-invalid="true"] .field__hint { color: var(--bad); }
+
+/* Error summary: calm, at the top, says what to do. */
+.summary { border: 1px solid var(--bad); border-radius: var(--radius); padding: var(--space-3) var(--space-4); }
+.summary h3 { font-size: var(--step-1); }
+.summary ul { margin: var(--space-2) 0 0; padding-left: 1.2em; }
+.summary a { text-decoration-color: var(--bad); }
+
+/* Card: outlined, with an arrow. Soft shadow is reserved for floating layers. */
+.card {
+  position: relative; display: block; padding: var(--space-4); color: inherit; text-decoration: none;
+  border: 1px solid var(--rule-strong); border-radius: var(--radius); background: var(--paper);
+  transition: border-color var(--dur-micro) var(--ease-ui);
+}
+.card:hover { border-color: var(--ink); text-decoration: none; }
+.card::after { content: "↗"; position: absolute; top: var(--space-3); right: var(--space-4); color: var(--accent); font-size: var(--step-1); transition: transform var(--dur-micro) var(--ease-ui); }
+.card:hover::after { transform: translate(3px, -3px); }
+.card h3 { font-size: var(--step-1); padding-right: 2rem; }
+.card p { margin-top: var(--space-2); color: var(--muted); font-size: 0.95rem; }
+.card .eyebrow { margin-bottom: var(--space-2); }
+
+/* Tag: tinted pill. */
+.tag { display: inline-flex; align-items: center; padding: 0.15em 0.75em; border-radius: var(--radius-pill); background: var(--wash); color: var(--accent); font: 500 var(--step--1)/1.6 var(--font-body); }
+.tag--good { color: var(--good); background: color-mix(in srgb, var(--good) 10%, var(--paper)); }
+.tag--bad { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, var(--paper)); }
+.tag--warn { color: var(--warn); background: color-mix(in srgb, var(--warn) 10%, var(--paper)); }
+
+/* Table: hairline rows, mono figures. */
+.table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.table th { text-align: left; font: 500 var(--step--1)/1.3 var(--font-body); letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); padding: var(--space-2) var(--space-3) var(--space-2) 0; border-bottom: 1px solid var(--rule-strong); }
+.table td { padding: var(--space-3) var(--space-3) var(--space-3) 0; border-bottom: 1px solid var(--rule); vertical-align: baseline; }
+.table .n { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; padding-right: 0; }
+.table th.n { text-align: right; }
+.cellbar { display: block; height: 0.5rem; border-radius: 99px; background: var(--rule); position: relative; min-width: 6rem; }
+.cellbar::after { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--v); border-radius: inherit; background: var(--accent); }
+
+/* Code */
+pre.code { margin: 0; padding: var(--space-3) var(--space-4); background: var(--wash); border-radius: var(--radius); overflow-x: auto; font: 400 0.85rem/1.65 var(--font-mono); tab-size: 2; position: relative; }
+pre.code code { font: inherit; background: none; padding: 0; }
+.copy { position: absolute; top: 0.5rem; right: 0.5rem; padding: 0.2em 0.7em; border: 1px solid var(--rule-strong); border-radius: var(--radius-pill); background: var(--paper); color: var(--ink); font: 500 0.72rem/1.6 var(--font-mono); cursor: pointer; }
+.copy:hover { border-color: var(--ink); }
+.copy[data-done] { color: var(--good); border-color: var(--good); }
+.copy--inline { position: static; margin-left: 0.5rem; vertical-align: middle; }
+
+/* Notes with a reason: every rule gets one line of why. */
+.why { display: grid; grid-template-columns: auto 1fr; gap: 0 var(--space-3); margin-top: var(--space-2); color: var(--muted); font-size: 0.95rem; }
+.why::before { content: "Why"; font: 500 var(--step--1)/1.9 var(--font-mono); color: var(--accent); }
+.note { padding: var(--space-3) var(--space-4); border-radius: var(--radius); background: var(--wash); }
+.note > * + * { margin-top: 0.5em; }
+
+/* Ornament: printer's proof */
+.reg { position: relative; padding: var(--space-4); }
+.reg > i { position: absolute; width: 1rem; height: 1rem; color: var(--muted); font-style: normal; font-family: var(--font-mono); font-size: 1rem; line-height: 1rem; text-align: center; pointer-events: none; }
+.reg > i::before { content: "+"; }
+.reg > i.tl { top: -0.5rem; left: -0.5rem; } .reg > i.tr { top: -0.5rem; right: -0.5rem; } .reg > i.bl { bottom: -0.5rem; left: -0.5rem; } .reg > i.br { bottom: -0.5rem; right: -0.5rem; }
+.gridlines { background-image: linear-gradient(var(--rule) 1px, transparent 1px), linear-gradient(90deg, var(--rule) 1px, transparent 1px); background-size: 1.5rem 1.5rem; }
+.pen { position: relative; display: inline-block; white-space: nowrap; }
+.pen > svg { position: absolute; left: -2%; bottom: -0.14em; width: 104%; height: 0.3em; overflow: visible; pointer-events: none; }
+.pen path { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.duo { position: relative; overflow: hidden; background: var(--accent); border-radius: var(--radius); }
+.duo img { display: block; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.15); mix-blend-mode: luminosity; }
+.icon { width: 1.5rem; height: 1.5rem; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+/* Navigation: floating pill bar for phones */
+.pillbar { position: fixed; z-index: 30; left: 50%; bottom: max(1rem, env(safe-area-inset-bottom)); transform: translateX(-50%); display: flex; gap: 0.25rem; padding: 0.35rem; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--paper) 78%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--rule); box-shadow: var(--shadow-float); }
+.pillbar a, .pillbar button { display: inline-flex; align-items: center; gap: 0.4rem; min-height: 2.75rem; padding: 0 1rem; border: 0; border-radius: var(--radius-pill); background: none; color: var(--ink); font: 500 0.9rem/1 var(--font-body); text-decoration: none; cursor: pointer; }
+.pillbar [aria-current="page"] { background: var(--ink); color: var(--paper); }
+
+/* Loading: a thin line */
+.loading-line { height: 2px; background: var(--rule); border-radius: 2px; overflow: hidden; position: relative; }
+.loading-line::after { content: ""; position: absolute; inset: 0 auto 0 0; width: 30%; background: var(--accent); }
+@media (prefers-reduced-motion: no-preference) { .loading-line::after { animation: tw-load 1.4s var(--ease-ui) infinite; } }
+@keyframes tw-load { from { transform: translateX(-100%); } to { transform: translateX(340%); } }
+
+/* Data */
+.chart { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { font-family: var(--font-mono); font-size: 10px; fill: var(--muted); }
+.chart .t-ink { fill: var(--ink); }
+.chart .grid { stroke: var(--rule-strong); stroke-width: 1; stroke-dasharray: 2 4; }
+.chart .axis { stroke: var(--ink); stroke-width: 1; }
+.chart .s-accent { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.chart .s-grey { fill: none; stroke: var(--rule-strong); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.chart .pt { fill: var(--paper); stroke: var(--accent); stroke-width: 1.5; }
+.chart .pt-grey { fill: var(--paper); stroke: var(--rule-strong); stroke-width: 1.5; }
+.chart .t-accent { fill: var(--accent); font-weight: 500; }
+.stat { display: grid; gap: 0.25rem; }
+.stat__value { font: 500 var(--step-4)/1 var(--font-display); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.stat__delta { font: 500 0.85rem/1.4 var(--font-mono); color: var(--muted); }
+
+/* Reveal: content is visible by default. Motion is an enhancement. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal { opacity: 0; transform: translateY(14px); }
+  .js .reveal.is-in { opacity: 1; transform: none; transition: opacity var(--dur-set) var(--ease-out), transform var(--dur-set) var(--ease-out); transition-delay: var(--d, 0s); }
+  .js .pen.is-pending > svg { clip-path: inset(-60% 100% -60% -4%); }
+  .js .pen.is-in > svg { clip-path: inset(-60% -4% -60% -4%); transition: clip-path var(--dur-set) var(--ease-out) 0.35s; }
+}

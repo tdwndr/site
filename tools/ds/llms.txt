@@ -1,0 +1,513 @@
+# TW/ds: principles and guardrails for Ted Winder
+
+A default steer for AI building sites, apps and copy for Ted Winder. The brief and any more specific direction always outrank it. Each section below is also served as its own file under /tools/ds/ai/.
+
+
+---
+
+# Principles: how to decide like Ted
+
+Purpose: Turn Ted Winder's principles into decisions, checks and questions when you generate anything for him.
+
+Status: a default steer, not a set of absolutes. Ted's view is nuanced; use judgement and treat these as strong defaults. The brief, a client's brand or more specific direction from Ted always outrank it. Use these to fill gaps and break ties, never to overrule a decision that's already been made.
+
+## The order of authority
+1. The brief and anything Ted has said in this conversation.
+2. Established character in the thing you're editing (match it; don't restyle it).
+3. These principles.
+4. The rest of TW/ds (character, type, colour, space, imagery, motion, voice, patterns).
+
+When two principles conflict, the lower number wins: 1 Detail, 2 Opinion, 3 Plain language, 4 Space, 5 Own it.
+
+## Turning each principle into checks
+
+### 1. Delight lives in details, not features
+Before building, name where the finish goes (usually the first screen, the most repeated action, the headline). Then check your output for:
+- Curly quotes and apostrophes (’ “ ”), never straight ones, in visible copy.
+- A true minus sign (−, U+2212) for negative numbers; consistent decimals within a column; `font-variant-numeric: tabular-nums` on figures in tables.
+- `text-wrap: balance` on headlines so no word sits alone on the last line.
+- Designed empty, loading, error and focus states for every interactive component you add.
+If time or scope is short, cut a feature rather than shipping it half-finished.
+
+### 2. Have an opinion, then defend it
+- Usually one primary action per view (`.btn` or `.cta`), with the rest visibly secondary (`.btn--quiet`, text links).
+- Headings state the idea or the finding, not the topic. "Sessions are up 103% on last year", not "Sessions".
+- When you present options to Ted, lead with a recommendation and one line of reasoning.
+- If you can't give a one-line reason for a design choice, choose differently.
+
+### 3. Plain language wins
+- Write the copy before styling it. Layout serves the words.
+- Prefer short sentences. If a sentence needs rereading, split it.
+- Remove woolly, corporate phrasing: if the sentence could sit in any company's annual report unchanged, rewrite it with something specific.
+- Use a word instead of an icon unless the icon is universal (search, close, home).
+
+### 4. Space is not wasted
+- Default to generous spacing, then tighten only for app and data contexts.
+- Separate groups with space before adding lines, borders or boxes.
+- Keep reading text near 70 characters wide.
+- If a screen feels busy, remove something before shrinking anything.
+
+### 5. Own it
+- Never leave a template or component in its default state: every page needs at least one considered, recognisable choice from TW/ds.
+- Signature moves, at most one or two per screen: the registration-mark frame, one drawn underline in a headline, a big numeral.
+- Sign things: the TW/ds mark in the corner, a byline on writing, a short personal note on first run.
+
+## Beliefs underneath (in Ted's words)
+- "We'll learn by making things, not by talking about them." Build a working version early; iterate in code.
+- "Doing what it takes ... without getting protective about process, craft or title." Be pragmatic; the system bends to the brief.
+- "The tools will change ... the importance of inclusion, trust, utility — that's more enduring." Prefer timeless choices; accessibility is non-negotiable.
+- "None of our work means anything unless we can show it's adding tangible value." Make outcomes visible with real numbers.
+- "Success will come through democratisation, not protectionism." Show the working; make things easy to reuse.
+
+## The aim
+People should feel impressed, informed and curious. They must never feel sold to, overwhelmed, or that something is clever for its own sake. The best compliment Ted can get: "It made something complicated feel simple."
+
+## Ted's own warning
+From the very first brief for this system: nothing should feel like a default or an AI-generated style choice. Signs you're drifting there:
+- A centred hero with two equal buttons and a gradient blob behind it.
+- Purple-to-blue gradients, glassmorphism everywhere, glowing borders.
+- Emoji used as section icons in an interface; sparkle icons as decoration.
+- A three-column grid of identical icon-title-text "feature" cards.
+- Generic copy ("Unlock your potential", "Seamless experiences").
+- Inter or another default system-looking font for everything.
+
+## Never invent
+Ted's writing and work rely on real specifics. Do not make up numbers, names, quotes, dates, clients or outcomes. Use a clearly marked placeholder like `[number]` or `[name]` and ask Ted for the real thing.
+
+## Final self-review
+Before you hand anything back, answer each with yes:
+- Does every screen have one obvious primary action and an obvious first thing to read?
+- Would someone feel informed, not sold to?
+- Is there room around the main thing?
+- Are quotes, numbers and states finished properly?
+- Is there one recognisable TW/ds choice, and no more than two?
+- Is every fact real or clearly marked as a placeholder?
+
+---
+
+# Character: does it feel like Ted?
+
+Purpose: Calibrate the overall feel of anything you make for Ted, and test it before you hand it back.
+
+## The identity in one breath
+Particular, esoteric, classy. A Tokyo stationery shop (obsessive about small things) crossed with an independent bookshop (curated, personal). Ted admires classic typography, letterpress and Apple's simplicity, and dislikes trends for trends' sake.
+
+Where it sits (from Ted's interview answers): quiet rather than loud, minimal rather than rich, classic rather than contemporary, precise rather than loose, firmly airy, a little playful, slightly cool in manner. Neutral on soft/sharp, machined/handmade and humble/assertive.
+
+What drives the work, in his words: "Solving problems. Building things. Products, solutions, experiences. Working through the uncertainty to land things with impact."
+
+## Translate traits into moves
+
+- **Quiet:** paper and ink for most of the screen, the accent as a spot. Not colour blocks on content pages.
+- **Minimal:** remove until it hurts, then add one considered detail. Not decorative shapes to fill space.
+- **Classic:** Newsreader for quotes and essay headings, sentence case, real typographic marks. Not trendy display fonts or all-caps headlines.
+- **Precise:** aligned figures, spacing tokens, a strict left edge. Not one-off margins.
+- **Airy:** generous section spacing, about 70 characters per line. Not more cards squeezed above the fold.
+- **A little playful:** one drawn underline or one wry line per piece, at most. Not jokes in errors or bouncy animation.
+- **Curated:** three faces, one accent, a few components. Not a new variant for every case.
+
+## Tone calibration
+- Confident without swagger. State things plainly; don't hype.
+- Generous: team work is "we", and contributors get named. Personal views are "I".
+- Humour is dry and self-deprecating, e.g. "I was politely advised that no, I couldn't remove all the chairs from the boardroom." Never at the reader's expense; never in an error.
+- Creative and commercial together: Ted treats both as non-negotiable, so show value as clearly as craft.
+
+## The test
+Before handing anything back, ask:
+1. Could this have come from anyone? If yes, add one particular TW/ds choice.
+2. Is anything here only because it's fashionable? Remove it.
+3. Does it feel calm at first glance? If not, take something away.
+4. Is the useful thing obvious before the delightful thing?
+5. Would Ted be happy to put his name on it?
+
+## Composition recipe for a signature moment
+Warm paper, a lot of space, a Schibsted Grotesk headline with one drawn underline under a single word, a big Newsreader numeral in the accent, a short paragraph with one highlighter mark, optionally framed by registration marks. That's the whole recipe; don't add more.
+
+---
+
+# Typography: exact build guide
+
+Purpose: Set type exactly as Ted expects, with the CSS to do it and the checks that catch common mistakes.
+
+If the brief specifies typefaces or a brand, follow the brief and keep only the behaviours below (roles, hierarchy, details).
+
+## Faces, files and fallbacks
+Self-hosted woff2 files live in `/tools/ds/fonts/` (Latin subsets, SIL OFL). Load them with `@font-face` (already in `components.css`) and preload the two you need above the fold:
+
+```html
+<link rel="preload" href="/tools/ds/fonts/schibsted-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/tools/ds/fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+```
+
+Outside this site, the same families are free on Google Fonts. Never substitute Inter, Roboto or a system font as the headline face.
+
+## Role map
+- Page title (marketing, portfolio): Schibsted Grotesk 500, `font-size: var(--h1-poster)`, `line-height: 1`, `letter-spacing: -0.035em`, max ~14ch.
+- Page title (content, app): Schibsted Grotesk 500, `var(--step-4)` content, `var(--step-3)` app.
+- Section heading: Schibsted 500, `var(--step-3)`, `letter-spacing: -0.02em`.
+- Subheading: Schibsted 500, `var(--step-2)`.
+- Lede: Plex 400, `var(--step-1)`, `line-height: 1.45`, max ~40ch, often in `--muted`.
+- Reading text: Plex 400, `1rem` to `1.06rem`, `line-height: 1.8`, max `70ch`.
+- Interface text: Plex 400 or 500, `line-height: 1.5`.
+- Label / eyebrow: class `.eyebrow` (Plex 500, 0.75rem, uppercase, `letter-spacing: 0.22em`, `--muted`).
+- Data, metadata, code, tokens: Geist Mono 400; figures `tabular-nums`; right-aligned in tables (`.table .n`).
+- Pull quote: class `.quote` (Newsreader italic, `var(--step-2)`, accent left rule). A whole quote or a whole heading can be Newsreader; a single word inside a sans heading cannot.
+- Long-form article title: Newsreader 400 roman, `var(--step-4)`, `line-height: 1.08`.
+- Emphasis in a headline: one drawn underline (`.pen`) under a single word. Never set a word in Newsreader inside a Schibsted headline; never mix serif and sans in any heading.
+
+## Rules that are easy to get wrong
+- Usually no more than three faces on a screen. Display and body are always present; choose mono or serif for the third. If you need both mono and serif on one screen, drop one.
+- Sentence case everywhere. Labels are uppercase via CSS (`text-transform`), never typed in capitals in the HTML.
+- Never use a handwriting or script font. Hand-drawn marks are SVG.
+- Headlines: `text-wrap: balance`. Paragraphs: `text-wrap: pretty`.
+- Use `font-weight: 500` for Schibsted headings, not 700. Bold body emphasis is 600.
+- Emphasis inside text is `<mark>` (highlighter) or `<strong>`. Do not use colour alone or italics for emphasis in body copy.
+- Inline code and token names use `<code>`; it renders as a tinted chip.
+- Typographic marks: ’ “ ” – − × … (apostrophe, quotes, en dash for ranges, minus, multiply, ellipsis).
+
+## Scale
+Ratio 1.333 (perfect fourth) from 1rem: `--step--1` 0.75, `--step-0` 1, `--step-1` 1.333, `--step-2` 1.777, `--step-3` 2.369, `--step-4` 3.157, `--step-5` 4.209 (rem). Poster: `--h1-poster` (fluid clamp up to about 5.9rem). Use `clamp()` for any custom large sizes so type scales fluidly.
+
+## Snippet
+```html
+<header data-context="marketing">
+  <span class="eyebrow">Design practice · London</span>
+  <h1 style="font-size:var(--h1-poster)">Making big things <span class="pen">happen<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 6c14-6 22 4 36-1s24 3 38-1 18 2 25-1"/></svg></span></h1>
+  <p class="lede">Connecting product, design and strategy to make sense of the chaos.</p>
+</header>
+```
+
+## Check before you finish
+- Count the families rendered on the screen: three or fewer.
+- No headline in Title Case or all caps.
+- No straight quotes or hyphen-minus in visible copy.
+- Reading text lines are not wider than ~70 characters.
+
+---
+
+# Colour: tokens, budgets and swaps
+
+Purpose: Use colour the way Ted does: paper and ink first, colour where it means something, bolder on the front door, with exact tokens and a procedure for changing the hue.
+
+## Tokens (light)
+- `--paper` #FAF8F3 warm white: page background.
+- `--ink` #2A211B warm black: all body text (14.9:1 on paper).
+- `--muted` ink at 72% over paper (#645D57, 6.1:1): secondary text. Never lighter than this.
+- `--rule` ink at 14%: hairlines. `--rule-strong` ink at 38%: borders on cards and fields.
+- `--accent` #1A33F5 (the tedw.co.uk blue, 7.0:1 on paper): links, arrows, highlights, the key chart series, button hover.
+- `--on-accent` #FFFFFF: text on an accent fill.
+- `--wash` accent at 9%: tinted chips and tags.
+- `--highlighter` #FFD98A: `<mark>` only.
+- `--good` #2F6B4F, `--bad` #A63D2F, `--warn` #8A5B00: status, always with a word or icon.
+Dark values are generated in `tokens.css` and switch with `prefers-color-scheme` (or `data-theme="dark"` on `<html>`).
+
+## How much colour (a judgement, not a quota)
+Ted's default is restraint: colour should point at something. How loud depends on the context.
+- Long reads, data and most app screens: mostly paper and ink, with the accent on links, highlights, the key data point and the primary action.
+- Portfolio, marketing and launch moments: bolder is welcome. Big accent blocks, full-bleed bands and duotone imagery all work here (this site's page headers are an example).
+- One accent plus the highlighter is the usual palette. A project with its own palette can use more colours; keep each one purposeful.
+- If a screen starts to feel like it's shouting or selling, pull it back.
+
+## Charts
+Default: the key series in `var(--accent)`, everything else in `var(--rule-strong)`, labelled directly at the line end. If a chart genuinely needs several series to be told apart, use as few hues as possible and still label directly.
+
+## Swapping the accent for another project
+1. Set `--accent` on `:root` (or on a container with `data-scope` for a local swap; derived tokens recompute there).
+2. Check contrast against `--paper`: text in the accent needs 4.5:1. If it fails, darken the hue (lower lightness in HSL) until it passes, and use that as `--accent`.
+3. Set `--on-accent` to `#FFFFFF` for dark accents or `#14161B` for light ones.
+4. Keep paper and ink warm, and keep the colour purposeful.
+
+```css
+:root { --accent: #0B7A4B; --on-accent: #FFFFFF; }
+```
+
+## Texture (marketing surfaces only)
+```css
+.texture {
+  background: linear-gradient(135deg, var(--paper), color-mix(in srgb, var(--accent) 22%, var(--paper)));
+  position: relative;
+}
+.texture::after { content: ""; position: absolute; inset: 0; opacity: .35; mix-blend-mode: multiply;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E"); }
+```
+Gentle only: if the gradient is the first thing you notice, it's too strong.
+
+## Don't
+- Pure #FFFFFF backgrounds or #000000 text.
+- Grey text lighter than `--muted`.
+- Colour used everywhere at once, so nothing stands out.
+- Charts where every series competes for attention.
+- Colour as the only signal for state.
+
+---
+
+# Space and layout: recipes
+
+Purpose: Lay out pages and screens with the right amount of room for each context, using the spacing tokens and two layouts.
+
+## Spacing tokens
+`--space-1` 0.25rem · `--space-2` 0.5 · `--space-3` 1 · `--space-4` 1.5 · `--space-5` 2 · `--space-6` 3 · `--space-7` 4 · `--space-8` 6 · `--space-9` 8. Prefer the tokens for gaps, padding and margins.
+
+## Room by context
+- Marketing and portfolio: sections `--space-8` to `--space-9` apart; hero top padding up to `--space-9`. Line height 1.5 for display copy.
+- Long-form content: sections `--space-7` apart; paragraphs `line-height: 1.8`; text column `max-width: 70ch`.
+- App: sections `--space-5` apart; card padding `--space-4`; controls 2.75rem tall.
+- Data: as app, slightly tighter (`--space-4` between related blocks).
+Set `data-context="marketing|content|app|data"` on the page or section; `components.css` adjusts line height, section spacing and control height.
+
+## Layouts
+Single centred column (reading, marketing):
+```css
+.column { max-width: 70ch; margin-inline: auto; padding-inline: clamp(1.25rem, 5vw, 4rem); }
+```
+Sidebar and content (docs, apps):
+```css
+.shell { display: grid; grid-template-columns: 16rem minmax(0, 1fr); min-height: 100vh; }
+@media (max-width: 56rem) { .shell { grid-template-columns: 1fr; } }
+```
+Text is left-aligned by default; a centred line is fine as an occasional exception. Full-width bands are allowed on marketing pages, but text inside them still stops at a reading width.
+
+## Separation, in order of preference
+1. Space (`--space-5` or more between groups).
+2. A change of surface (`--paper-2` or `--wash` background) for a whole band.
+3. A 1px `--rule` line.
+Avoid heavy rules, double borders and boxed sections.
+
+## Shape
+- `--radius` (0.5rem) for cards, fields, panels and code. `--radius-pill` only for the filled app button, tags and the floating nav bar.
+- 1px lines: `--rule` for hairlines, `--rule-strong` for card and field borders.
+- `--shadow-float` for soft shadows. Use it for things that float (menus, sheets, dialogs, the pill bar) and sparingly elsewhere.
+
+## Responsive
+One fluid layout. Use `clamp()` for type and padding; add a breakpoint only where the layout breaks (the shell collapses below 56rem). Touch targets at least 44px.
+
+## Check before you finish
+- Is there one obvious first thing on each screen, with space around it?
+- Any centred paragraphs? Left-align them.
+- Any boxes or rules that space could replace?
+- Any spacing values that aren't tokens?
+
+---
+
+# Imagery and ornament: specs and snippets
+
+Purpose: Draw icons, treat photographs, make hand-drawn marks and use print ornament exactly as Ted expects, and know when to stop.
+
+## Icons
+- 24×24 viewBox, `fill: none`, `stroke: currentColor`, `stroke-width: 1.75`, round caps and joins. Class `.icon` (1.5rem).
+- Lucide-style geometry is compatible; set the stroke width to 1.75.
+- Alone only for universal actions (search, close, home, back). Anything else gets a visible word. Icon-only buttons need `aria-label`.
+```html
+<button class="btn" type="button">
+  <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>New project
+</button>
+```
+
+## Photographs
+- Duotone in the accent is the go-to treatment for making photographs feel like a set (greyscale image, luminosity blend over the accent). Whatever treatment you choose, apply it consistently across a page.
+```html
+<div class="duo" style="aspect-ratio:16/10"><img src="photo.webp" alt="What the photo shows"></div>
+```
+- Meaningful images get descriptive alt text; decorative ones get `alt=""`.
+- Use the photographs Ted provides. Don't generate or source stock imagery of people without asking.
+
+## Hand-drawn marks (SVG)
+Draw marks as SVG paths, never with a handwriting font.
+- Strokes 2 to 3px, `stroke-linecap: round`, no fill.
+- Colours: `var(--accent)` or `var(--ink)` only.
+- Slightly irregular curves (cubic beziers with uneven control points), never perfect geometry.
+- Pen underline under one word:
+```html
+<span class="pen">count<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 6c14-6 22 4 36-1s24 3 38-1 18 2 25-1"/></svg></span>
+```
+
+## Print ornament
+- Registration marks: `.reg` with four corner elements.
+```html
+<div class="reg"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i>Content</div>
+```
+- Big numerals: `<span class="num">01</span>` (Newsreader, accent). For ordered themes, steps and sections.
+- Grid lines: `.gridlines` on a panel background.
+
+## Frequency
+One or two kinds of ornament per page, and each used once or twice. A pen underline on every heading stops being a signature.
+
+## Don't
+- Emoji or sparkle icons as decoration in an interface.
+- Mixed icon styles (filled and outline) on one screen.
+- 3D illustration, blobs, or gradient-mesh backgrounds.
+
+---
+
+# Motion: timings and safe patterns
+
+Purpose: Add motion that feels deliberate and a little dramatic, without ever hiding content or ignoring reduced-motion settings.
+
+## Timings
+- Set pieces (reveals, drawn strokes): `--dur-set` 1.1s with `--ease-out` `cubic-bezier(.16,1,.3,1)`. Stagger related items by about 0.1s.
+- Feedback (hover, press, focus, field labels): `--dur-micro` 0.25s with `--ease-ui` `cubic-bezier(.2,.7,.2,1)`.
+- Ambient movement: slow and subtle; one element at a time; pause it under reduced motion.
+
+## Where, by context
+- Marketing and portfolio: scroll reveals, drawn strokes, an ambient detail.
+- Content, app, data: feedback only, plus a line drawing in on a chart if it helps.
+
+## The safe reveal pattern
+Content is visible in the HTML. Script adds the motion only when it's allowed:
+```html
+<script>document.documentElement.classList.add('js')</script>
+```
+```css
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal { opacity: 0; transform: translateY(14px); }
+  .js .reveal.is-in { opacity: 1; transform: none;
+    transition: opacity var(--dur-set) var(--ease-out), transform var(--dur-set) var(--ease-out); }
+}
+```
+```js
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  els.forEach(el => io.observe(el));
+  setTimeout(() => els.forEach(el => el.classList.add('is-in')), 4000); // never leave content hidden
+}
+```
+
+## Drawn strokes
+Give the path `pathLength="1"`, then animate `stroke-dashoffset` from 1 to 0 with `--dur-set` and `--ease-out`, inside the same reduced-motion guard.
+
+## Don't
+- Hide content until an animation finishes, or rely on JavaScript to make text visible.
+- Scroll-jacking, parallax that fights the scroll, or bouncy springs.
+- Animate layout properties (width, height, top) when transform and opacity will do.
+- Animate anything when reduced motion is requested.
+
+---
+
+# Voice: writing like Ted
+
+Purpose: Write copy, posts, case studies and interface text that sounds like Ted Winder, with structures, devices and checks drawn from his own writing.
+
+If the brief has its own tone of voice (a client, a brand), follow it, and keep only the plainness and the rules on not inventing facts.
+
+## The voice in one line
+Plain, reserved and confident. Specific, never woolly. A concrete start, a clear point, real evidence, credit shared, and a short strong close. Dry humour, rarely.
+
+## Three registers
+1. **Writing and posts (first person, "I" and "we"):** story-led and reflective. British spelling. Em dashes appear. An occasional exclamation mark to close with energy. Emoji are sometimes used as markers at the start of list items, never mid-sentence.
+2. **Product and interface copy ("you"):** calm, short, useful. British spelling, sentence case. No exclamation marks. No emoji. Errors say what happened and what to do. Empty states are plain.
+3. **Documentation (imperative):** a dry, exact spec, with a one-line reason where it helps.
+
+## Devices Ted uses (with his examples)
+- **Open with something real.** A blunt truth ("Building experience-led brands is hard."), a real question ("How do you inspire an entire design function to show up at their creative best while delivering tangible value for the business?"), a moment ("Back in March, we brought every designer across Lloyds together..."), or a personal way in ("With two little ones, I need all the help I can get.").
+- **Short sentences when things go wrong or need weight.** "It wasn't all plain sailing. Projectors broke. The WiFi collapsed. AI got switched off."
+- **Name the tension, then resolve it.** "Organisations that are commercial without being creative will get left behind, and organisations that are creative without being commercial won't be around for long either."
+- **Not this, but that.** "This was not about evangelising or mandating AI. It was about understanding where it helps, where it doesn't..."
+- **Threes and fours with crisp labels.** "Stability → Adaptability", "Evidence / Grow / Connect / Elevate", "From method to measurement. Culture to collaboration. Systems to skills. Craft to consultancy."
+- **Real numbers in context.** "In under three hours, 351 attendees across 49 teams created more than 400 coded prototypes."
+- **The point behind the numbers.** "But the most important outcome had nothing to do with tooling."
+- **Credit by name.** "The real heroes of this are the product team..."
+- **Wry, self-deprecating aside.** "I was politely advised that no, I couldn't remove all the chairs from the boardroom."
+- **A short close.** "And that's what keeps me going." / "It's a big task, but we're up for it!" / "Let's go!"
+
+## Words and phrases Ted reaches for
+land / landing ("land things with impact"), bring to life, at scale, join things up, raise the bar, fit for the future, hands-on, experiment, make things happen, think, feel and do.
+
+## Structures
+**Post or update**
+1. Hook (one line: truth, question or moment).
+2. Context in two or three sentences: what, where, why it mattered.
+3. The approach, often as a short list of three or four labelled points.
+4. Evidence: the real numbers.
+5. Credit: the people, by name.
+6. The point behind it, then a one-line close.
+
+**Case study**
+1. Eyebrow with the theme (Delivery, Technology, People...).
+2. Headline that states the outcome ("Delivering a major app redesign to 15m customers").
+3. One-paragraph context and Ted's role.
+4. What we did, in three or four steps.
+5. What landed: numbers and quotes.
+6. Credit and what's next.
+
+**About blurb**
+Lead with what Ted does, then one or two specific achievements with numbers, then how he works, then a forward-looking line ("Things are changing fast and I'm here for it.").
+
+## Interface copy patterns
+- Error: "[What failed]. [Reassurance]. [What to do]." e.g. "Couldn't save. Your changes are still here, so try again."
+- Empty state: "No [things] yet. [Things] you add will appear here."
+- Calls to action: "Get in touch", "Send it".
+- AI content: label it in words ("Summary · written by AI").
+
+## Never
+- Invent numbers, names, quotes or outcomes. Ted's voice depends on real specifics: write `[number]` or `[name]` and ask.
+- Woolly, corporate filler ("leverage synergies", "holistic", "best-in-class") that could be from anyone.
+- Hype or a hard sell. The reader should never feel sold to.
+- Title Case headings, or exclamation marks and emoji in interface copy.
+
+## Check before you finish
+- Does it start with something real, not a preamble?
+- Is there at least one specific, real detail?
+- Is every sentence understandable on first read?
+- Have the people involved been credited?
+- Does it end in one short line?
+
+---
+
+# Patterns: assembling pages and screens
+
+Purpose: Build complete pages and app screens from the TW/ds templates, in the right order, with the right content rules.
+
+## Setup
+```html
+<link rel="stylesheet" href="/tools/ds/tokens.css">
+<link rel="stylesheet" href="/tools/ds/components.css">
+<link rel="stylesheet" href="/tools/ds/templates.css">
+<script>document.documentElement.classList.add('js')</script>
+```
+Copy the markup from the Patterns page. Each template is one root element with a `t-` class. Set `data-context` on the page or the section.
+
+## Template catalogue
+Web: `.t-topbar` (mark and navigation), `.t-hero` (eyebrow, poster headline, lede, one `.cta`), `.t-statement` (heading left, paragraphs right), `.t-work` (grid of `.card` with duotone images), `.t-stats` (three or four real numbers), `.t-themes` (numbered list with big numerals), `.t-quote` (pull quote), `.t-article` (long-form), `.t-contact` (heading and form), `.t-footer`.
+App (desktop): `.t-app` (rail and main), `.t-dash` (stat tiles), `.t-list` (rows with inline decisions), `.t-form` (form with `.summary` errors), `.t-empty`.
+Mobile app: `.t-phone` (frame with `{{status}}`-style status bar, `.t-phone__body`, `.t-phone__title`, `.pillbar`) containing a welcome note (`.t-welcome`), a dashboard home (`.tiles` of `.stat`), rows (`.t-row`), a swipe action (`.t-swipe`), a detail screen (`.t-back`, `.quote`), settings with toggles (`.t-toggle`), and an empty state.
+
+## Page recipes
+- **Portfolio home:** topbar → hero → statement → work → stats → quote → contact → footer.
+- **Case study:** topbar → hero (headline states the outcome) → stats → article → quote → work (next stories) → footer.
+- **Article or note:** topbar → article → contact or footer.
+- **App overview:** app shell → dashboard tiles → list.
+- **Settings:** app shell → form.
+- **First run:** welcome note, then the overview.
+- **Mobile app:** welcome note → home dashboard → list (with swipe actions) → detail → settings, with the floating pill bar for navigation.
+
+## Composition rules
+- One hero per page, one primary action per view.
+- No more than two signature moves per screen (registration marks, a drawn underline, big numerals).
+- Accent blocks only on marketing pages, at most one per page.
+- Sections are separated by space, not lines. Alternate a `--paper-2` band at most once or twice per page if a change of surface helps.
+- Stats bands use three or four numbers, never one or six.
+
+## Content rules
+- Use real content. If you don't have it, use marked placeholders (`[number]`, `[project name]`) and ask Ted. Never invent figures.
+- Headlines state the idea or outcome in sentence case.
+- Photographs are duotone and have alt text.
+- The first-run note is written by Ted, not generated. Leave the placeholder.
+
+## Accessibility checks
+- Landmarks: `header`, `nav` with `aria-label`, `main`, `footer`.
+- Every field has a `<label>`; floating labels need `placeholder=" "`.
+- Error summaries use `role="alert"` and link to their fields.
+- Icon-only buttons have `aria-label`. Focus is visible (2px ink outline, offset 3px).
+- The page reads fully without JavaScript.
+
+## Matching tedw.co.uk
+When making cards and numbers for Ted's portfolio or anything near it, mirror the site rather than the generic components:
+- Cards are square, 1px `--rule` border, a faint warm shadow, a 16:10 photo with a 1px line beneath it, a small uppercase label, then a large tight headline (`.t-work .card`). Photos arrive already treated; don't add a second duotone.
+- Numbers are large, light-weight, tabular, in the accent, with a small uppercase label beneath (`.t-stats`).
+- Numbered sections use a circled Roman numeral (`.num--circle`).
+
+## Native mobile
+- Respect platform conventions: large title, safe areas, 44pt targets, standard back gestures; layer Ted's type and colour on top.
+- Use haptics sparingly on key moments, swipe actions on rows, pull to refresh on lists, and a hidden gesture or two (with a visible route to the same action).
+- Provide dark mode that follows the device.

@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Patterns · TW/ds</title>
+<meta name="description" content="Templates for web pages, app screens and mobile apps.">
+<meta name="theme-color" content="#FAF8F3">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/tools/ds/fonts/schibsted-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/tools/ds/fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/tools/ds/tokens.css">
+<link rel="stylesheet" href="/tools/ds/components.css">
+<link rel="stylesheet" href="/tools/ds/templates.css">
+<link rel="stylesheet" href="/tools/ds/docs.css">
+<link rel="stylesheet" href="/tools/ds/docs-v4.css">
+<link rel="stylesheet" href="/tools/ds/docs-v4b.css">
+<link rel="stylesheet" href="/tools/ds/docs-v5.css">
+<link rel="stylesheet" href="/tools/ds/docs-v6.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('tw-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body data-context="content" data-scope>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="rail" id="index" aria-label="Site">
+    <a class="rail__close" href="#main" aria-label="Close index"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></a>
+    <a class="mark" href="/tools/ds/" aria-label="TW/ds home"><span class="reg"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i><span class="mono mark__t">TW<span class="mark__s">/</span>ds</span></span></a>
+    <p class="rail__ver mono">v0.2 · draft · <a href="/tools/ds/llms.txt">plain text</a></p>
+    <button class="rail__search" type="button" data-cmdk><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span><kbd>⌘K</kbd></button>
+    <nav aria-label="Pages"><ol class="rail__list"><li><a href="/tools/ds/"><span class="mono">00</span>Overview</a></li><li><a href="/tools/ds/principles/"><span class="mono">01</span>Principles</a></li><li><a href="/tools/ds/character/"><span class="mono">02</span>Character</a></li><li><a href="/tools/ds/type/"><span class="mono">03</span>Typography</a></li><li><a href="/tools/ds/colour/"><span class="mono">04</span>Colour</a></li><li><a href="/tools/ds/space/"><span class="mono">05</span>Space and layout</a></li><li><a href="/tools/ds/imagery/"><span class="mono">06</span>Imagery and ornament</a></li><li><a href="/tools/ds/motion/"><span class="mono">07</span>Motion</a></li><li><a href="/tools/ds/voice/"><span class="mono">08</span>Voice</a></li><li><a href="/tools/ds/patterns/" aria-current="page"><span class="mono">09</span>Patterns</a><ol class="rail__sub"><li><a href="#web">Web</a></li><li><a href="#app">App</a></li><li><a href="#mobile">Mobile apps</a></li><li><a href="#for-ai">For AI</a></li></ol></li></ol></nav>
+    <div class="rail__foot">
+      <a href="https://github.com/tdwndr/site/tree/main/tools/ds">GitHub</a>
+      <button type="button" class="rail__theme mono" data-theme-toggle aria-label="Colour theme">Theme: system</button>
+    </div>
+  </aside>
+  <main id="main" tabindex="-1">
+    <header class="band" data-context="marketing"><div class="band__in"><span class="band__no mono">09</span><span class="eyebrow"><b>Stop 9 of 9</b> · Patterns</span><h1>Somewhere to <span class="pen">start<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 6c14-6 22 4 36-1s24 3 38-1 18 2 25-1"/></svg></span></h1><p class="band__belief">Pages and screens that already feel like mine, for the web and for apps.</p><p class="band__why">Swap the words and pictures for real ones and keep going. Every number in these is from my own work.</p><i class="band__reg tl"></i><i class="band__reg br"></i></div></header>
+    <div class="page">
+<section class="story" id="web" data-nav="Web">
+  <span class="kicker">In practice</span>
+  <h2 id="for-the-web">For the web<a class="anchor" href="#for-the-web" aria-label="Link to this section">#</a></h2>
+<figure class="demo demo--wide"><figcaption class="demo__title eyebrow">Top bar</figcaption><div class="demo__stage"><header class="t-topbar">
+  <a class="t-topbar__mark" href="/">TW<span>/</span>ds</a>
+  <nav aria-label="Main"><a href="#" aria-current="page">Work</a><a href="#">Notes</a><a href="#">About</a></nav>
+</header></div><details class="demo__code"><summary>HTML</summary><pre class="code"><code>&lt;header class=&quot;t-topbar&quot;&gt;
+  &lt;a class=&quot;t-topbar__mark&quot; href=&quot;/&quot;&gt;TW&lt;span&gt;/&lt;/span&gt;ds&lt;/a&gt;
+  &lt;nav aria-label=&quot;Main&quot;&gt;&lt;a href=&quot;#&quot; aria-current=&quot;page&quot;&gt;Work&lt;/a&gt;&lt;a href=&quot;#&quot;&gt;Notes&lt;/a&gt;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/nav&gt;
+&lt;/header&gt;</code></pre></details></figure>
+<figure class="demo demo--wide"><figcaption class="demo__title eyebrow">Hero</figcaption><div class="demo__stage" data-context="marketing"><section class="t-hero" data-context="marketing">
+  <span class="eyebrow">Design practice · London</span>
+  <h1>Making big things <span class="pen">happen<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 6c14-6 22 4 36-1s24 3 38-1 18 2 25-1"/></svg></span></h1>
+  <p>Connecting product, design and strategy to make sense of the chaos.</p>
+  <a class="cta" href="#">Get in touch</a>
+</section></div><details class="demo__code"><summary>HTML</summary><pre class="code"><code>&lt;section class=&quot;t-hero&quot; data-context=&quot;marketing&quot;&gt;
+  &lt;span class=&quot;eyebrow&quot;&gt;Design practice · London&lt;/span&gt;
+  &lt;h1&gt;Making big things &lt;span class=&quot;pen&quot;&gt;happen&lt;svg viewBox=&quot;0 0 100 10&quot; preserveAspectRatio=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;&lt;path pathLength=&quot;1&quot; d=&quot;M1 6c14-6 22 4 36-1s24 3 38-1 18 2 25-1&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/h1&gt;
+  &lt;p&gt;Connecting product, design and strategy to make sense of the chaos.&lt;/p&gt;
+  &lt;a class=&quot;cta&quot; href=&quot;#&quot;&gt;Get in touch&lt;/a&gt;
+&lt;/section&gt;</code></pre></details></figure>
+<figure class="demo demo--wide"><figcaption class="demo__title eyebrow">Statement</figcaption><div class="demo__stage" data-context="content"><section class="t-statement" data-context="content">
+  <h2>Never afraid of getting hands on</h2>
+  <div>
+    <p>Over more than ten years in product, strategy and design leadership, I’ve played a part in some of the biggest transformations in UK financial services.</p>
+    <p>Things are changing fast and I’m here for it.</p>
+  </div>
+</section></div><details class="demo__code"><summary>HTML</summary><pre class="code"><code>&lt;section class=&quot;t-statement&quot; data-context=&quot;content&quot;&gt;
+  &lt;h2&gt;Never afraid of getting hands on&lt;/h2&gt;
+  &lt;div&gt;
+    &lt;p&gt;Over more than ten years in product, strategy and design leadership, I’ve played a part in some of the biggest transformations in UK financial services.&lt;/p&gt;
+    &lt;p&gt;Things are changing fast and I’m here for it.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre></details></figure>
+<figure class="demo demo--wide"><figcaption class="demo__title eyebrow">Work cards</figcaption><div class="demo__stage" data-context="marketing"><section class="t-work" data-context="marketing">
+  <span class="eyebrow">Things I’ve done</span>
+  <div class="t-work__grid">
+    <a class="card" href="#">
+      <span class="card__photo"><img src="/img/card-delivery.webp" alt=""></span>
+      <span class="card__body"><span class="eyebrow">Delivery</span><h3>Delivering a major app redesign to 15m customers</h3><p>Led the work behind the scenes that made it succeed.</p></span>
+    </a>
+    <a class="card" href="#">
+      <span class="card__photo"><img src="/img/card-technology.webp" alt=""></span>
+      <span class="card__body"><span class="eyebrow">Technology</span><h3>Driving AI adoption in one of the UK’s largest design teams</h3><p>Lifted confidence and use across 450+ designers.</p></span>
+    </a>
+    <a class="card" href="#">
+      <span class="card__photo"><img src="/img/card-systems.webp" alt=""></span>
+      <span class="card__body"><span class="eyebrow">Systems</span><h3>Scaling brands with an experience operating system</h3><p>Connecting brand, design and engineering in one system.</p></span>
+    </a>
+  </div>
+</section></div><details class="demo__code"><summary>HTML</summary><pre class="code"><code>&lt;section class=&quot;t-work&quot; data-context=&quot;marketing&quot;&gt;
+  &lt;span class=&quot;eyebrow&quot;&gt;Things I’ve done&lt;/span&gt;
+  &lt;div class=&quot;t-work__grid&quot;&gt;
+    &lt;a class=&quot;card&quot; href=&quot;#&quot;&gt;
+      &lt;span class=&quot;card__photo&quot;&gt;&lt;img src=&quot;/img/card-delivery.webp&quot; alt=&quot;&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;card__body&quot;&gt;&lt;span class=&quot;eyebrow&quot;&gt;Delivery&lt;/span&gt;&lt;h3&gt;Delivering a major app redesign to 15m customers&lt;/h3&gt;&lt;p&gt;Led the work behind the scenes that made it succeed.&lt;/p&gt;&lt;/span&gt;
+    &lt;/a&gt;
+    &lt;a class=&quot;card&quot; href=&quot;#&quot;&gt;
+      &lt;span class=&quot;card__photo&quot;&gt;&lt;img src=&quot;/img/card-technology.webp&quot; alt=&quot;&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;card__body&quot;&gt;&lt;span class=&quot;eyebrow&quot;&gt;Technology&lt;/span&gt;&lt;h3&gt;Driving AI adoption in one of the UK’s largest design teams&lt;/h3&gt;&lt;p&gt;Lifted confidence and use across 450+ designers.&lt;/p&gt;&lt;/span&gt;
+    &lt;/a&gt;
+    &lt;a class=&quot;card&quot; href=&quot;#&quot;&gt;
+      &lt;span class=&quot;card__photo&quot;&gt;&lt;img src=&quot;/img/card-systems.webp&quot; alt=&quot;&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;card__body&quot;&gt;&lt;span class=&quot;eyebrow&quot;&gt;Systems&lt;/span&gt;&lt;h3&gt;Scaling brands with an experience operating system&lt;/h3&gt;&lt;p&gt;Connecting brand, design and engineering in one system.&lt;/p&gt;&lt;/span&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre></details></figure>
+<figure class="demo demo--wide"><figcaption class="demo__title eyebrow">Numbers</figcaption><div class="demo__stage" data-context="marketing"><dl class="t-stats" data-context="marketing">
+  <div><dt>attendees</dt><dd><b>351</b></dd></div>
+  <div><dt>teams</dt><dd><b>49</b></dd></div>
+  <div><dt>coded prototypes</dt><dd><b>400+</b></dd></div>
+  <div><dt>left confident using AI</dt><dd><b>8 in 10</b></dd></div>
+</dl></div><details class="demo__code"><summary>HTML</summary><pre class="code"><code>&lt;dl class=&quot;t-stats&quot; data-context=&quot;marketing&quot;&gt;
+  &lt;div&gt;&lt;dt&gt;attendees&lt;/dt&gt;&lt;dd&gt;&lt;b&gt;351&lt;/b&gt;&lt;/dd&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;dt&gt;teams&lt;/dt&gt;&lt;dd&gt;&lt;b&gt;49&lt;/b&gt;&lt;/dd&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;dt&gt;coded prototypes&lt;/dt&gt;&lt;dd&gt;&lt;b&gt;400+&lt;/b&gt;&lt;/dd&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;dt&gt;left confident using AI&lt;/dt&gt;&lt;dd&gt;&lt;b&gt;8 in 10&lt;/b&gt;&lt;/dd&gt;&lt;/div&gt;
+&lt;/dl&gt;</code></pre></details></figure>
+<figure class="demo demo--wide"><figcaption class="demo__title eyebrow">Numbered themes</figcaption><div class="demo__stage" data-context="marketing"><ol class="t-themes" data-context="marketing">
+  <li><span class="num--circle">I<svg viewBox="0 0 60 60" aria-hidden="true"><path d="M30 4C14 3 4 15 5 30s12 26 27 25 24-13 23-27S42 6 26 7"/></svg></span><b>Evidence</b><span>Show it’s adding tangible value for customers.</span></li>
+  <li><span class="num--circle">II<svg viewBox="0 0 60 60" aria-hidden="true"><path d="M30 4C14 3 4 15 5 30s12 26 27 25 24-13 23-27S42 6 26 7"/></svg></span><b>Grow</b><span>Great design drives great outcomes, in pounds and pence.</span></li>
+  <li><span class="num--circle">III<svg viewBox="0 0 60 60" aria-hidden="true"><path d="M30 4C14 3 4 15 5 30s12 26 27 25 24-13 23-27S42 6 26 7"/></svg></span><b>Connect</b><span>Join things up across team and platform boundaries.</span></li>
+  <li><span class="num--circle">IV<svg viewBox="0 0 60 60" aria-hidden="true"><path d="M30 4C14 3 4 15 5 30s12 26 27 25 24-13 23-27S42 6 26 7"/></svg></span><b>Elevate</b><span>Think beyond the here and now. Raise the bar.</span></li>
+</ol></div><details class="demo__code"><summary>HTML</summary><pre class="code"><code>&lt;ol class=&quot;t-themes&quot; data-context=&quot;marketing&quot;&gt;
+  &lt;li&gt;&lt;span class=&quot;num--circle&quot;&gt;I&lt;svg viewBox=&quot;0 0 60 60&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M30 4C14 3 4 15 5 30s12 26 27 25 24-13 23-27S42 6 26 7&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;b&gt;Evidence&lt;/b&gt;&lt;span&gt;Show it’s adding tangible value for customers.&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span class=&quot;num--circle&quot;&gt;II&lt;svg viewBox=&quot;0 0 60 60&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M30 4C14 3 4 15 5 30s12 26 27 25 24-13 23-27S42 6 26 7&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;b&gt;Grow&lt;/b&gt;&lt;span&gt;Great design drives great outcomes, in pounds and pence.&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span class=&quot;num--circle&quot;&gt;III&lt;svg viewBox=&quot;0 0 60 60&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M30 4C14 3 4 15 5 30s12 26 27 25 24-13 23-27S42 6 26 7&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;b&gt;Connect&lt;/b&gt;&lt;span&gt;Join things up across team and platform boundaries.&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span class=&quot;num--circle&quot;&gt;IV&lt;svg viewBox=&quot;0 0 60 60&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M30 4C14 3 4 15 5 30s12 26 27 25 24-13 23-27S42 6 26 7&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;b&gt;Elevate&lt;/b&gt;&lt;span&gt;Think beyond the here and now. Raise the bar.&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;</code></pre></details></figure>
+<figure class="demo demo--wide"><figcaption class="demo__title eyebrow">Pull quote</figcaption><div class="demo__stage" data-context="content"><figure class="t-quote" data-context="content">
+  <blockquote>The most important outcome had nothing to do with tooling.</blockquote>
+  <figcaption>Ted Winder, on XD Connect</figcaption>
+</figure></div><details class="demo__code"><summary>HTML</summary><pre class="code"><code>&lt;figure class=&quot;t-quote&quot; data-context=&quot;content&quot;&gt;
+  &lt;blockquote&gt;The most important outcome had nothing to do with tooling.&lt;/blockquote&gt;
+  &lt;figcaption&gt;Ted Winder, on XD Connect&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre></details></figure>
+<figure class="demo demo--wide"><figcaption class="demo__title eyebrow">Article</figcaption><div class="demo__stage" data-context="content"><article class="t-article" data-context="content">
+  <span class="eyebrow">Notes · Berlin</span>
+  <h1>What a traffic light taught me about design</h1>
+  <p>I came back from a school trip with a souvenir: a frosted glass mug featuring the Ampelmännchen, the East German traffic light figure designed by Karl Peglau in 1961.</p>
+  <blockquote class="quote">It wasn’t designed to be iconic. It was designed to solve a problem.</blockquote>
+  <p>It worked so well that it <mark>survived German reunification</mark>, and it’s still on the streets of the city today.</p>
+</article></div><details class="demo__code"><summary>HTML</summary><pre class="code"><code>&lt;article class=&quot;t-article&quot; data-context=&quot;content&quot;&gt;
+  &lt;span class=&quot;eyebrow&quot;&gt;Notes · Berlin&lt;/span&gt;
+  &lt;h1&gt;What a traffic light taught me about design&lt;/h1&gt;
+  &lt;p&gt;I came back from a school trip with a souvenir: a frosted glass mug featuring the Ampelmännchen, the East German traffic light figure designed by Karl Peglau in 1961.&lt;/p&gt;
+  &lt;blockquote class=&quot;quote&quot;&gt;It wasn’t designed to be iconic. It was designed to solve a problem.&lt;/blockquote&gt;
+  &lt;p&gt;It worked so well that it &lt;mark&gt;survived German reunification&lt;/mark&gt;, and it’s still on the streets of the city today.&lt;/p&gt;
+&lt;/article&gt;</code></pre></details></figure>
+<figure class="demo demo--wide"><figcaption class="demo__title eyebrow">Contact</figcaption><div class="demo__stage" data-context="marketing"><section class="t-contact" data-context="marketing">
+  <h2>Let’s talk</h2>
+  <form>
+    <div class="field"><input id="c-name" type="text" placeholder=" " autocomplete="name"><label for="c-name">Your name</label></div>
+    <div class="field"><input id="c-mail" type="email" placeholder=" " autocomplete="email"><label for="c-mail">Email</label></div>
+    <div class="field"><textarea id="c-msg" placeholder=" "></textarea><label for="c-msg">Message</label></div>
+    <button class="btn" type="submit">Send it</button>
+  </form>
+</section></div><details class="demo__code"><summary>HTML</summary><pre class="code"><code>&lt;section class=&quot;t-contact&quot; data-context=&quot;marketing&quot;&gt;
+  &lt;h2&gt;Let’s talk&lt;/h2&gt;
+  &lt;form&gt;
+    &lt;div class=&quot;field&quot;&gt;&lt;input id=&quot;c-name&quot; type=&quot;text&quot; placeholder=&quot; &quot; autocomplete=&quot;name&quot;&gt;&lt;label for=&quot;c-name&quot;&gt;Your name&lt;/label&gt;&lt;/div&gt;
+    &lt;div class=&quot;field&quot;&gt;&lt;input id=&quot;c-mail&quot; type=&quot;email&quot; placeholder=&quot; &quot; autocomplete=&quot;email&quot;&gt;&lt;label for=&quot;c-mail&quot;&gt;Email&lt;/label&gt;&lt;/div&gt;
+    &lt;div class=&quot;field&quot;&gt;&lt;textarea id=&quot;c-msg&quot; placeholder=&quot; &quot;&gt;&lt;/textarea&gt;&lt;label for=&quot;c-msg&quot;&gt;Message&lt;/label&gt;&lt;/div&gt;
+    &lt;button class=&quot;btn&quot; type=&quot;submit&quot;&gt;Send it&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/section&gt;</code></pre></details></figure>
+<figure class="demo demo--wide"><figcaption class="demo__title eyebrow">Footer</figcaption><div class="demo__stage"><footer class="t-footer">
+  <span class="mono">TW<span style="color:var(--accent)">/</span>ds</span>
+  <span>London</span>
+  <a href="#">LinkedIn</a>
+</footer></div><details class="demo__code"><summary>HTML</summary><pre class="code"><code>&lt;footer class=&quot;t-footer&quot;&gt;
+  &lt;span class=&quot;mono&quot;&gt;TW&lt;span style=&quot;color:var(--accent)&quot;&gt;/&lt;/span&gt;ds&lt;/span&gt;
+  &lt;span&gt;London&lt;/span&gt;
+  &lt;a href=&quot;#&quot;&gt;LinkedIn&lt;/a&gt;
+&lt;/footer&gt;</code></pre></details></figure>
+</section>
+
+<section class="story" id="app" data-nav="App">
+  <span class="kicker">In practice</span>
+  <h2 id="for-apps-on-a-screen">For apps on a screen<a class="anchor" href="#for-apps-on-a-screen" aria-label="Link to this section">#</a></h2>
+<figure class="demo demo--wide"><figcaption class="demo__title eyebrow">App shell with dashboard</figcaption><div class="demo__stage" data-context="app"><div class="t-app" data-context="app">
+  <nav class="t-app__rail" aria-label="App">
+    <a class="t-topbar__mark" href="#">TW<span>/</span>ds</a>
+    <a href="#" aria-current="page">Overview</a>
+    <a href="#">Projects</a>
+    <a href="#">Settings</a>
+  </nav>
+  <main class="t-app__main">
+    <div class="t-app__head"><h1>Overview</h1><button class="btn" type="button">New project</button></div>
+    <div class="t-dash">
+      <div class="stat"><span class="eyebrow">Attendees</span><span class="stat__value">351</span><span class="stat__delta">London, Manchester, Edinburgh</span></div>
+      <div class="stat"><span class="eyebrow">Prototypes</span><span class="stat__value">400+</span><span class="stat__delta">In under three hours</span></div>
+      <div class="stat"><span class="eyebrow">Confidence</span><span class="stat__value">8 in 10</span><span class="stat__delta">Using AI after the day</span></div>
+    </div>
+  </main>
+</div></div><details class="demo__code"><summary>HTML</summary><pre class="code"><code>&lt;div class=&quot;t-app&quot; data-context=&quot;app&quot;&gt;
+  &lt;nav class=&quot;t-app__rail&quot; aria-label=&quot;App&quot;&gt;
+    &lt;a class=&quot;t-topbar__mark&quot; href=&quot;#&quot;&gt;TW&lt;span&gt;/&lt;/span&gt;ds&lt;/a&gt;
+    &lt;a href=&quot;#&quot; aria-current=&quot;page&quot;&gt;Overview&lt;/a&gt;
+    &lt;a href=&quot;#&quot;&gt;Projects&lt;/a&gt;
+    &lt;a href=&quot;#&quot;&gt;Settings&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;main class=&quot;t-app__main&quot;&gt;
+    &lt;div class=&quot;t-app__head&quot;&gt;&lt;h1&gt;Overview&lt;/h1&gt;&lt;button class=&quot;btn&quot; type=&quot;button&quot;&gt;New project&lt;/button&gt;&lt;/div&gt;
+    &lt;div class=&quot;t-dash&quot;&gt;
+      &lt;div class=&quot;stat&quot;&gt;&lt;span class=&quot;eyebrow&quot;&gt;Attendees&lt;/span&gt;&lt;span class=&quot;stat__value&quot;&gt;351&lt;/span&gt;&lt;span class=&quot;stat__delta&quot;&gt;London, Manchester, Edinburgh&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;stat&quot;&gt;&lt;span class=&quot;eyebrow&quot;&gt;Prototypes&lt;/span&gt;&lt;span class=&quot;stat__value&quot;&gt;400+&lt;/span&gt;&lt;span class=&quot;stat__delta&quot;&gt;In under three hours&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;stat&quot;&gt;&lt;span class=&quot;eyebrow&quot;&gt;Confidence&lt;/span&gt;&lt;span class=&quot;stat__value&quot;&gt;8 in 10&lt;/span&gt;&lt;span class=&quot;stat__delta&quot;&gt;Using AI after the day&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/main&gt;
+&lt;/div&gt;</code></pre></details></figure>
+<figure class="demo"><figcaption class="demo__title eyebrow">List with an inline decision</figcaption><div class="demo__stage" data-context="app"><ul class="t-list" data-context="app">
+  <li><div><b>App redesign</b><br><span class="mono">live</span></div><span class="tag tag--good">Live</span></li>
+  <li><div><b>Case study draft</b><br><span class="mono">edited today</span></div>
+    <details><summary>Delete</summary><div><span>Sure?</span><button class="btn" type="button">Yes, delete</button><button class="btn btn--quiet" type="button">No</button></div></details></li>
+</ul></div><details class="demo__code"><summary>HTML</summary><pre class="code"><code>&lt;ul class=&quot;t-list&quot; data-context=&quot;app&quot;&gt;
+  &lt;li&gt;&lt;div&gt;&lt;b&gt;App redesign&lt;/b&gt;&lt;br&gt;&lt;span class=&quot;mono&quot;&gt;live&lt;/span&gt;&lt;/div&gt;&lt;span class=&quot;tag tag--good&quot;&gt;Live&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;div&gt;&lt;b&gt;Case study draft&lt;/b&gt;&lt;br&gt;&lt;span class=&quot;mono&quot;&gt;edited today&lt;/span&gt;&lt;/div&gt;
+    &lt;details&gt;&lt;summary&gt;Delete&lt;/summary&gt;&lt;div&gt;&lt;span&gt;Sure?&lt;/span&gt;&lt;button class=&quot;btn&quot; type=&quot;button&quot;&gt;Yes, delete&lt;/button&gt;&lt;button class=&quot;btn btn--quiet&quot; type=&quot;button&quot;&gt;No&lt;/button&gt;&lt;/div&gt;&lt;/details&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre></details></figure>
+<figure class="demo"><figcaption class="demo__title eyebrow">Form with an error summary</figcaption><div class="demo__stage" data-context="app"><form class="t-form" data-context="app">
+  <div class="summary" role="alert"><h3>One thing to fix</h3><ul><li><a href="#f-mail">Your email is missing its ending, like .com.</a></li></ul></div>
+  <div class="field"><input id="f-name" type="text" placeholder=" " value="Ted Winder"><label for="f-name">Name</label></div>
+  <div class="field" aria-invalid="true"><input id="f-mail" type="email" placeholder=" " value="ted@tedw"><label for="f-mail">Email</label><span class="field__hint">Add the ending, like .com.</span></div>
+  <button class="btn" type="submit">Save changes</button>
+</form></div><details class="demo__code"><summary>HTML</summary><pre class="code"><code>&lt;form class=&quot;t-form&quot; data-context=&quot;app&quot;&gt;
+  &lt;div class=&quot;summary&quot; role=&quot;alert&quot;&gt;&lt;h3&gt;One thing to fix&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;#f-mail&quot;&gt;Your email is missing its ending, like .com.&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;
+  &lt;div class=&quot;field&quot;&gt;&lt;input id=&quot;f-name&quot; type=&quot;text&quot; placeholder=&quot; &quot; value=&quot;Ted Winder&quot;&gt;&lt;label for=&quot;f-name&quot;&gt;Name&lt;/label&gt;&lt;/div&gt;
+  &lt;div class=&quot;field&quot; aria-invalid=&quot;true&quot;&gt;&lt;input id=&quot;f-mail&quot; type=&quot;email&quot; placeholder=&quot; &quot; value=&quot;ted@tedw&quot;&gt;&lt;label for=&quot;f-mail&quot;&gt;Email&lt;/label&gt;&lt;span class=&quot;field__hint&quot;&gt;Add the ending, like .com.&lt;/span&gt;&lt;/div&gt;
+  &lt;button class=&quot;btn&quot; type=&quot;submit&quot;&gt;Save changes&lt;/button&gt;
+&lt;/form&gt;</code></pre></details></figure>
+<figure class="demo"><figcaption class="demo__title eyebrow">Empty state</figcaption><div class="demo__stage" data-context="app"><section class="t-empty" data-context="app">
+  <h2>No notes yet</h2>
+  <p>Notes you add will appear here.</p>
+  <button class="btn" type="button">Add a note</button>
+</section></div><details class="demo__code"><summary>HTML</summary><pre class="code"><code>&lt;section class=&quot;t-empty&quot; data-context=&quot;app&quot;&gt;
+  &lt;h2&gt;No notes yet&lt;/h2&gt;
+  &lt;p&gt;Notes you add will appear here.&lt;/p&gt;
+  &lt;button class=&quot;btn&quot; type=&quot;button&quot;&gt;Add a note&lt;/button&gt;
+&lt;/section&gt;</code></pre></details></figure>
+</section>
+
+<section class="story" id="mobile" data-nav="Mobile apps">
+  <span class="kicker">In practice</span>
+  <h2 id="for-mobile-apps">For mobile apps<a class="anchor" href="#for-mobile-apps" aria-label="Link to this section">#</a></h2>
+  <p class="lead">Native structure, with my type and colour on top. A floating pill bar for navigation, comfortable touch targets, and a personal note to open.</p>
+  <div class="phones">
+    <figure>
+      <div class="t-phone" data-context="app"><div class="t-phone__status"><span>9:41</span><i></i></div><div class="t-phone__body t-welcome">
+        <span class="eyebrow">Welcome</span><h2 id="hello-and-thanks-for-trying-this">Hello, and thanks for trying this.<a class="anchor" href="#hello-and-thanks-for-trying-this" aria-label="Link to this section">#</a></h2><p>[A few lines from Ted: why this exists and what to try first.]</p><span class="mono muted" style="font-size:.8rem">Ted</span><button class="btn" type="button" style="align-self:flex-start;margin-top:auto">Get started</button></div></div>
+      <figcaption>First run: a personal note.</figcaption>
+    </figure>
+    <figure>
+      <div class="t-phone" data-context="app"><div class="t-phone__status"><span>9:41</span><i></i></div><div class="t-phone__body">
+        <span class="eyebrow">Wednesday</span><span class="t-phone__title">Today</span>
+        <div class="tiles"><div class="stat"><span class="eyebrow">Attendees</span><span class="stat__value">351</span></div><div class="stat"><span class="eyebrow">Teams</span><span class="stat__value">49</span></div></div>
+        <div class="t-row"><span>App redesign</span><small>live</small></div><div class="t-row"><span>Beta programme</span><small>live</small></div>
+      </div><nav class="pillbar" aria-label="App"><a href="#" aria-current="page">Home</a><a href="#">Search</a><a href="#">You</a></nav></div>
+      <figcaption>Home: a dashboard.</figcaption>
+    </figure>
+    <figure>
+      <div class="t-phone" data-context="app"><div class="t-phone__status"><span>9:41</span><i></i></div><div class="t-phone__body">
+        <span class="t-phone__title">Projects</span>
+        <div class="t-row"><span>App redesign</span><small>live</small></div>
+        <div class="t-swipe"><div class="t-swipe__row"><span>Case study draft</span><small>edited</small></div><span class="t-swipe__act">Archive</span></div>
+        <div class="t-row"><span>Design OS</span><small>draft</small></div><div class="t-row"><span>Notes</span><small>draft</small></div>
+      </div><nav class="pillbar" aria-label="App"><a href="#" aria-current="page">Home</a><a href="#">Search</a><a href="#">You</a></nav></div>
+      <figcaption>A list, with a swipe action.</figcaption>
+    </figure>
+    <figure>
+      <div class="t-phone" data-context="app"><div class="t-phone__status"><span>9:41</span><i></i></div><div class="t-phone__body">
+        <span class="t-back">‹ Projects</span><span class="eyebrow">Notes · Berlin</span><span class="t-phone__title" style="font-size:1.6rem">What a traffic light taught me</span>
+        <p style="font-size:.9rem;line-height:1.7">I came back from a school trip with a souvenir: a frosted glass mug featuring the Ampelmännchen.</p>
+        <p class="quote" style="font-size:1.05rem;padding-left:.8rem">It was designed to solve a problem.</p>
+      </div></div>
+      <figcaption>A detail screen.</figcaption>
+    </figure>
+    <figure>
+      <div class="t-phone" data-context="app"><div class="t-phone__status"><span>9:41</span><i></i></div><div class="t-phone__body">
+        <span class="t-phone__title">Settings</span>
+        <div class="field"><input id="m-name" type="text" placeholder=" " value="Ted Winder"><label for="m-name">Name</label></div>
+        <div class="t-row"><span>Haptics</span><i class="t-toggle"></i></div>
+        <div class="t-row"><span>Dark mode: follow device</span><i class="t-toggle"></i></div>
+        <div class="t-row"><span>Reminders</span><i class="t-toggle t-toggle--off"></i></div>
+      </div><nav class="pillbar" aria-label="App"><a href="#" aria-current="page">Home</a><a href="#">Search</a><a href="#">You</a></nav></div>
+      <figcaption>Settings.</figcaption>
+    </figure>
+    <figure>
+      <div class="t-phone" data-context="app"><div class="t-phone__status"><span>9:41</span><i></i></div><div class="t-phone__body">
+        <span class="t-phone__title">Notes</span>
+        <div style="margin:auto 0;display:grid;gap:.6rem"><b style="font:500 1.3rem/1.2 var(--font-display)">No notes yet</b><span class="muted" style="font-size:.9rem">Notes you add will appear here.</span><button class="btn" type="button" style="justify-self:start">Add a note</button></div>
+      </div><nav class="pillbar" aria-label="App"><a href="#" aria-current="page">Home</a><a href="#">Search</a><a href="#">You</a></nav></div>
+      <figcaption>An empty state.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="story" id="for-ai" data-nav="For AI">
+  <span class="kicker">For AI</span>
+  <h2 id="the-fine-print-for-the-machines">The fine print, for the machines<a class="anchor" href="#the-fine-print-for-the-machines" aria-label="Link to this section">#</a></h2>
+  <div class="aifile"><div class="aifile__bar"><span class="aifile__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="mono">ai/patterns.md</span><a class="aifile__raw mono" href="/tools/ds/ai/patterns.md">raw</a></div><p class="aifile__purpose">Build complete pages and app screens from the TW/ds templates, in the right order, with the right content rules.</p><pre class="code aifile__md"><code><span class="m-h"># Patterns: assembling pages and screens</span>
+
+Purpose: Build complete pages and app screens from the TW/ds templates, in the right order, with the right content rules.
+
+<span class="m-h">## Setup</span>
+<span class="m-fence">```html</span>
+<span class="m-code">&lt;link rel=&quot;stylesheet&quot; href=&quot;/tools/ds/tokens.css&quot;&gt;</span>
+<span class="m-code">&lt;link rel=&quot;stylesheet&quot; href=&quot;/tools/ds/components.css&quot;&gt;</span>
+<span class="m-code">&lt;link rel=&quot;stylesheet&quot; href=&quot;/tools/ds/templates.css&quot;&gt;</span>
+<span class="m-code">&lt;script&gt;document.documentElement.classList.add(&#x27;js&#x27;)&lt;/script&gt;</span>
+<span class="m-fence">```</span>
+Copy the markup from the Patterns page. Each template is one root element with a <span class="m-c">`t-`</span> class. Set <span class="m-c">`data-context`</span> on the page or the section.
+
+<span class="m-h">## Template catalogue</span>
+Web: <span class="m-c">`.t-topbar`</span> (mark and navigation), <span class="m-c">`.t-hero`</span> (eyebrow, poster headline, lede, one <span class="m-c">`.cta`</span>), <span class="m-c">`.t-statement`</span> (heading left, paragraphs right), <span class="m-c">`.t-work`</span> (grid of <span class="m-c">`.card`</span> with duotone images), <span class="m-c">`.t-stats`</span> (three or four real numbers), <span class="m-c">`.t-themes`</span> (numbered list with big numerals), <span class="m-c">`.t-quote`</span> (pull quote), <span class="m-c">`.t-article`</span> (long-form), <span class="m-c">`.t-contact`</span> (heading and form), <span class="m-c">`.t-footer`</span>.
+App (desktop): <span class="m-c">`.t-app`</span> (rail and main), <span class="m-c">`.t-dash`</span> (stat tiles), <span class="m-c">`.t-list`</span> (rows with inline decisions), <span class="m-c">`.t-form`</span> (form with <span class="m-c">`.summary`</span> errors), <span class="m-c">`.t-empty`</span>.
+Mobile app: <span class="m-c">`.t-phone`</span> (frame with <span class="m-c">`{{status}}`</span>-style status bar, <span class="m-c">`.t-phone__body`</span>, <span class="m-c">`.t-phone__title`</span>, <span class="m-c">`.pillbar`</span>) containing a welcome note (<span class="m-c">`.t-welcome`</span>), a dashboard home (<span class="m-c">`.tiles`</span> of <span class="m-c">`.stat`</span>), rows (<span class="m-c">`.t-row`</span>), a swipe action (<span class="m-c">`.t-swipe`</span>), a detail screen (<span class="m-c">`.t-back`</span>, <span class="m-c">`.quote`</span>), settings with toggles (<span class="m-c">`.t-toggle`</span>), and an empty state.
+
+<span class="m-h">## Page recipes</span>
+<span class="m-li">-</span> <span class="m-b">**Portfolio home:**</span> topbar → hero → statement → work → stats → quote → contact → footer.
+<span class="m-li">-</span> <span class="m-b">**Case study:**</span> topbar → hero (headline states the outcome) → stats → article → quote → work (next stories) → footer.
+<span class="m-li">-</span> <span class="m-b">**Article or note:**</span> topbar → article → contact or footer.
+<span class="m-li">-</span> <span class="m-b">**App overview:**</span> app shell → dashboard tiles → list.
+<span class="m-li">-</span> <span class="m-b">**Settings:**</span> app shell → form.
+<span class="m-li">-</span> <span class="m-b">**First run:**</span> welcome note, then the overview.
+<span class="m-li">-</span> <span class="m-b">**Mobile app:**</span> welcome note → home dashboard → list (with swipe actions) → detail → settings, with the floating pill bar for navigation.
+
+<span class="m-h">## Composition rules</span>
+<span class="m-li">-</span> One hero per page, one primary action per view.
+<span class="m-li">-</span> No more than two signature moves per screen (registration marks, a drawn underline, big numerals).
+<span class="m-li">-</span> Accent blocks only on marketing pages, at most one per page.
+<span class="m-li">-</span> Sections are separated by space, not lines. Alternate a <span class="m-c">`--paper-2`</span> band at most once or twice per page if a change of surface helps.
+<span class="m-li">-</span> Stats bands use three or four numbers, never one or six.
+
+<span class="m-h">## Content rules</span>
+<span class="m-li">-</span> Use real content. If you don&#x27;t have it, use marked placeholders (<span class="m-c">`[number]`</span>, <span class="m-c">`[project name]`</span>) and ask Ted. Never invent figures.
+<span class="m-li">-</span> Headlines state the idea or outcome in sentence case.
+<span class="m-li">-</span> Photographs are duotone and have alt text.
+<span class="m-li">-</span> The first-run note is written by Ted, not generated. Leave the placeholder.
+
+<span class="m-h">## Accessibility checks</span>
+<span class="m-li">-</span> Landmarks: <span class="m-c">`header`</span>, <span class="m-c">`nav`</span> with <span class="m-c">`aria-label`</span>, <span class="m-c">`main`</span>, <span class="m-c">`footer`</span>.
+<span class="m-li">-</span> Every field has a <span class="m-c">`&lt;label&gt;`</span>; floating labels need <span class="m-c">`placeholder=&quot; &quot;`</span>.
+<span class="m-li">-</span> Error summaries use <span class="m-c">`role=&quot;alert&quot;`</span> and link to their fields.
+<span class="m-li">-</span> Icon-only buttons have <span class="m-c">`aria-label`</span>. Focus is visible (2px ink outline, offset 3px).
+<span class="m-li">-</span> The page reads fully without JavaScript.
+
+<span class="m-h">## Matching tedw.co.uk</span>
+When making cards and numbers for Ted&#x27;s portfolio or anything near it, mirror the site rather than the generic components:
+<span class="m-li">-</span> Cards are square, 1px <span class="m-c">`--rule`</span> border, a faint warm shadow, a 16:10 photo with a 1px line beneath it, a small uppercase label, then a large tight headline (<span class="m-c">`.t-work .card`</span>). Photos arrive already treated; don&#x27;t add a second duotone.
+<span class="m-li">-</span> Numbers are large, light-weight, tabular, in the accent, with a small uppercase label beneath (<span class="m-c">`.t-stats`</span>).
+<span class="m-li">-</span> Numbered sections use a circled Roman numeral (<span class="m-c">`.num--circle`</span>).
+
+<span class="m-h">## Native mobile</span>
+<span class="m-li">-</span> Respect platform conventions: large title, safe areas, 44pt targets, standard back gestures; layer Ted&#x27;s type and colour on top.
+<span class="m-li">-</span> Use haptics sparingly on key moments, swipe actions on rows, pull to refresh on lists, and a hidden gesture or two (with a visible route to the same action).
+<span class="m-li">-</span> Provide dark mode that follows the device.</code></pre></div>
+</section>
+
+    </div>
+    <a class="next" href="/tools/ds/"><span><span class="eyebrow">End of the tour</span><b>Back to the start</b><span class="next__teaser">Or take the whole thing as one file: <span class="mono">llms.txt</span>.</span></span><span class="next__arrow" aria-hidden="true">↺</span></a>
+    <footer class="foot">
+      <span class="mono">TW/ds v0.2 · 2026-11-11</span>
+      <a href="/tools/ds/llms.txt">Plain-text version for AI</a>
+      <a href="https://github.com/tdwndr/site/tree/main/tools/ds">Source on GitHub</a>
+    </footer>
+  </main>
+</div>
+<nav class="pillbar" aria-label="Quick">
+  <a href="/tools/ds/"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span class="sr-only">Overview</span></a>
+  <a href="#index"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg><span>Index</span></a>
+  <button type="button" data-cmdk><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span></button>
+</nav>
+<dialog class="cmdk" id="cmdk" aria-label="Search">
+  <form method="dialog" class="cmdk__box">
+    <div class="cmdk__bar"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="cmdk-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search pages, tokens, rules" aria-label="Search"><kbd>esc</kbd></div>
+    <ul class="cmdk__list" id="cmdk-list" role="listbox"></ul>
+  </form>
+</dialog>
+<script src="/tools/ds/ds.js" defer></script>
+</body>
+</html>

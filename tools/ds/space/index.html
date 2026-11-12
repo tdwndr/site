@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Space and layout · TW/ds</title>
+<meta name="description" content="Room, alignment and shape.">
+<meta name="theme-color" content="#FAF8F3">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/tools/ds/fonts/schibsted-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/tools/ds/fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/tools/ds/tokens.css">
+<link rel="stylesheet" href="/tools/ds/components.css">
+<link rel="stylesheet" href="/tools/ds/templates.css">
+<link rel="stylesheet" href="/tools/ds/docs.css">
+<link rel="stylesheet" href="/tools/ds/docs-v4.css">
+<link rel="stylesheet" href="/tools/ds/docs-v4b.css">
+<link rel="stylesheet" href="/tools/ds/docs-v5.css">
+<link rel="stylesheet" href="/tools/ds/docs-v6.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('tw-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body data-context="content" data-scope>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="rail" id="index" aria-label="Site">
+    <a class="rail__close" href="#main" aria-label="Close index"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></a>
+    <a class="mark" href="/tools/ds/" aria-label="TW/ds home"><span class="reg"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i><span class="mono mark__t">TW<span class="mark__s">/</span>ds</span></span></a>
+    <p class="rail__ver mono">v0.2 · draft · <a href="/tools/ds/llms.txt">plain text</a></p>
+    <button class="rail__search" type="button" data-cmdk><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span><kbd>⌘K</kbd></button>
+    <nav aria-label="Pages"><ol class="rail__list"><li><a href="/tools/ds/"><span class="mono">00</span>Overview</a></li><li><a href="/tools/ds/principles/"><span class="mono">01</span>Principles</a></li><li><a href="/tools/ds/character/"><span class="mono">02</span>Character</a></li><li><a href="/tools/ds/type/"><span class="mono">03</span>Typography</a></li><li><a href="/tools/ds/colour/"><span class="mono">04</span>Colour</a></li><li><a href="/tools/ds/space/" aria-current="page"><span class="mono">05</span>Space and layout</a><ol class="rail__sub"><li><a href="#so-what">So what</a></li><li><a href="#in-practice">In practice</a></li><li><a href="#for-ai">For AI</a></li></ol></li><li><a href="/tools/ds/imagery/"><span class="mono">06</span>Imagery and ornament</a></li><li><a href="/tools/ds/motion/"><span class="mono">07</span>Motion</a></li><li><a href="/tools/ds/voice/"><span class="mono">08</span>Voice</a></li><li><a href="/tools/ds/patterns/"><span class="mono">09</span>Patterns</a></li></ol></nav>
+    <div class="rail__foot">
+      <a href="https://github.com/tdwndr/site/tree/main/tools/ds">GitHub</a>
+      <button type="button" class="rail__theme mono" data-theme-toggle aria-label="Colour theme">Theme: system</button>
+    </div>
+  </aside>
+  <main id="main" tabindex="-1">
+    <header class="band" data-context="marketing"><div class="band__in"><span class="band__no mono">05</span><span class="eyebrow"><b>Stop 5 of 9</b> · Space and layout</span><h1>Room to <span class="pen">think<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 6c14-6 22 4 36-1s24 3 38-1 18 2 25-1"/></svg></span></h1><p class="band__belief">Airy, and left-aligned, with space doing most of the separating.</p><p class="band__why">Whitespace is what stops people feeling overwhelmed, and it’s what makes the important thing obvious.</p><i class="band__reg tl"></i><i class="band__reg br"></i></div></header>
+    <div class="page">
+<section class="story" id="so-what" data-nav="So what">
+  <span class="kicker">So what</span>
+  <h2 id="what-room-looks-like">What room looks like<a class="anchor" href="#what-room-looks-like" aria-label="Link to this section">#</a></h2>
+  <ul class="notes">
+    <li><b>Generous by default.</b><span>Busy apps and data can be a bit tighter.</span></li>
+    <li><b>A strong left edge.</b><span>I lean left far more than centred.</span></li>
+    <li><b>Space before lines.</b><span>Boxes and heavy rules are a last resort.</span></li>
+    <li><b>Soft corners, fine lines, soft shadows.</b><span>Calm shapes that don’t compete.</span></li>
+  </ul>
+</section>
+
+<section class="story" id="in-practice" data-nav="In practice">
+  <span class="kicker">In practice</span>
+  <h2 id="how-wide-should-a-line-be">How wide should a line be?<a class="anchor" href="#how-wide-should-a-line-be" aria-label="Link to this section">#</a></h2>
+  <p class="lead">Comfortable reading usually lands somewhere around 60 to 75 characters.</p>
+  <div class="measures">
+    <div><span class="eyebrow">Narrow</span><p class="m1">I came back from a school trip with a souvenir: a frosted glass mug featuring the Ampelmännchen, the East German traffic light figure designed by Karl Peglau in 1961. It wasn’t designed to be iconic. It was designed to solve a problem.</p></div>
+    <div><span class="eyebrow">Comfortable <span class="tedtag">my usual</span></span><p class="m2">I came back from a school trip with a souvenir: a frosted glass mug featuring the Ampelmännchen, the East German traffic light figure designed by Karl Peglau in 1961. It wasn’t designed to be iconic. It was designed to solve a problem.</p></div>
+    <div><span class="eyebrow">Wide</span><p class="m3">I came back from a school trip with a souvenir: a frosted glass mug featuring the Ampelmännchen, the East German traffic light figure designed by Karl Peglau in 1961. It wasn’t designed to be iconic. It was designed to solve a problem.</p></div>
+  </div>
+  <div class="exs" style="margin-top:var(--space-7)">
+    <figure class="ex"><div class="ex__stage ex__stage--top"><span class="eyebrow">Design practice</span><p style="font:500 var(--step-2)/1.1 var(--font-display)">Making big things happen</p><p>Product, design and strategy, connected.</p></div><figcaption>One edge to read from.</figcaption></figure>
+    <figure class="ex"><div class="ex__stage ex__stage--top"><div><b>Strategy</b><p class="muted">Embedded in how people work.</p></div><div style="margin-top:var(--space-5)"><b>Delivery</b><p class="muted">Rolled out to millions.</p></div></div><figcaption>Space doing the separating.</figcaption></figure>
+  </div>
+</section>
+
+<section class="story" id="for-ai" data-nav="For AI">
+  <span class="kicker">For AI</span>
+  <h2 id="the-fine-print-for-the-machines">The fine print, for the machines<a class="anchor" href="#the-fine-print-for-the-machines" aria-label="Link to this section">#</a></h2>
+  <div class="aifile"><div class="aifile__bar"><span class="aifile__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="mono">ai/space.md</span><a class="aifile__raw mono" href="/tools/ds/ai/space.md">raw</a></div><p class="aifile__purpose">Lay out pages and screens with the right amount of room for each context, using the spacing tokens and two layouts.</p><pre class="code aifile__md"><code><span class="m-h"># Space and layout: recipes</span>
+
+Purpose: Lay out pages and screens with the right amount of room for each context, using the spacing tokens and two layouts.
+
+<span class="m-h">## Spacing tokens</span>
+<span class="m-c">`--space-1`</span> 0.25rem · <span class="m-c">`--space-2`</span> 0.5 · <span class="m-c">`--space-3`</span> 1 · <span class="m-c">`--space-4`</span> 1.5 · <span class="m-c">`--space-5`</span> 2 · <span class="m-c">`--space-6`</span> 3 · <span class="m-c">`--space-7`</span> 4 · <span class="m-c">`--space-8`</span> 6 · <span class="m-c">`--space-9`</span> 8. Prefer the tokens for gaps, padding and margins.
+
+<span class="m-h">## Room by context</span>
+<span class="m-li">-</span> Marketing and portfolio: sections <span class="m-c">`--space-8`</span> to <span class="m-c">`--space-9`</span> apart; hero top padding up to <span class="m-c">`--space-9`</span>. Line height 1.5 for display copy.
+<span class="m-li">-</span> Long-form content: sections <span class="m-c">`--space-7`</span> apart; paragraphs <span class="m-c">`line-height: 1.8`</span>; text column <span class="m-c">`max-width: 70ch`</span>.
+<span class="m-li">-</span> App: sections <span class="m-c">`--space-5`</span> apart; card padding <span class="m-c">`--space-4`</span>; controls 2.75rem tall.
+<span class="m-li">-</span> Data: as app, slightly tighter (<span class="m-c">`--space-4`</span> between related blocks).
+Set <span class="m-c">`data-context=&quot;marketing|content|app|data&quot;`</span> on the page or section; <span class="m-c">`components.css`</span> adjusts line height, section spacing and control height.
+
+<span class="m-h">## Layouts</span>
+Single centred column (reading, marketing):
+<span class="m-fence">```css</span>
+<span class="m-code">.column { max-width: 70ch; margin-inline: auto; padding-inline: clamp(1.25rem, 5vw, 4rem); }</span>
+<span class="m-fence">```</span>
+Sidebar and content (docs, apps):
+<span class="m-fence">```css</span>
+<span class="m-code">.shell { display: grid; grid-template-columns: 16rem minmax(0, 1fr); min-height: 100vh; }</span>
+<span class="m-code">@media (max-width: 56rem) { .shell { grid-template-columns: 1fr; } }</span>
+<span class="m-fence">```</span>
+Text is left-aligned by default; a centred line is fine as an occasional exception. Full-width bands are allowed on marketing pages, but text inside them still stops at a reading width.
+
+<span class="m-h">## Separation, in order of preference</span>
+<span class="m-li">1.</span> Space (<span class="m-c">`--space-5`</span> or more between groups).
+<span class="m-li">2.</span> A change of surface (<span class="m-c">`--paper-2`</span> or <span class="m-c">`--wash`</span> background) for a whole band.
+<span class="m-li">3.</span> A 1px <span class="m-c">`--rule`</span> line.
+Avoid heavy rules, double borders and boxed sections.
+
+<span class="m-h">## Shape</span>
+<span class="m-li">-</span> <span class="m-c">`--radius`</span> (0.5rem) for cards, fields, panels and code. <span class="m-c">`--radius-pill`</span> only for the filled app button, tags and the floating nav bar.
+<span class="m-li">-</span> 1px lines: <span class="m-c">`--rule`</span> for hairlines, <span class="m-c">`--rule-strong`</span> for card and field borders.
+<span class="m-li">-</span> <span class="m-c">`--shadow-float`</span> for soft shadows. Use it for things that float (menus, sheets, dialogs, the pill bar) and sparingly elsewhere.
+
+<span class="m-h">## Responsive</span>
+One fluid layout. Use <span class="m-c">`clamp()`</span> for type and padding; add a breakpoint only where the layout breaks (the shell collapses below 56rem). Touch targets at least 44px.
+
+<span class="m-h">## Check before you finish</span>
+<span class="m-li">-</span> Is there one obvious first thing on each screen, with space around it?
+<span class="m-li">-</span> Any centred paragraphs? Left-align them.
+<span class="m-li">-</span> Any boxes or rules that space could replace?
+<span class="m-li">-</span> Any spacing values that aren&#x27;t tokens?</code></pre></div>
+</section>
+
+    </div>
+    <a class="next" href="/tools/ds/imagery/"><span><span class="eyebrow">Next stop · 06</span><b>Imagery and ornament</b><span class="next__teaser">Photographs, drawn marks and ornament.</span></span><span class="next__arrow" aria-hidden="true">→</span></a>
+    <footer class="foot">
+      <span class="mono">TW/ds v0.2 · 2026-11-11</span>
+      <a href="/tools/ds/llms.txt">Plain-text version for AI</a>
+      <a href="https://github.com/tdwndr/site/tree/main/tools/ds">Source on GitHub</a>
+    </footer>
+  </main>
+</div>
+<nav class="pillbar" aria-label="Quick">
+  <a href="/tools/ds/"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span class="sr-only">Overview</span></a>
+  <a href="#index"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg><span>Index</span></a>
+  <button type="button" data-cmdk><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span></button>
+</nav>
+<dialog class="cmdk" id="cmdk" aria-label="Search">
+  <form method="dialog" class="cmdk__box">
+    <div class="cmdk__bar"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="cmdk-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search pages, tokens, rules" aria-label="Search"><kbd>esc</kbd></div>
+    <ul class="cmdk__list" id="cmdk-list" role="listbox"></ul>
+  </form>
+</dialog>
+<script src="/tools/ds/ds.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+/* TW/ds templates: ready-made sections for web and apps. Needs tokens.css and components.css.
+   Every template is a single root element with a t- class. Set data-context on it or on a parent. */
+
+/* ---------- Web ---------- */
+.t-topbar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-4) clamp(var(--space-4), 5vw, var(--space-7)); }
+.t-topbar__mark { font: 500 1.05rem/1 var(--font-mono); text-decoration: none; letter-spacing: 0.02em; }
+.t-topbar__mark span { color: var(--accent); }
+.t-topbar nav { display: flex; gap: var(--space-5); font-size: 0.95rem; }
+.t-topbar nav a { text-decoration: none; color: var(--muted); }
+.t-topbar nav a:hover, .t-topbar nav a[aria-current] { color: var(--ink); }
+
+.t-hero { padding: clamp(var(--space-7), 12vw, var(--space-9)) clamp(var(--space-4), 5vw, var(--space-7)); }
+.t-hero h1 { font-size: var(--h1-poster); line-height: 0.98; letter-spacing: -0.035em; max-width: 13ch; margin-top: var(--space-4); }
+.t-hero p { margin-top: var(--space-5); font-size: var(--step-1); line-height: 1.45; max-width: 36ch; color: var(--muted); }
+.t-hero .cta { margin-top: var(--space-6); }
+
+.t-statement { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: var(--space-6); padding: var(--space-8) clamp(var(--space-4), 5vw, var(--space-7)); align-items: start; }
+.t-statement h2 { font-size: var(--step-3); max-width: 14ch; }
+.t-statement p { font-size: 1.06rem; line-height: 1.8; max-width: 56ch; }
+.t-statement p + p { margin-top: 1em; }
+
+.t-work { padding: var(--space-7) clamp(var(--space-4), 5vw, var(--space-7)); }
+.t-work__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: var(--space-4); margin-top: var(--space-5); }
+.t-work .card .duo { aspect-ratio: 16 / 10; margin: calc(var(--space-4) * -1) calc(var(--space-4) * -1) var(--space-4); border-radius: var(--radius) var(--radius) 0 0; }
+
+.t-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); gap: var(--space-5); padding: var(--space-7) clamp(var(--space-4), 5vw, var(--space-7)); }
+.t-stats div { display: grid; gap: var(--space-2); }
+.t-stats b { font: 500 var(--step-4)/1 var(--font-display); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.t-stats span { color: var(--muted); font-size: 0.95rem; }
+
+.t-themes { list-style: none; margin: 0; padding: var(--space-7) clamp(var(--space-4), 5vw, var(--space-7)); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: var(--space-6) var(--space-5); }
+.t-themes li { display: grid; gap: var(--space-2); align-content: start; }
+.t-themes .num { font-size: var(--step-4); }
+.t-themes b { font: 500 var(--step-1)/1.25 var(--font-display); }
+.t-themes span { color: var(--muted); line-height: 1.6; }
+
+.t-quote { padding: var(--space-8) clamp(var(--space-4), 5vw, var(--space-7)); }
+.t-quote blockquote { margin: 0; font: italic 400 clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem)/1.25 var(--font-serif); max-width: 26ch; }
+.t-quote figcaption { margin-top: var(--space-4); font: 400 0.8rem/1.4 var(--font-mono); color: var(--muted); }
+
+.t-article { padding: var(--space-7) clamp(var(--space-4), 5vw, var(--space-7)); max-width: calc(var(--measure) + 10rem); }
+.t-article h1 { font: 400 var(--step-4)/1.08 var(--font-serif); letter-spacing: -0.02em; max-width: 18ch; margin-top: var(--space-3); }
+.t-article > p, .t-article > ul { max-width: var(--measure); line-height: var(--lh-read); font-size: 1.06rem; }
+.t-article > * + * { margin-top: 1.1em; }
+.t-article h1 + p { margin-top: var(--space-5); }
+.t-article .quote { margin: var(--space-6) 0; }
+
+.t-contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-6); padding: var(--space-8) clamp(var(--space-4), 5vw, var(--space-7)); align-items: start; }
+.t-contact h2 { font-size: var(--step-3); max-width: 12ch; }
+.t-contact form { display: grid; gap: var(--space-3); }
+.t-contact form .btn { justify-self: start; margin-top: var(--space-2); }
+
+.t-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3) var(--space-5); padding: var(--space-6) clamp(var(--space-4), 5vw, var(--space-7)); font-size: 0.9rem; color: var(--muted); }
+.t-footer a { color: inherit; }
+
+/* ---------- App ---------- */
+.t-app { display: grid; grid-template-columns: 13rem minmax(0, 1fr); min-height: 26rem; }
+.t-app__rail { display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-4) var(--space-3); border-right: 1px solid var(--rule); }
+.t-app__rail .t-topbar__mark { padding: 0 var(--space-2) var(--space-4); }
+.t-app__rail a:not(.t-topbar__mark) { display: flex; gap: var(--space-2); align-items: center; padding: 0.5rem var(--space-2); border-radius: 6px; text-decoration: none; color: var(--muted); font-size: 0.95rem; }
+.t-app__rail a[aria-current] { background: var(--paper-2, var(--wash)); color: var(--ink); font-weight: 500; }
+.t-app__rail .icon { width: 1.15rem; height: 1.15rem; }
+.t-app__main { padding: var(--space-5) var(--space-5) var(--space-6); min-width: 0; }
+.t-app__head { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); }
+.t-app__head h1 { font-size: var(--step-3); }
+
+.t-dash { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: var(--space-3); margin-top: var(--space-5); }
+.t-dash > div { padding: var(--space-4); border: 1px solid var(--rule); border-radius: var(--radius); }
+.t-dash .stat__value { font-size: var(--step-3); }
+
+.t-list { list-style: none; margin: var(--space-4) 0 0; padding: 0; }
+.t-list li { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid var(--rule); }
+.t-list li b { font-weight: 500; }
+.t-list li .mono { font-size: 0.8rem; color: var(--muted); }
+.t-list details summary { cursor: pointer; font-size: 0.9rem; color: var(--muted); list-style: none; }
+.t-list details summary::-webkit-details-marker { display: none; }
+.t-list details[open] summary { display: none; }
+.t-list details > div { display: flex; gap: var(--space-2); align-items: center; }
+
+.t-form { display: grid; gap: var(--space-3); max-width: 28rem; margin-top: var(--space-4); }
+.t-form .btn { justify-self: start; }
+
+.t-empty { display: grid; gap: var(--space-3); justify-items: start; padding: var(--space-7) var(--space-5); }
+.t-empty h2 { font-size: var(--step-2); }
+.t-empty p { color: var(--muted); max-width: 36ch; }
+
+.t-welcome { display: grid; gap: var(--space-4); max-width: 30rem; padding: var(--space-6) var(--space-5); }
+.t-welcome h2 { font: 400 var(--step-3)/1.1 var(--font-serif); letter-spacing: -0.015em; }
+.t-welcome p { line-height: 1.7; }
+.t-welcome .t-welcome__sig { font: 400 0.85rem/1.4 var(--font-mono); color: var(--muted); }
+
+.t-phone { position: relative; width: 17rem; aspect-ratio: 9 / 18.5; margin: 0 auto; padding: var(--space-5) var(--space-4) 5rem; border: 7px solid var(--ink); border-radius: 2.4rem; background: var(--paper); overflow: hidden; }
+.t-phone .pillbar { position: absolute; bottom: 1rem; display: flex; }
+
+@media (max-width: 48rem) {
+  .t-statement, .t-contact { grid-template-columns: 1fr; }
+  .t-app { grid-template-columns: 1fr; }
+  .t-app__rail { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--rule); }
+  .t-app__rail .t-topbar__mark { padding: 0.5rem var(--space-2); }
+  .t-topbar nav { gap: var(--space-3); }
+}
+
+/* ---------- Matched to tedw.co.uk: square cards, light accent numbers ---------- */
+.t-work .card { padding: 0; border-radius: 0; border: 1px solid var(--rule); background: color-mix(in srgb, #fff 55%, var(--paper)); box-shadow: 0 1px 2px rgba(42, 33, 27, .07), 0 10px 22px -16px rgba(42, 33, 27, .38); display: flex; flex-direction: column; text-decoration: none; transition: box-shadow var(--dur-micro) var(--ease-ui); }
+.t-work .card:hover { box-shadow: 0 2px 4px rgba(42, 33, 27, .08), 0 20px 36px -20px rgba(42, 33, 27, .48); border-color: var(--rule); }
+.t-work .card::after { display: none; }
+.t-work .card__photo { display: block; aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 1px solid var(--rule); background: var(--accent); }
+.t-work .card__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.t-work .card__body { display: flex; flex-direction: column; gap: .35rem; padding: 1.1rem 1.25rem 1.4rem; }
+.t-work .card h3 { margin: .15rem 0 .4rem; padding: 0; font-size: clamp(1.5rem, 2vw, 2rem); line-height: 1.06; letter-spacing: -.02em; }
+.t-work .card p { margin: 0; color: var(--muted); font-size: .96rem; line-height: 1.45; }
+.t-stats b, .stat__value { font-weight: 400; font-size: clamp(3.4rem, 7vw, 6.2rem); line-height: .9; letter-spacing: -.045em; color: var(--accent); font-variant-numeric: lining-nums tabular-nums; }
+.t-stats div { flex-direction: column-reverse; }
+.t-stats span { font: 500 var(--step--1)/1.3 var(--font-body); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.t-dash .stat__value { font-size: clamp(2.2rem, 4vw, 3.2rem); }
+.num--circle { position: relative; display: inline-grid; place-items: center; width: 3rem; height: 3rem; font: italic 400 1.7rem/1 var(--font-serif); color: var(--accent); }
+.num--circle svg { position: absolute; inset: -.2rem; width: calc(100% + .4rem); height: calc(100% + .4rem); color: var(--accent); fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+
+/* ---------- Mobile app templates ---------- */
+.phones { display: grid; grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr)); gap: var(--space-6) var(--space-4); align-items: stretch; }
+.phones > figure { margin: 0; display: flex; flex-direction: column; align-items: center; }
+.phones figcaption { margin-top: var(--space-3); font-size: .875rem; line-height: 1.45; color: var(--muted); text-align: center; max-width: 18rem; }
+.t-phone { position: relative; width: 100%; max-width: 17.5rem; aspect-ratio: 9 / 19; margin: 0; padding: 0; border: 7px solid var(--ink); border-radius: 2.6rem; background: var(--paper); overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow-float); }
+.t-phone__status { display: flex; justify-content: space-between; align-items: center; padding: .85rem 1.5rem .3rem; font: 600 .8rem/1 var(--font-body); }
+.t-phone__status i { font-style: normal; display: inline-flex; gap: .25rem; align-items: center; }
+.t-phone__status i::before { content: ""; width: 1.1rem; height: .55rem; border: 1.5px solid currentColor; border-radius: 3px; }
+.t-phone__body { flex: 1; min-height: 0; padding: .9rem 1.2rem 5.5rem; overflow: hidden; display: flex; flex-direction: column; gap: .8rem; }
+.t-phone__title { font: 500 1.9rem/1.05 var(--font-display); letter-spacing: -.03em; }
+.t-phone .pillbar { position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); display: flex; }
+.t-phone .pillbar a { min-height: 2.4rem; padding: 0 .85rem; font-size: .8rem; }
+.t-phone .stat { gap: .15rem; padding: .8rem; border: 1px solid var(--rule); border-radius: var(--radius); }
+.t-phone .stat__value { font-size: 2.4rem; }
+.t-phone .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+.t-row { display: flex; justify-content: space-between; align-items: center; gap: .6rem; padding: .7rem 0; border-bottom: 1px solid var(--rule); font-size: .95rem; }
+.t-row small { color: var(--muted); font: 400 .72rem/1 var(--font-mono); }
+.t-swipe { position: relative; margin: 0 -1.2rem; overflow: hidden; border-bottom: 1px solid var(--rule); }
+.t-swipe__row { position: relative; z-index: 1; display: flex; justify-content: space-between; padding: .75rem 1.2rem; background: var(--paper); transform: translateX(-4.6rem); font-size: .95rem; }
+.t-swipe__act { position: absolute; inset: 0 0 0 auto; width: 4.6rem; display: grid; place-items: center; background: var(--accent); color: #fff; font: 500 .8rem/1 var(--font-body); }
+.t-back { display: inline-flex; align-items: center; gap: .3rem; color: var(--accent); font-size: .95rem; }
+.t-toggle { display: inline-block; position: relative; width: 2.6rem; height: 1.6rem; border-radius: 99px; background: var(--accent); flex: none; }
+.t-toggle::after { content: ""; position: absolute; top: .15rem; right: .15rem; width: 1.3rem; height: 1.3rem; border-radius: 50%; background: #fff; }
+.t-toggle--off { background: var(--rule-strong); }
+.t-toggle--off::after { right: auto; left: .15rem; }
+.t-phone .field input { min-height: 3rem; padding: 1.3rem .75rem .35rem; font-size: .95rem; }
+.t-phone .field label { left: .75rem; top: .8rem; font-size: .9rem; }
+.t-phone .t-welcome { padding: 0; max-width: none; }
+.t-phone .t-welcome h2 { font-size: 1.7rem; }
+
+/* Numbers: label sits beneath a big, light, accent figure (as on tedw.co.uk) */
+.t-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: var(--space-5) var(--space-5); margin: 0; }
+.t-stats > div { display: flex; flex-direction: column-reverse; gap: .7rem; justify-content: flex-end; }
+.t-stats dd { margin: 0; }
+.t-stats dt { font: 500 var(--step--1)/1.3 var(--font-body); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.t-stats b { display: block; white-space: nowrap; font-size: clamp(2.8rem, 5.2vw, 5rem); }
+.t-phone .t-welcome { padding: .9rem 1.2rem 5.5rem; max-width: none; display: flex; }
+.t-phone .t-welcome h2 { font-size: 1.7rem; }
+.t-swipe__row { transform: none; width: calc(100% - 4.6rem); }
+.t-phone .t-welcome .btn { margin-top: auto; }
