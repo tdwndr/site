@@ -68,7 +68,13 @@
   --c-parkrun: #0AA19E;
   --c-race: #7B3FF2;
   --c-rest: #8A8FA3;
-  --c-line: #E0700A;        /* long-run line in the load chart (validated against the bar blue) */
+  --c-line: #E0700A;
+  /* Training phases, in order. Validated for colour-blind separation; always shown with a text label too */
+  --ph-foundation: #8A8FA3;
+  --ph-base: #0AA19E;
+  --ph-build: #E8930A;
+  --ph-peak: #D6336C;
+  --ph-taper: #5B5BF0;
 
   --r-xl: 24px;
   --r-lg: 18px;
@@ -102,6 +108,10 @@
     --c-long: #5B8CFF;
     --c-race: #9C6BFF;
     --c-line: #D8721C;
+    --ph-base: #0B9C99;
+    --ph-build: #C77F0A;
+    --ph-peak: #D6336C;
+    --ph-taper: #6E6EF5;
     --sh-1: none;
   }
 }
@@ -156,11 +166,11 @@ b, strong { font-weight: 650; }
 .k-good { --c: var(--good); }
 .k-warn { --c: var(--warn); }
 .k-bad { --c: var(--bad); }
-.p-foundation { --c: var(--c-rest); }
-.p-base { --c: var(--c-easy); }
-.p-build { --c: var(--c-tempo); }
-.p-peak { --c: var(--c-speed); }
-.p-taper { --c: var(--c-long); }
+.p-foundation { --c: var(--ph-foundation); }
+.p-base { --c: var(--ph-base); }
+.p-build { --c: var(--ph-build); }
+.p-peak { --c: var(--ph-peak); }
+.p-taper { --c: var(--ph-taper); }
 .tile {
   flex: none; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px;
   background: color-mix(in srgb, var(--c, var(--accent)) 14%, var(--surface)); color: var(--c, var(--accent));
@@ -212,6 +222,7 @@ b, strong { font-weight: 650; }
 @media (hover: hover) { .icon-btn:hover { background: var(--fill-2); color: var(--ink); } }
 .link { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 0 4px; border: 0; background: none; color: var(--accent); font: 600 15px/1 var(--ui); border-radius: 8px; }
 .link .ic { width: 16px; height: 16px; stroke-width: 2.4; }
+.link--inline { display: inline; min-height: 0; padding: 12px 4px; margin: -12px -4px; font: inherit; font-weight: 650; vertical-align: baseline; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
 
 /* 5. CARDS & LISTS ------------------------------------------------------------- */
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--sh-1); }
@@ -251,7 +262,10 @@ b, strong { font-weight: 650; }
 }
 .cell__main:active { background: var(--fill); }
 @media (hover: hover) { .cell:hover { background: var(--fill); } .cell:hover + .cell::before, .cell:hover::before { opacity: 0; } }
-.cell__text { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.cell__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.cell__chev { width: 18px; height: 18px; margin: 0 2px 0 4px; color: var(--ink-3); stroke-width: 2.4; transition: transform .2s var(--ease), color .2s; }
+@media (hover: hover) { .cell:hover .cell__chev { color: var(--accent); transform: translateX(2px); } }
+.cell__main:active .cell__chev { color: var(--accent); }
 .cell__title { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; font-weight: 650; font-size: 16.5px; line-height: 1.25; }
 .cell__sub { font-size: 14.5px; color: var(--ink-2); line-height: 1.4; }
 .cell__flag { display: inline-flex; color: var(--ink-2); }
@@ -556,7 +570,7 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 .week__body { border-top: 1px solid var(--line); padding: 6px; }
 .week__body .callout { margin: 8px 8px 6px; font-size: 15px; }
 .mring { position: relative; flex: none; display: grid; place-items: center; width: 44px; height: 44px; font: 700 12px/1 var(--ui); color: var(--ink-2); }
-.mring svg { position: absolute; inset: 0; rotate: -90deg; }
+.mring > svg:not(.ic) { position: absolute; inset: 0; rotate: -90deg; }
 .mring circle { fill: none; stroke-width: 4; }
 .mring__bg { stroke: var(--fill); }
 .mring__fg { stroke: var(--c); stroke-linecap: round; }
@@ -571,27 +585,35 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 .chart__grid span { position: absolute; right: calc(100% + 8px); top: -8px; font-size: 12px; color: var(--ink-3); white-space: nowrap; }
 .chart__bars { position: absolute; inset: 0; display: flex; align-items: flex-end; }
 .bar-col { position: relative; flex: 1; height: 100%; display: flex; align-items: flex-end; justify-content: center; padding: 0; border: 0; background: none; border-radius: 6px; }
-.bar { position: relative; width: min(22px, 68%); border-radius: 4px 4px 0 0; background: color-mix(in srgb, var(--accent) 26%, var(--surface)); overflow: hidden; transition: height .5s var(--ease), background-color .2s; }
-.bar__done { position: absolute; left: 0; right: 0; bottom: 0; background: var(--accent); transition: height .5s var(--ease); }
+.bar { position: relative; width: min(22px, 68%); border-radius: 4px 4px 0 0; background: color-mix(in srgb, var(--c, var(--accent)) 32%, var(--surface)); overflow: hidden; transition: height .5s var(--ease), background-color .2s; }
+.bar__done { position: absolute; left: 0; right: 0; bottom: 0; background: var(--c, var(--accent)); transition: height .5s var(--ease); }
+.bar-col--hit .bar { display: none; }
+.chart__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.chart__switch { flex: none; width: 196px; }
+.chart__area { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.chart__area .plan { fill: none; stroke: color-mix(in srgb, var(--accent) 38%, var(--surface)); stroke-width: 2; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.chart__area .run { fill: color-mix(in srgb, var(--accent) 12%, transparent); stroke: none; }
+.chart__area .runline { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.chart__cross { position: absolute; top: 0; bottom: 0; width: 1px; margin-left: -.5px; background: var(--line-2); pointer-events: none; transition: left .2s var(--ease); }
+.chart__pin { position: absolute; width: 10px; height: 10px; margin: 0 0 -5px -5px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px var(--surface); pointer-events: none; transition: left .2s var(--ease), bottom .2s var(--ease); }
+.chart__end { position: absolute; right: 0; transform: translateY(-130%); font-size: 12.5px; font-weight: 650; color: var(--ink-2); white-space: nowrap; }
+.chart__x { display: flex; justify-content: space-between; margin: 8px 0 0 30px; font-size: 12px; color: var(--ink-3); }
 .bar-col.is-sel .bar { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--ink); }
 @media (hover: hover) { .bar-col:hover .bar { background: color-mix(in srgb, var(--accent) 40%, var(--surface)); } }
 .bar-col__mark { position: absolute; top: -22px; left: 50%; translate: -50% 0; font: 700 11px/1 var(--ui); color: var(--ink); white-space: nowrap; }
 .bar-col__mark .ic { width: 16px; height: 16px; color: var(--c-race); }
-.chart__line { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-.chart__line polyline { fill: none; stroke: var(--c-line); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
-.chart__dot { position: absolute; width: 8px; height: 8px; margin: 0 0 -4px -4px; border-radius: 50%; background: var(--c-line); box-shadow: 0 0 0 2px var(--surface); pointer-events: none; }
 .chart__phases { display: flex; gap: 3px; margin: 10px 0 0 30px; }
-.chart__phases span { min-width: 0; padding-top: 6px; border-top: 2px solid var(--line-2); font-size: 12px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chart__phases span { min-width: 0; padding-top: 6px; border-top: 3px solid var(--c, var(--line-2)); font-size: 12px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .chart__readout { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; min-height: 48px; margin-top: 16px; padding: 12px 14px; border-radius: var(--r-md); background: var(--surface-2); border: 1px solid var(--line); font-size: 14.5px; color: var(--ink-2); }
 .chart__readout b { font-size: 16px; color: var(--ink); }
 .chart__readout strong { color: var(--ink); }
 .legend2 { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 14px; font-size: 13.5px; color: var(--ink-2); }
 .legend2 span { display: inline-flex; align-items: center; gap: 8px; }
 .legend2 i { display: inline-block; }
-.legend2 .lg-bar { width: 10px; height: 12px; border-radius: 3px 3px 0 0; background: var(--accent); }
-.legend2 .lg-bar--soft { background: color-mix(in srgb, var(--accent) 26%, var(--surface)); }
-.legend2 .lg-line { width: 18px; height: 2px; border-radius: 1px; background: var(--c-line); position: relative; }
-.legend2 .lg-line::after { content: ""; position: absolute; left: 5px; top: -3px; width: 8px; height: 8px; border-radius: 50%; background: var(--c-line); }
+.legend2 .lg-bar { width: 10px; height: 12px; border-radius: 3px 3px 0 0; background: var(--c, var(--accent)); }
+.legend2 .lg-bar--soft { background: color-mix(in srgb, var(--c, var(--accent)) 32%, var(--surface)); }
+.legend2 .lg-line { width: 18px; height: 3px; border-radius: 2px; background: var(--accent); }
+.legend2 .lg-line--soft { background: color-mix(in srgb, var(--accent) 38%, var(--surface)); }
 .chart__table summary { display: inline-flex; align-items: center; min-height: 44px; margin-top: 4px; color: var(--accent); font-weight: 600; font-size: 14.5px; cursor: pointer; list-style: none; border-radius: 8px; }
 .chart__table summary::-webkit-details-marker { display: none; }
 .chart__table table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 4px; }
@@ -673,7 +695,6 @@ body[data-view="setup"] .toast { bottom: calc(env(safe-area-inset-bottom) + 100p
   .burst i { animation: burst .7s var(--ease) forwards; }
   .moon i { animation: zzz 3s ease-in-out infinite; }
   .moon i:nth-of-type(2) { animation-delay: .6s; }
-  .road__me { animation: bob 2.4s ease-in-out infinite; }
   .wave { display: inline-block; transform-origin: 70% 80%; animation: wave 2.2s ease-in-out 1 .6s; }
   .tile--solid.k-good .ic, .callout.k-good > .ic { animation: pop .5s var(--ease) .1s backwards; }
 }
@@ -684,7 +705,6 @@ body[data-view="setup"] .toast { bottom: calc(env(safe-area-inset-bottom) + 100p
 @keyframes float { 50% { translate: 0 -6px; } }
 @keyframes burst { 0% { opacity: 1; transform: translate(0, 0) rotate(0); } 100% { opacity: 0; transform: translate(var(--x), var(--y)) rotate(var(--r)); } }
 @keyframes zzz { 0%, 100% { opacity: 0; transform: translateY(2px); } 40%, 70% { opacity: 1; transform: translateY(-3px); } }
-@keyframes bob { 0%, 100% { translate: -50% -50%; } 50% { translate: -50% -62%; } }
 @keyframes wave { 0%, 60%, 100% { rotate: 0deg; } 10%, 30% { rotate: 14deg; } 20%, 40% { rotate: -8deg; } 50% { rotate: 10deg; } }
 </style>
 </head>
@@ -1192,15 +1212,29 @@ const TERMS = {
 /* ======================================================================
    State and storage
    ====================================================================== */
+const KEY_BAK = KEY + '-previous';
+const DATA_VERSION = 2;
 let state = load();
+/* Saved data is versioned and migrated forward, so updates to the app never
+   lose a plan, ticks, moves or settings. A copy of the previous save is kept
+   in case a write is ever interrupted. */
+function migrate(s) {
+  if (!s || typeof s !== 'object') return null;
+  s.done = s.done || {}; s.buggy = s.buggy || {}; s.moves = s.moves || {}; s.units = s.units || 'km';
+  if (!s.v || s.v < 2) Object.keys(s.done).forEach(k => { if (s.done[k] && typeof s.done[k] !== 'object') s.done[k] = { d: k }; });   // v1 stored ticks as 1
+  s.v = DATA_VERSION;
+  return s;
+}
 function load() {
-  try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.v === 1) return s; } catch (e) { /* storage unavailable */ }
-  return { v: 1, profile: null, start: null, done: {}, buggy: {}, units: 'km' };
+  for (const k of [KEY, KEY_BAK]) {
+    try { const s = migrate(JSON.parse(localStorage.getItem(k))); if (s) return s; } catch (e) { /* unreadable: try the previous copy */ }
+  }
+  return { v: DATA_VERSION, profile: null, start: null, done: {}, buggy: {}, moves: {}, units: 'km' };
 }
 let saveTimer;
 function save(now) {
   clearTimeout(saveTimer);
-  const go = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { toast('Couldn’t save on this device. Try “Back up your plan” to keep a copy.'); } };
+  const go = () => { try { const prev = localStorage.getItem(KEY); if (prev) localStorage.setItem(KEY_BAK, prev); localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { toast('Couldn’t save on this device. Try “Back up your plan” to keep a copy.'); } };
   now ? go() : (saveTimer = setTimeout(go, 250));
   if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
 }
@@ -1409,7 +1443,7 @@ function weeksUntil(dateISO, startISO) {
 }
 const longestMax = dk => ({ '5k': 10, '10k': 16, 'hm': 24, 'm': 36 })[dk];
 const longestLabel = v => v == 0 ? 'Just starting' : fmt(state.units).dist(v);
-const buggySlots = d => SLOTS[!!d.parkrun][d.runs].filter(s => s[1] !== 'q');   // speed days are always solo
+const buggySlots = d => SLOTS[!!d.parkrun][d.runs];   // any day; speed and hill sessions stay solo
 function runsHint(d) {
   const D = DIST[d.distance];
   return d.runs === 2 ? `Two works: your long run does the heavy lifting. Most ${D.name} plans use ${D.runs}.`
@@ -1475,7 +1509,7 @@ function renderSetup() {
         <div class="opt-more" id="buggy-days" ${d.buggy ? '' : 'hidden'}>
           <p id="l-buggy" style="font-weight:600;font-size:15px;margin-bottom:10px">Which runs?</p>
           <div class="chips" role="group" aria-labelledby="l-buggy" id="buggy-list"></div>
-          <p class="hint" style="margin:12px 0 0">Speed sessions are always solo. The buggy is challenge enough!</p>
+          <p class="hint" style="margin:12px 0 0">Pick any days. Speed and hill sessions always stay solo (the buggy is challenge enough!), so your plan gets a mix.</p>
         </div>
       </div>
     </fieldset>`;
@@ -1607,7 +1641,33 @@ const isDone = r => !!state.done[r.id];
 const goalPace = () => state.profile.goal / DIST[state.profile.distance].km;
 const TABS = [['today', 'Today', 'today'], ['plan', 'Plan', 'plan'], ['adjust', 'Adjust', 'adjust'], ['learn', 'Learn', 'learn']];
 
-function regen() { plan = generate(state.profile, state.start, state.units, state.buggy, state.moves); return plan; }
+function regen() { plan = generate(state.profile, state.start, state.units, state.buggy, state.moves); applyHistory(); return plan; }
+const snapshotOf = r => ({ d: r.date, t: r.title, k: r.km, c: r.cat, m: Math.round(r.mins), b: r.buggy ? 1 : 0 });
+const KIND_OF = { easy: ['easy', 'easy'], long: ['long', 'long'], speed: ['intervals', 'interval'], tempo: ['tempo', 'tempo'], parkrun: ['parkrun-easy', 'parkrun'], race: ['race', 'race'] };
+function historyRun(rec, id) {
+  const [kind, pace] = KIND_OF[rec.c] || KIND_OF.easy, date = rec.d || id;
+  return { id, date, dow: dowMon(parseISO(date)), title: rec.t, km: rec.k, cat: rec.c || 'easy', kind, pace, purpose: 'Completed', mins: rec.m || rec.k * 6.5,
+    steps: ['Done and dusted. Your plan has changed since, so this run is kept exactly as you ran it.'], buggy: !!rec.b, canBuggy: false, canMove: false, history: true, exact: rec.c === 'race' };
+}
+/* Keep every completed run as it was done, even if the plan is regenerated
+   differently later (new settings, or an app update with new training rules) */
+function applyHistory() {
+  const byId = new Map(allRuns().map(r => [r.id, r]));
+  let fill = false;
+  Object.entries(state.done).forEach(([id, rec]) => {
+    if (!rec || typeof rec !== 'object') return;
+    const r = byId.get(id);
+    if (!rec.t) { if (r) { Object.assign(rec, snapshotOf(r)); fill = true; } return; }   // older ticks: record them now
+    if (r && r.title === rec.t && Math.abs(r.km - rec.k) < .01) return;
+    const h = historyRun(rec, id);
+    if (r) { const w = weekOf(r); w.runs[w.runs.indexOf(r)] = h; return; }
+    const d = parseISO(h.date), w = plan.weeks.find(x => d >= x.start && d <= x.end);
+    if (!w) return;
+    w.runs = w.runs.filter(x => x.date !== h.date).concat(h).sort((a, b) => a.date < b.date ? -1 : 1);
+  });
+  plan.weeks.forEach(w => { w.km = w.runs.reduce((a, x) => a + x.km, 0); });
+  if (fill) save();
+}
 function nowInfo() {
   const t = today(), ti = iso(t), runs = allRuns();
   return {
@@ -1703,6 +1763,7 @@ function cell(r, now) {
         <span class="cell__title">${esc(r.title)}${isToday ? '<span class="badge">Today</span>' : ''}${r.buggy ? `<span class="cell__flag" title="With the buggy">${ic('buggy')}<span class="sr-only">, with the buggy</span></span>` : ''}${r.moved ? `<span class="cell__flag" title="Moved">${ic('move')}<span class="sr-only">, moved from its usual day</span></span>` : ''}</span>
         <span class="cell__sub">${DOW3[r.dow]} ${d.getDate()} ${MON3[d.getMonth()]} · ${F.dist(r.km, r.exact)} · ${runPace(r)}</span>
       </span>
+      ${ic('chevR', 'cell__chev')}<span class="sr-only">, show details</span>
     </button>
     ${checkHTML(r)}
   </li>`;
@@ -1797,43 +1858,73 @@ function miniRing(d, t) {
   return `<span class="mring" role="img" aria-label="${d} of ${t} runs done"><svg viewBox="0 0 44 44" aria-hidden="true"><circle class="mring__bg" cx="22" cy="22" r="18"/><circle class="mring__fg" cx="22" cy="22" r="18" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - f)}"/></svg><span aria-hidden="true">${d}/${t}</span></span>`;
 }
 const longOf = w => { const l = w.runs.find(r => r.cat === 'long' || r.kind === 'race'); return l ? l.km : 0; };
-function chartReadout(w, now) {
-  const F = fmt(state.units), doneKm = w.runs.filter(isDone).reduce((s, r) => s + r.km, 0);
-  const isNow = w.i === now.wkIdx;
+let chartMode = state.chartView === 'total' ? 'total' : 'phase';
+const cumulative = () => {
+  let p = 0, d = 0;
+  return plan.weeks.map(w => { p += w.km; d += w.runs.filter(isDone).reduce((s, r) => s + r.km, 0); return { plan: p, done: d }; });
+};
+function chartReadout(i, now) {
+  const F = fmt(state.units), w = plan.weeks[i], isNow = w.i === now.wkIdx;
+  if (chartMode === 'total') {
+    const c = cumulative()[i], future = now.t < w.start;
+    return `<b>By the end of week ${w.n}${isNow ? ' (this week)' : ''}</b><span><strong>${F.dist(c.plan)}</strong> planned in total</span>${future ? '' : `<span><strong>${F.dist(c.done)}</strong> run so far</span>`}`;
+  }
+  const doneKm = w.runs.filter(isDone).reduce((s, r) => s + r.km, 0);
   return `<b>Week ${w.n}${isNow ? ' (this week)' : ''}</b><span>${PHASE[w.phase].name}${w.cut ? ' · deload' : ''} · ${fmtRangeDates(w.start, w.end)}</span>
     <span><strong>${F.dist(w.km)}</strong> in total${doneKm ? ` · ${F.dist(doneKm)} done` : ''}</span><span>Long run <strong>${F.dist(longOf(w), w.runs.some(r => r.kind === 'race'))}</strong></span>`;
 }
-function chartHTML(now) {
+const niceStep = v => [5, 10, 20, 25, 50, 100, 200, 250, 500, 1000].find(x => x >= v) || 1000;
+const chartTop = max => { const st = niceStep(max / 4); return [st, Math.ceil(max / st) * st]; };
+function chartBody(now) {
   const F = fmt(state.units), W = plan.weeks, n = W.length, toU = km => F.mi ? km / MI : km;
-  const max = Math.max(...W.map(w => toU(w.km)), 1);
-  const step = max <= 20 ? 5 : max <= 50 ? 10 : 20, top = Math.ceil(max / step) * step;
-  const ticks = []; for (let v = 0; v <= top; v += step) ticks.push(v);
   const sel = chartSel != null && W[chartSel] ? chartSel : Math.max(0, now.wkIdx);
-  const pts = W.map((w, i) => [(i + .5) / n * 100, 100 - toU(longOf(w)) / top * 100]);
+  const cum = cumulative();
+  const max = chartMode === 'total' ? Math.max(toU(cum[n - 1].plan), 1) : Math.max(...W.map(w => toU(w.km)), 1);
+  const [step, top] = chartTop(max);
+  const ticks = []; for (let v = 0; v <= top; v += step) ticks.push(v);
   const phases = []; W.forEach(w => { const l = phases[phases.length - 1]; if (l && l.p === w.phase) l.c++; else phases.push({ p: w.phase, c: 1 }); });
-  const every = Math.ceil(n / 8);
-  return `<section class="card pad" aria-labelledby="load-h">
-    <h2 class="sec-h" style="margin:0 0 4px" id="load-h">How your training builds</h2>
-    <p class="sec-sub" style="margin:0">Weekly distance in ${F.unit}. Notice the deload dips and the taper at the end. Tap a week for details.</p>
-    <div class="chart">
-      <div class="chart__plot">
-        <div class="chart__grid" aria-hidden="true">${ticks.map(v => `<div style="bottom:${v / top * 100}%"><span>${v}</span></div>`).join('')}</div>
-        <div class="chart__bars">${W.map((w, i) => {
-          const h = toU(w.km) / top * 100, dk = w.runs.filter(isDone).reduce((s, r) => s + r.km, 0), dh = w.km ? dk / w.km * 100 : 0;
-          const mark = i === now.wkIdx ? '<span class="bar-col__mark">Now</span>' : i === n - 1 ? `<span class="bar-col__mark">${ic('race')}</span>` : '';
-          return `<button class="bar-col ${i === sel ? 'is-sel' : ''}" data-bar="${i}" aria-label="Week ${w.n}: ${F.dist(w.km)}, long run ${F.dist(longOf(w))}${w.cut ? ', deload week' : ''}" aria-pressed="${i === sel}"><span class="bar" style="height:${h}%"><span class="bar__done" style="height:${dh}%"></span></span>${mark}</button>`;
-        }).join('')}</div>
-        <svg class="chart__line" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polyline points="${pts.map(p => p.join(',')).join(' ')}"/></svg>
-        ${pts.map(p => `<span class="chart__dot" aria-hidden="true" style="left:${p[0]}%;bottom:${100 - p[1]}%"></span>`).join('')}
-      </div>
-      <div class="chart__phases" aria-hidden="true">${phases.map(x => `<span style="flex:${x.c}">${PHASE[x.p].name}</span>`).join('')}</div>
-    </div>
-    <div class="chart__readout" id="chart-readout" aria-live="polite">${chartReadout(W[sel], now)}</div>
-    <div class="legend2"><span><i class="lg-bar"></i>Done</span><span><i class="lg-bar lg-bar--soft"></i>Planned</span><span><i class="lg-line"></i>Long run</span></div>
+  const grid = `<div class="chart__grid" aria-hidden="true">${ticks.map(v => `<div style="bottom:${v / top * 100}%"><span>${v}</span></div>`).join('')}</div>`;
+  const label = (w, i) => `Week ${w.n}: ${chartMode === 'total' ? `${F.dist(cum[i].plan)} planned in total` : `${PHASE[w.phase].name}, ${F.dist(w.km)}`}`;
+  let plot;
+  if (chartMode === 'total') {
+    // Cumulative distance: planned (light line) and run so far (filled), one km axis
+    const x = i => (i + 1) / n * 100, y = v => 100 - toU(v) / top * 100;
+    const planPts = ['0,100', ...cum.map((c, i) => `${x(i)},${y(c.plan)}`)].join(' ');
+    const last = now.wkIdx >= 0 ? now.wkIdx : (now.t < W[0].start ? -1 : n - 1);
+    const runPts = ['0,100', ...cum.slice(0, last + 1).map((c, i) => `${x(i)},${y(c.done)}`)];
+    const area = last >= 0 ? `<path class="run" d="M${runPts.join(' L')} L${x(last)},100 Z"/><polyline class="runline" points="${runPts.join(' ')}"/>` : '';
+    const pinV = now.t < W[sel].start ? cum[sel].plan : cum[sel].done;
+    plot = `${grid}<svg class="chart__area" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polyline class="plan" points="${planPts}"/>${area}</svg>
+      <span class="chart__end" style="bottom:${100 - y(cum[n - 1].plan)}%">${F.dist(cum[n - 1].plan)}</span>
+      <span class="chart__cross" id="chart-cross" style="left:${x(sel)}%"></span><span class="chart__pin" id="chart-pin" style="left:${x(sel)}%;bottom:${100 - y(pinV)}%"></span>
+      <div class="chart__bars">${W.map((w, i) => `<button class="bar-col bar-col--hit ${i === sel ? 'is-sel' : ''}" data-bar="${i}" aria-label="${label(w, i)}" aria-pressed="${i === sel}"></button>`).join('')}</div>`;
+  } else {
+    // Weekly distance coloured by training phase; solid = done
+    plot = `${grid}<div class="chart__bars">${W.map((w, i) => {
+      const h = toU(w.km) / top * 100, dk = w.runs.filter(isDone).reduce((s, r) => s + r.km, 0), dh = w.km ? dk / w.km * 100 : 0;
+      const mark = i === now.wkIdx ? '<span class="bar-col__mark">Now</span>' : i === n - 1 ? `<span class="bar-col__mark">${ic('race')}</span>` : '';
+      return `<button class="bar-col p-${w.phase} ${i === sel ? 'is-sel' : ''}" data-bar="${i}" aria-label="${label(w, i)}${w.cut ? ', deload week' : ''}" aria-pressed="${i === sel}"><span class="bar" style="height:${h}%"><span class="bar__done" style="height:${dh}%"></span></span>${mark}</button>`;
+    }).join('')}</div>`;
+  }
+  const legend = chartMode === 'total'
+    ? `<span><i class="lg-line"></i>Run so far</span><span><i class="lg-line lg-line--soft"></i>Planned</span>`
+    : phases.map(x => `<span class="p-${x.p}"><i class="lg-bar"></i>${PHASE[x.p].name}</span>`).join('') + `<span><i class="lg-bar lg-bar--soft" style="--c:var(--ink-3)"></i>Lighter = still to run</span>`;
+  return `<div class="chart"><div class="chart__plot">${plot}</div>
+      <div class="chart__phases" aria-hidden="true">${phases.map(x => `<span class="p-${x.p}" style="flex:${x.c}">${PHASE[x.p].name}</span>`).join('')}</div></div>
+    <div class="chart__readout" id="chart-readout" aria-live="polite">${chartReadout(sel, now)}</div>
+    <div class="legend2">${legend}</div>
     <details class="chart__table"><summary>Show as a table</summary>
-      <table><thead><tr><th scope="col">Week</th><th scope="col">Phase</th><th scope="col">Total</th><th scope="col">Long run</th></tr></thead>
-      <tbody>${W.map(w => `<tr><td>${w.n}${w.cut ? ' (deload)' : ''}</td><td>${PHASE[w.phase].name}</td><td>${F.dist(w.km)}</td><td>${F.dist(longOf(w))}</td></tr>`).join('')}</tbody></table>
-    </details>
+      <table><thead><tr><th scope="col">Week</th><th scope="col">Phase</th><th scope="col">Week total</th><th scope="col">Long run</th><th scope="col">Running total</th></tr></thead>
+      <tbody>${W.map((w, i) => `<tr><td>${w.n}${w.cut ? ' (deload)' : ''}</td><td>${PHASE[w.phase].name}</td><td>${F.dist(w.km)}</td><td>${F.dist(longOf(w))}</td><td>${F.dist(cum[i].plan)}</td></tr>`).join('')}</tbody></table>
+    </details>`;
+}
+const chartSubText = () => { const F = fmt(state.units); return chartMode === 'total' ? `Total distance in ${F.unit}, building up to race day. Tap a week for details.` : `Weekly distance in ${F.unit}, coloured by phase. Spot the deload dips and the taper.`; };
+function chartHTML(now) {
+  return `<section class="card pad" aria-labelledby="load-h">
+    <div class="chart__head"><div><h2 class="sec-h" style="margin:0 0 4px" id="load-h">How your training builds</h2>
+      <p class="sec-sub" style="margin:0" id="chart-sub">${chartSubText()}</p></div>
+      <div class="seg seg--sm chart__switch" role="radiogroup" aria-label="Chart view"><label><input type="radio" name="chart-view" value="phase" ${chartMode === 'phase' ? 'checked' : ''}><span>Weekly</span></label><label><input type="radio" name="chart-view" value="total" ${chartMode === 'total' ? 'checked' : ''}><span>Total</span></label></div></div>
+    <div id="chart-body">${chartBody(now)}</div>
   </section>`;
 }
 function renderPlanTab(now) {
@@ -1901,7 +1992,7 @@ function renderAdjust() {
     ${Object.keys(state.moves || {}).length ? `<button class="row row--nav k-tempo" data-act="reset-moves"><span class="tile">${ic('move')}</span><span class="row__label">Put moved runs back<small>Return every run to its suggested day</small></span>${ic('chevR', 'chev')}</button>` : ''}
     <button class="row row--nav row--danger k-bad" data-act="reset"><span class="tile">${ic('trash')}</span><span class="row__label">Start a new plan</span>${ic('chevR', 'chev')}</button>
   </div>
-  <p class="footnote">Your plan is saved on this device only. Clearing your browser data removes it, so keep a backup link somewhere safe. Plans follow widely used training principles; they’re a guide, not medical advice. If something hurts, rest, and see a professional if it doesn’t settle. · <a href="/">tedw.co.uk</a></p>`;
+  <p class="footnote">Your plan, ticks and changes are saved on this device and carry over whenever the app is updated. Clearing your browser data removes them, so keep a backup link somewhere safe. Plans follow widely used training principles; they’re a guide, not medical advice. If something hurts, rest, and see a professional if it doesn’t settle. · <a href="/">tedw.co.uk</a></p>`;
   $$('#s-adjust .range').forEach(setFill);
 }
 function syncAdjust() {
@@ -1963,7 +2054,7 @@ function moverHTML(r) {
   const prevD = parseISO(r.date), near = wk.runs.filter(x => x !== r && HARD(x) && Math.abs(diffDays(parseISO(x.date), prevD)) === 1);
   const warn = HARD(r) && near.length ? `<div class="callout k-warn">${ic('info')}<p><b>Two harder runs back to back</b>That’s OK now and then, but an easy day or rest day in between helps your legs recover.</p></div>` : '';
   return `<div class="days7" role="radiogroup" aria-label="Move this run to another day">${btns}</div>
-    <p class="hint" style="margin:12px 2px 0">${r.moved ? `Moved from ${DOW[dowMon(parseISO(r.id))]}. <button class="link" data-unmove="${r.id}" style="min-height:32px">Put it back</button>` : 'Life happens. Tap a free day to move this run.'}</p>${warn}`;
+    <p class="hint" style="margin:12px 2px 0">${r.moved ? `Moved from ${DOW[dowMon(parseISO(r.id))]}. <button class="link link--inline" data-unmove="${r.id}">Put it back</button>` : 'Life happens. Tap a free day to move this run.'}</p>${warn}`;
 }
 function fillRunSheet() {
   const p = state.profile, r = runById(sheetId), dlg = $('#run-sheet');
@@ -1996,7 +2087,7 @@ function toggleDone(id, btn) {
   const p = state.profile, nm = first(p.name), was = !!state.done[id];
   const where = btn && btn.closest('dialog, [data-screen]'), whereSel = where ? `#${where.id}` : null, hadFocus = document.activeElement === btn;
   if (!was) burst(btn.querySelector('.check__c') || btn, `var(--c-${(runById(id) || {}).cat || 'easy'})`);
-  if (was) delete state.done[id]; else state.done[id] = 1;
+  if (was) delete state.done[id]; else state.done[id] = snapshotOf(runById(id));
   save(); haptic();
   refresh();
   if (hadFocus && whereSel) { const again = $(`${whereSel} [data-tick="${id}"]`); again && again.focus({ preventScroll: true }); }
@@ -2024,7 +2115,7 @@ function backup() {
   if (navigator.clipboard) navigator.clipboard.writeText(url).then(() => toast('Backup link copied. Paste it somewhere safe.', 'check'), () => prompt('Copy this link and keep it somewhere safe:', url));
   else prompt('Copy this link and keep it somewhere safe:', url);
 }
-function freshState() { return { v: 1, profile: null, start: null, done: {}, buggy: {}, moves: {}, units: state.units }; }
+function freshState() { return { v: DATA_VERSION, profile: null, start: null, done: {}, buggy: {}, moves: {}, units: state.units }; }
 function startSetup(opts) {
   draft = newDraft(); step = opts.step || 0; goalTouched = !!opts.editing; editing = !!opts.editing;
   if (opts.name) draft.name = opts.name;
@@ -2081,9 +2172,19 @@ document.addEventListener('click', e => {
   }
 });
 function selectBar(i) {
+  if (chartSel === i && document.querySelector(`[data-bar="${i}"].is-sel`)) return;   // no re-render loop while hovering
   chartSel = i;
+  const now = nowInfo();
   $$('[data-bar]').forEach(b => { const on = +b.dataset.bar === i; b.classList.toggle('is-sel', on); b.setAttribute('aria-pressed', on); });
-  $('#chart-readout').innerHTML = chartReadout(plan.weeks[i], nowInfo());
+  const ro = $('#chart-readout'); if (ro) ro.innerHTML = chartReadout(i, now);
+  if (chartMode === 'total') {
+    const W = plan.weeks, n = W.length, c = cumulative(), F = fmt(state.units), toU = km => F.mi ? km / MI : km;
+    const top = chartTop(Math.max(toU(c[n - 1].plan), 1))[1];
+    const v = now.t < W[i].start ? c[i].plan : c[i].done, x = (i + 1) / n * 100;
+    const cr = $('#chart-cross'), pin = $('#chart-pin');
+    if (cr) cr.style.left = `${x}%`;
+    if (pin) { pin.style.left = `${x}%`; pin.style.bottom = `${toU(v) / top * 100}%`; }
+  }
 }
 document.addEventListener('pointerover', e => { const b = e.target.closest && e.target.closest('[data-bar]'); if (b && e.pointerType === 'mouse') selectBar(+b.dataset.bar); });
 document.addEventListener('focusin', e => { const b = e.target.closest && e.target.closest('[data-bar]'); if (b) selectBar(+b.dataset.bar); });
@@ -2097,6 +2198,12 @@ document.addEventListener('change', e => {
   const t = e.target;
   if (view !== 'plan') return;
   if (t.name === 'units') { state.units = t.value; save(); renderAdjust(); refresh(); return; }
+  if (t.name === 'chart-view') {
+    chartMode = t.value; state.chartView = t.value; save();
+    $('#chart-sub').textContent = chartSubText();
+    $('#chart-body').innerHTML = chartBody(nowInfo());
+    return;
+  }
   if (t.hasAttribute('data-buggy-run')) {
     state.buggy[t.dataset.buggyRun] = t.checked;
     save(); haptic(); regen(); refresh();
@@ -2118,7 +2225,7 @@ function restoreFromHash() {
   if (!m) return;
   try {
     const s = decode(m[1]);
-    if (s && s.v === 1 && s.profile && (!state.profile || confirm(`Restore ${s.profile.name ? s.profile.name + '’s' : 'this'} plan from the link? It will replace the plan on this device.`))) {
+    if (migrate(s) && s.profile && (!state.profile || confirm(`Restore ${s.profile.name ? s.profile.name + '’s' : 'this'} plan from the link? It will replace the plan on this device.`))) {
       state = s; if (!state.moves) state.moves = {}; save(true); view = 'plan';
     }
   } catch (err) { /* bad link: ignore */ }
