@@ -185,13 +185,16 @@ mark {
 .bar { display: flex; justify-content: space-between; align-items: center; padding: 2.25rem 0 0; }
 .bar a { text-decoration: none; }
 .bar a:hover { color: inherit; }
-.bar__links { display: flex; gap: 1.75rem; }
+.bar__links { display: flex; align-items: center; }
+.bar__dot { margin: 0 .75em; font-size: 1.6em; line-height: 1; }
 .bar__links a:hover { text-decoration: underline; text-underline-offset: .3em; }
 .bar__li { display: inline-flex; align-items: center; }
 .bar__icon { display: none; width: 1.05rem; height: 1.05rem; fill: currentColor; }
 /* on phones LinkedIn becomes a very small icon (the word stays for screen readers) */
 @media (max-width: 760px) {
   .bar__li { padding: .85rem; margin: -.85rem; }      /* a 44px tap area round the small icon */
+  .bar__links { gap: 1.75rem; }      /* no interpunct on phones: two icons, spaced so their 44px tap areas do not overlap */
+  .bar__dot { display: none; }
   .bar__icon { display: block; }
   .bar__li-text { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 }
@@ -713,6 +716,8 @@ html:not(.js) .ticker__pause { display: none; }
     <div class="bar">
       <a class="brand" href="#top">Ted Winder</a>
       <div class="bar__links caps">
+        <a class="bar__li" href="/tools/"><svg class="bar__icon" viewBox="0 0 24 24" aria-hidden="true"><mask id="tools-icon-cut"><rect width="24" height="24" fill="#fff"/><path d="M17.66 12.71 L19.20 13.73 L18.31 15.87 L16.50 15.49 L16.03 16.03 L15.49 16.50 L15.87 18.31 L13.73 19.20 L12.71 17.66 L12.00 17.70 L11.29 17.66 L10.27 19.20 L8.13 18.31 L8.51 16.50 L7.97 16.03 L7.50 15.49 L5.69 15.87 L4.80 13.73 L6.34 12.71 L6.30 12.00 L6.34 11.29 L4.80 10.27 L5.69 8.13 L7.50 8.51 L7.97 7.97 L8.51 7.50 L8.13 5.69 L10.27 4.80 L11.29 6.34 L12.00 6.30 L12.71 6.34 L13.73 4.80 L15.87 5.69 L15.49 7.50 L16.03 7.97 L16.50 8.51 L18.31 8.13 L19.20 10.27 L17.66 11.29 L17.70 12.00z" fill="#000"/><circle cx="12" cy="12" r="2.5" fill="#fff"/></mask><rect width="24" height="24" rx="2.2" fill="currentColor" mask="url(#tools-icon-cut)"/></svg><span class="bar__li-text">Tools</span></a>
+        <span class="bar__dot" aria-hidden="true">·</span>
         <a class="bar__li" rel="me" href="https://www.linkedin.com/in/ted-winder/"><svg class="bar__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg><span class="bar__li-text">LinkedIn</span></a>
       </div>
     </div>
