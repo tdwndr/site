@@ -189,6 +189,10 @@ b, strong { font-weight: 650; }
 .ai-note { display: flex; gap: 12px; align-items: flex-start; padding: 16px 18px; border-radius: var(--r-lg); background: var(--accent-soft); font-size: 15px; line-height: 1.55; }
 .method .ai-note p { font-size: 15px; }
 .ai-note .ic { color: var(--accent); width: 22px; height: 22px; margin-top: 1px; }
+.sheet--ask .sheet__scroll { padding-bottom: 8px; }
+.ask-actions { display: grid; gap: 10px; }
+.ask-actions .btn--danger { background: var(--bad); color: #fff; }
+.input.ask-code { width: 100%; min-height: 110px; resize: none; font: 500 13px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; word-break: break-all; color: var(--ink-2); }
 .version { margin-top: 10px; text-align: center; font-size: 12.5px; color: var(--ink-3); }
 /* Race week: a little party */
 .race-week { position: relative; overflow: hidden; margin-top: 20px; padding: 22px; border-radius: var(--r-xl); color: #fff;
@@ -837,6 +841,7 @@ body[data-view="setup"] .toast { bottom: calc(env(safe-area-inset-bottom) + 100p
   </div>
 </dialog>
 <dialog class="sheet method" id="method-sheet" aria-labelledby="method-title"></dialog>
+<dialog class="sheet sheet--ask" id="ask-sheet" aria-labelledby="ask-title"></dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
 (() => {
@@ -1505,14 +1510,15 @@ IC.move = '<path d="M8 7 4 11l4 4"/><path d="M4 11h11a5 5 0 0 1 0 10h-2"/>';
 IC.chart = '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>';
 IC.trend = '<path d="M3 6.5l6.5 6.5 4-4 7.5 7.5"/><path d="M15.5 17.5H21V12"/>';
 /* Version: each published update of Run plan is a release */
-const APP_VERSION = '0.10';
+const APP_VERSION = '0.11';
 /* Releases: 0.1 first plan · 0.2 app look · 0.3 web-app feel, chart, moving runs · 0.4 phase/total chart, safer saves ·
    0.5 past runs fixed, clearer explained words · 0.6 logo, time ranges, race-week celebration, evidence-based taper ·
    0.7 parkrun buggy runs, "How this plan is built" (methodology and sources) ·
    0.8 long-run day, session diagrams, clearer run tags, smoother sheets, race confetti ·
    0.9 simpler diagrams, smoother pull-to-close, tray closes when marked done ·
    0.10 model review: paces from current fitness, Daniels-aligned bands, 15% long-run growth cap,
-        parkrun as alternate-week hard session; build animation; PB auto-format */
+        parkrun as alternate-week hard session; build animation; PB auto-format ·
+   0.11 in-app confirm, backup and restore trays (no browser pop-ups) */
 const versionHTML = () => `<p class="version">Run plan v${APP_VERSION} · Beta</p>`;
 const LOGO = '<span class="logo" aria-hidden="true"><svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#1A33F5"/><path fill="#F6F4EE" transform="translate(8.89 39.80) scale(0.02272)" d="M334.9 0V-572.9H27V-686.8H771.9V-572.9H464V0ZM1099.6 0 862.9 -686.8H1002.9L1151.6 -229.7Q1155.8 -218.7 1161.1 -200Q1166.3 -181.3 1172.1 -161.4Q1178 -141.6 1181.7 -125.8H1188.7Q1190.9 -137.8 1194.8 -152.1Q1198.7 -166.3 1202.3 -180.9Q1205.9 -195.5 1209.5 -208.3Q1213.1 -221 1215.6 -229.7L1351.9 -686.8H1530.2L1667 -229.7Q1670.5 -218.7 1675.5 -200.1Q1680.5 -181.5 1685.7 -161.5Q1690.9 -141.6 1693.6 -125.8H1700.6Q1704.1 -137.3 1708.1 -151.6Q1712.1 -165.8 1716.7 -180.1Q1721.3 -194.5 1724.9 -207.3Q1728.5 -220.2 1731.8 -229.7L1881.2 -686.8H2007.6L1770.2 0H1608.8L1465.9 -463.1Q1462.2 -476.2 1456.8 -494.9Q1451.4 -513.6 1447.1 -533.2Q1442.7 -552.8 1439.5 -568.1H1433.3Q1430.6 -552.6 1425.1 -532.5Q1419.6 -512.4 1414.6 -493.9Q1409.6 -475.4 1405.6 -463.1L1266.3 0Z"/></svg><i></i><i></i><i></i><i></i></span>';
 const BRAND = link => link ? `<a class="brandmark" href="/run/">${LOGO}<span class="brand">Run plan</span><span class="beta">Beta</span></a>` : `<span class="brandmark">${LOGO}<span class="brand">Run plan</span><span class="beta">Beta</span></span>`;
@@ -2341,6 +2347,7 @@ function renderAdjust() {
     <div class="row k-accent"><span class="tile">${ic('ruler')}</span><span class="row__label" id="l-units">Units</span>
       <div class="seg seg--sm" role="radiogroup" aria-labelledby="l-units" style="width:170px"><label><input type="radio" name="units" value="km" ${state.units !== 'mi' ? 'checked' : ''}><span>km</span></label><label><input type="radio" name="units" value="mi" ${state.units === 'mi' ? 'checked' : ''}><span>miles</span></label></div></div>
     <button class="row row--nav k-good" data-act="backup"><span class="tile">${ic('share')}</span><span class="row__label">Back up your plan<small>Get a link that restores it on any device</small></span>${ic('chevR', 'chev')}</button>
+    <button class="row row--nav k-accent" data-act="restore"><span class="tile">${ic('move')}</span><span class="row__label">Restore from a backup<small>Paste a backup link to load a plan</small></span>${ic('chevR', 'chev')}</button>
     ${Object.keys(state.moves || {}).length ? `<button class="row row--nav k-tempo" data-act="reset-moves"><span class="tile">${ic('move')}</span><span class="row__label">Put moved runs back<small>Return every run to its suggested day</small></span>${ic('chevR', 'chev')}</button>` : ''}
     <button class="row row--nav row--danger k-bad" data-act="reset"><span class="tile">${ic('trash')}</span><span class="row__label">Start a new plan</span>${ic('chevR', 'chev')}</button>
   </div>
@@ -2650,11 +2657,61 @@ function moveRun(id, toISO) {
   if (Object.keys(state.moves).length <= 1) renderAdjust();
 }
 
+/* In-app tray: a question with buttons. Resolves with the chosen button's value, or null if closed. */
+function ask({ icon = 'info', kind = 'k-accent', title, body, actions, foot = '' }) {
+  const d = $('#ask-sheet');
+  d.innerHTML = `<div class="sheet__scroll"><div class="sheet__grab" aria-hidden="true"></div>
+    <header class="sheet__head"><span class="tile tile--lg ${kind}">${ic(icon)}</span><div><h2 id="ask-title">${title}</h2></div><button class="icon-btn sheet__close" data-close aria-label="Close">${ic('close')}</button></header>
+    <div class="sheet__sec">${body}</div></div>
+    <div class="sheet__foot ask-actions">${actions.map(a => `<button class="btn ${a.cls || 'btn--secondary'} btn--block" data-ask="${a.value}">${a.icon ? ic(a.icon) : ''}${a.label}</button>`).join('')}${foot}</div>`;
+  openSheet(d);
+  return new Promise(res => {
+    const onClick = e => { const b = e.target.closest('[data-ask]'); if (!b) return; const v = b.dataset.ask; if (v === 'copy' || v === 'share' || v === 'restore') return; cleanup(); closeSheet(d); res(v); };
+    const onClose = () => { cleanup(); res(null); };
+    const cleanup = () => { d.removeEventListener('click', onClick); d.removeEventListener('close', onClose); };
+    d.addEventListener('click', onClick); d.addEventListener('close', onClose);
+  });
+}
+async function copyText(text, field) {
+  try { await navigator.clipboard.writeText(text); return true; }
+  catch (e) {
+    try { field.focus(); field.select(); field.setSelectionRange(0, text.length); return document.execCommand('copy'); } catch (e2) { return false; }
+  }
+}
 function backup() {
   const url = `${location.origin}${location.pathname}#plan=${encode(state)}`, nm = first(state.profile.name);
-  if (navigator.share) { navigator.share({ title: `${nm}’s run plan`, text: 'My running plan backup. Open this link to restore it.', url }).catch(() => {}); return; }
-  if (navigator.clipboard) navigator.clipboard.writeText(url).then(() => toast('Backup link copied. Paste it somewhere safe.', 'check'), () => prompt('Copy this link and keep it somewhere safe:', url));
-  else prompt('Copy this link and keep it somewhere safe:', url);
+  ask({ icon: 'share', kind: 'k-good', title: 'Back up your plan',
+    body: `<p>This link holds your whole plan: your details, ticks, moved runs and settings. Keep it somewhere safe, like a note or an email to yourself.</p>
+      <p style="margin-top:8px">To restore, open the link, or paste it into <b>Restore from a backup</b> in Adjust.</p>
+      <textarea class="input ask-code" id="backup-code" readonly aria-label="Your backup link" style="margin-top:14px">${esc(url)}</textarea>`,
+    actions: [{ label: 'Copy link', value: 'copy', cls: 'btn--primary', icon: 'check' }, ...(navigator.share ? [{ label: 'Share…', value: 'share', icon: 'share' }] : [])] });
+  const d = $('#ask-sheet');
+  d.querySelector('[data-ask="copy"]').addEventListener('click', async e => {
+    const btn = e.currentTarget, ok = await copyText(url, $('#backup-code'));
+    btn.innerHTML = ok ? `${ic('check')}Copied!` : 'Select and copy the link above';
+    if (ok) toast(`Backup link copied, ${nm}. Keep it safe.`, 'check');
+  });
+  const sh = d.querySelector('[data-ask="share"]');
+  if (sh) sh.addEventListener('click', () => { navigator.share({ title: `${nm}’s run plan`, text: 'My running plan backup. Open this link to restore it.', url }).catch(() => toast('Sharing isn’t available here. Use Copy link instead.', 'info')); });
+}
+function restoreFrom(text) {
+  const m = String(text || '').trim().match(/(?:#plan=)?([\w-]{20,})\s*$/);
+  if (!m) return null;
+  try { const s = decode(m[1]); return migrate(s) && s.profile ? s : null; } catch (e) { return null; }
+}
+function restorePrompt() {
+  ask({ icon: 'share', kind: 'k-accent', title: 'Restore from a backup',
+    body: `<p>Paste your backup link below.${state.profile ? ' It will replace the plan on this device.' : ''}</p>
+      <textarea class="input ask-code" id="restore-code" placeholder="Paste your backup link here" aria-label="Backup link" style="margin-top:14px"></textarea>
+      <p class="err" id="restore-err" hidden>That doesn’t look like a Run plan backup link. Check you copied all of it.</p>`,
+    actions: [{ label: 'Restore plan', value: 'restore', cls: 'btn--primary' }] });
+  const d = $('#ask-sheet');
+  d.querySelector('[data-ask="restore"]').addEventListener('click', () => {
+    const s = restoreFrom($('#restore-code').value);
+    if (!s) { $('#restore-err').hidden = false; return; }
+    state = s; save(true); closeSheet(d); view = 'plan'; tab = 'today'; render(); window.scrollTo(0, 0);
+    toast(`Welcome back, ${first(s.profile.name)}. Your plan is restored.`, 'check');
+  });
 }
 function freshState() { return { v: DATA_VERSION, profile: null, start: null, done: {}, buggy: {}, moves: {}, units: state.units }; }
 function startSetup(opts) {
@@ -2672,9 +2729,16 @@ document.addEventListener('click', e => {
     if (act === 'back') { readStep(false); step = Math.max(0, step - 1); renderSetup(); window.scrollTo(0, 0); }
     if (act === 'edit') startSetup({ editing: true });
     if (act === 'cancel-edit') { editing = false; view = 'plan'; render(); window.scrollTo(0, 0); }
-    if (act === 'reset' && confirm('Start a new plan? Your current plan and ticks will be deleted from this device.')) {
-      const name = state.profile && state.profile.name; state = freshState(); save(true); startSetup({ name });
+    if (act === 'reset') {
+      ask({ icon: 'trash', kind: 'k-bad', title: 'Start a new plan?',
+        body: `<p>Your current plan, ticks and changes will be deleted from this device. If you might want them later, back up your plan first.</p>`,
+        actions: [{ label: 'Delete and start again', value: 'yes', cls: 'btn--danger' }, { label: 'Back up first', value: 'backup' }, { label: 'Keep my plan', value: 'no', cls: 'btn--ghost' }] })
+        .then(v => {
+          if (v === 'yes') { const name = state.profile && state.profile.name; state = freshState(); save(true); startSetup({ name }); }
+          if (v === 'backup') setTimeout(backup, 320);
+        });
     }
+    if (act === 'restore') restorePrompt();
     if (act === 'reset-moves') { state.moves = {}; save(); regen(); refresh(); renderAdjust(); toast('All runs are back on their suggested days.', 'move'); }
     if (act === 'another') { const name = state.profile.name; state = freshState(); save(true); startSetup({ name, step: 1 }); }
     if (act === 'backup') backup();
@@ -2776,8 +2840,12 @@ function restoreFromHash() {
   if (!m) return;
   try {
     const s = decode(m[1]);
-    if (migrate(s) && s.profile && (!state.profile || confirm(`Restore ${s.profile.name ? s.profile.name + '’s' : 'this'} plan from the link? It will replace the plan on this device.`))) {
-      state = s; if (!state.moves) state.moves = {}; save(true); view = 'plan';
+    if (migrate(s) && s.profile) {
+      if (!state.profile) { state = s; save(true); view = 'plan'; }
+      else setTimeout(() => ask({ icon: 'share', title: `Restore ${s.profile.name ? esc(s.profile.name) + '’s' : 'this'} plan?`,
+        body: '<p>This backup link will replace the plan on this device.</p>',
+        actions: [{ label: 'Restore plan', value: 'yes', cls: 'btn--primary' }, { label: 'Keep my current plan', value: 'no', cls: 'btn--ghost' }] })
+        .then(v => { if (v === 'yes') { state = s; save(true); view = 'plan'; render(); toast('Plan restored.', 'check'); } }), 300);
     }
   } catch (err) { /* bad link: ignore */ }
   history.replaceState(null, '', location.pathname);
