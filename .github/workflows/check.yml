@@ -1,0 +1,29 @@
+# Checks that generated files match their sources, so a stale list or page
+# can't reach the live site. Runs on every pull request and every push to main.
+name: Check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  generated-files:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Tools list, _redirects, sitemap and llms.txt are up to date
+        run: python3 tools/build.py --check
+
+      - name: Design system pages are up to date
+        run: |
+          python3 tools/ds/build.py
+          git diff --exit-code || { echo "::error::tools/ds is out of date. Run: python3 tools/ds/build.py"; exit 1; }
