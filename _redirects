@@ -4,6 +4,5 @@
 /tools/_og/* /404.html 404!
 /tools/ds /404.html 404!
 /tools/ds/* /404.html 404!
-/tools/interview /404.html 404!
-/tools/interview/* /404.html 404!
+/tools/run/description.txt /404.html 404!
 # tools:end
