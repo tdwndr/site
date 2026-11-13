@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Run plan: a free, personal training plan for your next race</title>
 <meta name="description" content="Answer a few questions and get a personal running plan for a 5K, 10K, Half Marathon or marathon, with every run explained. Free, no sign-up, saved on your device.">
-<meta name="theme-color" content="#F4F5F9" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0B0C11" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" id="theme-color" content="#4A66FF">
 <meta name="color-scheme" content="light dark">
 <meta name="format-detection" content="telephone=no">
 <link rel="canonical" href="https://tedw.co.uk/tools/run/">
@@ -1670,6 +1669,9 @@ const scrolls = {};
 
 function render() {
   document.body.dataset.view = view;
+  // colour the browser / status bar to match the top of the screen (blue on the intro, page colour elsewhere)
+  { const cs = getComputedStyle(document.documentElement), c = (view === 'intro' ? cs.getPropertyValue('--grad-a') : cs.getPropertyValue('--bg')).trim();
+    if (c) $('#theme-color').setAttribute('content', c); }
   if (view === 'intro') renderIntro();
   else if (view === 'setup') renderSetup();
   else renderApp();
