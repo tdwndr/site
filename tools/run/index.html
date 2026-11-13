@@ -448,11 +448,10 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 .range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 25%, transparent); }
 .range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 25%, transparent); }
 
-/* Home Screen app: the page draws under the status bar, whose text is white, so keep that strip brand blue */
+/* Home Screen app: the page draws under the status bar, whose text is white, so the strip takes the page colour (transparent on the blue intro) */
 .statusfill { display: none; }
-@media (display-mode: standalone) { .statusfill { display: block; position: fixed; top: 0; left: 0; right: 0; height: env(safe-area-inset-top); background: var(--grad-b); z-index: 90; pointer-events: none; } }
-html.standalone .statusfill { display: block; position: fixed; top: 0; left: 0; right: 0; height: env(safe-area-inset-top); background: var(--grad-b); z-index: 90; pointer-events: none; }
-body:not([data-view="intro"]) .statusfill { background: var(--grad-b); }
+@media (display-mode: standalone) { .statusfill { display: block; position: fixed; top: 0; left: 0; right: 0; height: env(safe-area-inset-top); background: var(--bg); z-index: 90; pointer-events: none; } }
+html.standalone .statusfill { display: block; position: fixed; top: 0; left: 0; right: 0; height: env(safe-area-inset-top); background: var(--bg); z-index: 90; pointer-events: none; }
 body[data-view="intro"] .statusfill { background: transparent; }
 
 /* 7. INTRO -------------------------------------------------------------------- */
