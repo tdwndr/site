@@ -1936,7 +1936,8 @@ function readStep(showErr) {
   }
   if (step === 1) {
     d.event = $('#f-event').value.trim();
-    let v = $('#f-date').value, msg = '';
+    const f = $('#f-date');
+    let v = f.value || (f.valueAsDate ? iso(new Date(f.valueAsDate.getTime() + f.valueAsDate.getTimezoneOffset() * 6e4)) : '') || d.date || '', msg = '';
     if (!v) msg = 'Enter the full race date: day, month and year.';
     else {
       let [y, m, dd] = v.split('-').map(Number);
@@ -3128,6 +3129,7 @@ document.addEventListener('input', e => {
 });
 document.addEventListener('change', e => {
   const t = e.target;
+  if (view === 'setup' && draft && t.closest('#setup')) { if (t.id === 'f-date') { draft.date = t.value; syncSetup(); } return; }
   if (view !== 'plan') return;
   if (t.name === 'units') { state.units = t.value; save(); renderAdjust(); refresh(); return; }
   if (t.name === 'chart-view') {
@@ -3146,9 +3148,14 @@ document.addEventListener('change', e => {
 document.addEventListener('submit', e => {
   if (e.target.id !== 'setup') return;
   e.preventDefault();
-  if (!readStep(true)) return;
-  if (step < STEPS - 1) { step++; renderSetup(); window.scrollTo(0, 0); }
-  else finishSetup();
+  const go = () => {
+    if (!readStep(true)) return;
+    if (step < STEPS - 1) { step++; renderSetup(); window.scrollTo(0, 0); }
+    else finishSetup();
+  };
+  // 3. If a date picker is still open, close it and let it hand over the date before checking
+  const a = document.activeElement;
+  if (a && a.type === 'date') { a.blur(); setTimeout(go, 150); } else go();
 });
 
 /* Restore from a backup link */
