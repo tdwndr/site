@@ -469,58 +469,88 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
   background: linear-gradient(180deg, var(--grad-a), var(--grad-b) 85%);   /* top edge is exactly the band colour */
   display: flex; flex-direction: column;
 }
-/* All the intro content fits on screen at once: sizes follow the visible height (svh) */
+/* Safari colours its top bar from the body; anything below the page shows the root, so that's the bottom blue */
+html:has(> body[data-view="intro"]) { background: var(--grad-b); }
+body[data-view="intro"] { background: var(--grad-a); }
+
+/* Mobile first: everything fits on screen at once; spacing follows the visible height (svh) */
 .intro__in { position: relative; z-index: 1; width: 100%; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column;
-  min-height: 100vh; min-height: 100svh; padding: calc(env(safe-area-inset-top) + clamp(6px, 1.8svh, 22px)) 24px calc(env(safe-area-inset-bottom) + clamp(10px, 2svh, 24px)); }
+  min-height: 100vh; min-height: 100svh; padding: calc(env(safe-area-inset-top) + clamp(10px, 2.4svh, 24px)) 24px calc(env(safe-area-inset-bottom) + clamp(14px, 2.6svh, 28px)); }
 .intro__top { display: flex; justify-content: space-between; align-items: center; min-height: 44px; }
 .intro__top a { color: rgba(255, 255, 255, .8); text-decoration: none; font-size: 15px; padding: 10px 0; }
 .intro__top a:hover { color: #fff; text-decoration: underline; }
-/* Preview cards: always full size and in shape. On shorter screens they overlap more; on phones they run off the edges. */
-.preview { position: relative; height: 204px; margin: clamp(8px, 2svh, 22px) 0 clamp(2px, .8svh, 10px); }
+
+/* Three preview cards, always full size and in shape. They overlap only by their padding, so all the text shows,
+   and on phones they run off the edges. --ch is a card's height, --gap the step between cards. */
+.preview { --ch: 64px; --gap: clamp(48px, 6.8svh, 62px); position: relative; height: calc(var(--ch) + 2 * var(--gap)); margin: clamp(12px, 2.4svh, 30px) 0 0; }
 .preview__card {
-  position: absolute; display: flex; align-items: center; gap: 14px; width: 272px; padding: 14px 16px; border-radius: 18px;
+  position: absolute; display: flex; align-items: center; gap: 14px; width: 272px; height: var(--ch); padding: 0 16px; border-radius: 18px;
   background: rgba(255, 255, 255, .97); color: #10142A; box-shadow: 0 18px 40px -18px rgba(5, 10, 60, .7);
 }
-.preview__card b { display: block; font-size: 16.5px; white-space: nowrap; }
+.preview__card b { display: block; font-size: 16.5px; line-height: 1.25; white-space: nowrap; }
 .preview__card span { font-size: 14px; color: #585E75; white-space: nowrap; }
 .preview__card .tile { flex: none; background: color-mix(in srgb, var(--c) 14%, #fff); }
 .preview__card .check__c { flex: none; margin-left: auto; border-color: #9297AB; }
-.preview__card:nth-child(1) { top: 0; left: -34px; rotate: -4deg; }
-.preview__card:nth-child(2) { top: calc(50% - 34px); right: -44px; rotate: 3deg; }
-.preview__card:nth-child(3) { top: calc(100% - 68px); left: 4%; rotate: -1.5deg; }
-@media (min-width: 640px) { .preview__card:nth-child(1) { left: 0; } .preview__card:nth-child(2) { right: 8%; } }
-/* Shorter screens: two cards, overlapping just enough that both stay readable */
-@media (max-height: 800px) { .preview { height: 136px; } .preview__card:nth-child(2) { top: calc(100% - 68px); } .preview__card:nth-child(3) { display: none; } }
+.preview__card:nth-child(1) { top: 0; left: -30px; rotate: -4deg; }
+.preview__card:nth-child(2) { top: var(--gap); right: -46px; rotate: 3deg; }
+.preview__card:nth-child(3) { top: calc(2 * var(--gap)); left: 2%; rotate: -1.5deg; }
 .preview__card:nth-child(2) .check__c { background: #17A658; border-color: #17A658; }
 .preview__card:nth-child(2) .check__c .ic { opacity: 1; transform: none; }
-.intro h1 { margin-top: clamp(12px, 2.5svh, 30px); font: 750 clamp(28px, 4.2svh, 42px)/1.06 var(--ui); letter-spacing: -.025em; text-wrap: balance; }
-.intro__lede { margin-top: clamp(6px, 1.4svh, 14px); font-size: clamp(15.5px, 2.4svh, 18.5px); line-height: 1.42; color: rgba(255, 255, 255, .88); }
-.feats { display: grid; gap: clamp(6px, 1.3svh, 16px); margin: clamp(12px, 2.4svh, 28px) 0 clamp(12px, 2.4svh, 32px); }
-.feats li { display: flex; align-items: center; gap: 14px; font-size: clamp(15px, 2.2svh, 16.5px); line-height: 1.3; }
-.feats .tile { width: clamp(30px, 4.8svh, 40px); height: clamp(30px, 4.8svh, 40px); border-radius: 11px; background: rgba(255, 255, 255, .16); color: #fff; }
-.feats .tile .ic { width: 19px; height: 19px; }
-.intro__cta { margin-top: auto; display: flex; flex-direction: column; gap: clamp(6px, 1.4svh, 12px); align-items: center; }
-html:has(> body[data-view="intro"]) { background: var(--grad-a); }
-body[data-view="intro"] { background: var(--grad-a); }   /* Safari colours its top bar from this */
+
+.intro h1 { margin-top: clamp(18px, 3.4svh, 40px); font: 750 clamp(28px, 4.1svh, 38px)/1.08 var(--ui); letter-spacing: -.025em; text-wrap: balance; }
+.intro__lede { margin-top: clamp(10px, 1.8svh, 16px); font-size: clamp(14.5px, 2.05svh, 16.5px); line-height: 1.5; color: rgba(255, 255, 255, .86); }
+.feats { display: grid; gap: clamp(8px, 1.3svh, 14px); margin: clamp(14px, 2.4svh, 30px) 0 clamp(16px, 2.6svh, 34px); }
+.feats li { display: flex; align-items: center; gap: 12px; font-size: clamp(14px, 1.95svh, 15.5px); line-height: 1.35; }
+.feats .tile { width: clamp(30px, 4.4svh, 36px); height: clamp(30px, 4.4svh, 36px); border-radius: 10px; background: rgba(255, 255, 255, .16); color: #fff; }
+.feats .tile .ic { width: 18px; height: 18px; }
+.intro__cta { margin-top: auto; display: flex; flex-direction: column; gap: clamp(8px, 1.4svh, 12px); align-items: center; }
 .intro__cta .btn { max-width: 420px; }
+.intro__fine { font-size: 14px; color: rgba(255, 255, 255, .78); }
 /* In a phone browser, leave room above Safari's floating address bar */
 @media (pointer: coarse) { html:not(.app) .intro__in { padding-bottom: calc(env(safe-area-inset-bottom) + 76px); } }
-/* Short screens: tighten so everything still fits */
-@media (max-height: 700px) {
-  .intro h1 { margin-top: 12px; font-size: 27px; }
-  .intro__lede { font-size: 15px; }
+@media (max-height: 820px) {
+  .preview { --gap: 50px; }
+  .intro h1 { margin-top: 16px; }
+  .intro__lede { margin-top: 8px; }
+  .feats { margin: 14px 0 16px; gap: 8px; }
+}
+/* Short phones: tighter, still three cards */
+@media (max-height: 720px) {
+  .preview { --ch: 60px; --gap: 46px; margin-top: 8px; }
+  .preview__card { gap: 12px; }
+  .intro h1 { margin-top: 16px; font-size: 25px; }
+  .intro__lede { font-size: 14px; }
   .feats { gap: 4px; margin: 12px 0 14px; }
-  .feats li { font-size: 14.5px; }
-  .feats .tile { width: 28px; height: 28px; border-radius: 9px; }
-  .feats .tile .ic { width: 16px; height: 16px; }
+  .feats li { font-size: 13.5px; }
+  .feats .tile { width: 26px; height: 26px; border-radius: 8px; }
+  .feats .tile .ic { width: 15px; height: 15px; }
 }
-@media (max-height: 600px) {
-  .preview { height: 132px; margin-top: 4px; }
-  .intro h1 { font-size: 25px; }
-  .feats { display: none; }
-  .intro__lede { margin-bottom: 12px; }
+@media (max-height: 600px) { .feats { display: none; } .intro__lede { margin-bottom: 14px; } .preview { --ch: 60px; --gap: 58px; } .intro h1 { margin-top: 12px; font-size: 24px; } .intro__fine { display: none; } }
+
+/* Desktop: two roomy columns, text on the left and bigger cards on the right */
+@media (min-width: 960px) {
+  .intro__in { max-width: 1200px; padding: clamp(20px, 3.6vh, 40px) 64px clamp(20px, 5vh, 56px); display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); column-gap: 64px;
+    grid-template-areas: "top top" ". preview" "h1 preview" "lede preview" "feats preview" "cta preview" ". preview"; grid-template-rows: auto 1fr auto auto auto auto 1fr; }
+  .intro__top { grid-area: top; }
+  .intro h1 { grid-area: h1; margin-top: 0; font-size: clamp(40px, min(4vw, 7.4vh), 58px); }
+  .intro__lede { grid-area: lede; margin-top: clamp(14px, 2.6vh, 24px); font-size: 19px; max-width: 32em; }
+  .feats { grid-area: feats; gap: clamp(10px, 1.8vh, 16px); margin: clamp(20px, 4vh, 36px) 0 clamp(24px, 4.4vh, 40px); }
+  .feats li { font-size: 17px; gap: 16px; }
+  .feats .tile { width: 42px; height: 42px; border-radius: 12px; }
+  .feats .tile .ic { width: 21px; height: 21px; }
+  .intro__cta { grid-area: cta; margin-top: 0; align-items: flex-start; }
+  .intro__cta .btn { max-width: 360px; }
+  .preview { grid-area: preview; align-self: center; --ch: 86px; --gap: 104px; margin: 0; }
+  .preview__card { width: 380px; gap: 18px; padding: 0 22px; border-radius: 24px; }
+  .preview__card b { font-size: 21px; }
+  .preview__card span { font-size: 16.5px; }
+  .preview__card .tile { width: 52px; height: 52px; border-radius: 15px; }
+  .preview__card .tile .ic { width: 26px; height: 26px; }
+  .preview__card .check__c { width: 38px; height: 38px; min-width: 38px; }
+  .preview__card:nth-child(1) { left: 0; }
+  .preview__card:nth-child(2) { right: -12px; }
+  .preview__card:nth-child(3) { left: 8%; }
 }
-.intro__fine { font-size: 14px; color: rgba(255, 255, 255, .78); }
 
 /* 8. SETUP -------------------------------------------------------------------- */
 .nav { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
@@ -1768,7 +1798,7 @@ function renderIntro() {
         ${prev('k-long', 'long', 'Long run', 'Sun · 14 km')}
       </div>
       <h1>Build a bespoke race plan that supports you every step of the way.</h1>
-      <p class="intro__lede">Five quick questions, then a week-by-week plan for your 5K, 10K, Half Marathon or Marathon, with every run explained.</p>
+      <p class="intro__lede">Answer a few quick questions to get a week-by-week plan for your 5K, 10K, Half Marathon or Marathon, with everything explained.</p>
       <ul class="feats">
         <li><span class="tile">${ic('shield')}</span><span>Built on proven training principles</span></li>
         <li><span class="tile">${ic('learn')}</span><span>Friendly for first-timers: no jargon</span></li>
