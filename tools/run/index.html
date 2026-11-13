@@ -196,6 +196,22 @@ b, strong { font-weight: 650; }
 .ai-note .ic { color: var(--accent); width: 22px; height: 22px; margin-top: 1px; }
 .sheet--ask .sheet__scroll { padding-bottom: 8px; }
 .ask-actions { display: grid; gap: 10px; }
+.nudge > div { flex: 1; min-width: 0; }
+.nudge__act { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.nudge__small { margin-top: 10px; font-size: 14px; color: var(--ink-2); }
+.inline-i { width: 16px; height: 16px; vertical-align: -3px; }
+.feel { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.feel__b { display: flex; flex-direction: column; align-items: center; gap: 4px; min-height: 72px; padding: 10px 2px 8px; border: 1.5px solid var(--line-2); border-radius: 14px; background: var(--surface); color: var(--ink-2); font: 550 12.5px/1.15 var(--ui); cursor: pointer; }
+.feel__b span { font-size: 26px; line-height: 1; }
+.feel__b[aria-checked="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--ink); }
+.log-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 18px; }
+.log-f { display: grid; gap: 6px; }
+.log-f > span { font-size: 14.5px; font-weight: 600; color: var(--ink-2); }
+.logged { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-weight: 600; }
+.logged__feel span { margin-right: 6px; }
+.replan-list { display: grid; gap: 6px; }
+.replan-list li { display: flex; justify-content: space-between; padding: 10px 14px; border-radius: 12px; background: var(--surface-2, var(--accent-soft)); }
+.replan-list s { color: var(--ink-3, var(--ink-2)); margin-right: 6px; }
 .ask-actions .btn--danger { background: var(--bad); color: #fff; }
 .input.ask-code { width: 100%; min-height: 110px; resize: none; font: 500 13px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; word-break: break-all; color: var(--ink-2); }
 .version { margin-top: 10px; text-align: center; font-size: 12.5px; color: var(--ink-3); }
@@ -585,6 +601,11 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 .race-card__mid { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-top: 22px; }
 .race-card__days b { display: block; font: 800 62px/.9 var(--ui); letter-spacing: -.03em; }
 .race-card__days span { display: block; margin-top: 8px; font-size: 15px; color: rgba(255, 255, 255, .88); }
+.race-card__pred { display: flex; align-items: center; gap: 8px; width: 100%; margin: 14px 0 0; padding: 10px 12px; border: 0; border-radius: 12px; background: rgba(255, 255, 255, .14); color: #fff; font: 500 15px/1.3 var(--ui); text-align: left; cursor: pointer; }
+.race-card__pred .ic { flex: none; width: 18px; height: 18px; }
+.race-card__pred span { flex: 1; }
+.race-card__pred b { font-weight: 700; white-space: nowrap; }
+.race-card__pred .race-card__i { width: 16px; height: 16px; opacity: .75; }
 .streak { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px; background: rgba(255, 255, 255, .16); font: 650 14px/1 var(--ui); white-space: nowrap; }
 .streak .ic { width: 16px; height: 16px; color: #FFC774; }
 /* The road to race day: a track with a runner on it and a flag at the end */
@@ -835,6 +856,7 @@ body[data-view="setup"] .toast { bottom: calc(env(safe-area-inset-bottom) + 100p
 </style>
 </head>
 <body>
+<form name="run-feedback" data-netlify="true" netlify-honeypot="bot-field" hidden><input name="message"><input name="email"><input name="version"><input name="bot-field"></form>
 <noscript><div class="nojs"><p>This planner needs JavaScript to build and save your plan. Please turn it on and reload the page.</p></div></noscript>
 <div id="app"></div>
 <dialog class="sheet" id="run-sheet" aria-labelledby="run-sheet-title"></dialog>
@@ -1034,6 +1056,10 @@ function generate(p, startISO, units, overrides, moves) {
   peak = Math.round(peak * 2) / 2;
   const short = peakEff < peak - .25;
   const taperFr = { '5k': [], '10k': [], 'hm': [.55], 'm': [.65, .45] }[dk];   // long run in taper weeks, as a share of the peak
+  // After a break: from the resume week, long runs rebuild in the same capped steps from what was actually run recently
+  const RS = p.resume && p.resume.date ? mondayOf(parseISO(p.resume.date)) : null, rsKm = RS ? Math.max(2, p.resume.km || 2) : 0;
+  let reached = 0;
+  const HILL = p.noHills ? 'fartlek' : 'hills';        // "avoid hills": flat speed play does a similar job
 
   const weeks = [], ctr = {};
   let longestSoFar = 0, lastFull = 0;
@@ -1050,8 +1076,14 @@ function generate(p, startISO, units, overrides, moves) {
     } else {
       phase = 'taper';
       ti = i - B;                                      // 0-based taper week
-      L = isRaceWk ? 0 : peakEff * (taperFr[ti] ?? .6);
+      L = isRaceWk ? 0 : (RS ? Math.min(peakEff, Math.max(reached, rsKm)) : peakEff) * (taperFr[ti] ?? .6);
     }
+    if (RS && ws >= RS && i < B) {
+      let c = rsKm;
+      for (let j = Math.round((ws - RS) / (7 * DAY)); j > 0; j--) c += Math.min(D.inc, Math.max(.5, c * (GROW - 1)));
+      L = Math.min(L, c * (cut ? .8 : 1));
+    }
+    if (i < B && !cut && (!RS || ws >= RS)) reached = Math.max(reached, L);
     L = Math.max(2, L < 8 ? Math.round(L * 10) / 10 : r05(L));
 
     // Paces move from today's fitness towards the goal as the weeks go by
@@ -1059,7 +1091,9 @@ function generate(p, startISO, units, overrides, moves) {
     const capImp = Math.min(.12, .006 * N + .01);       // same realistic-improvement limit as the goal check
     const target = goal >= cur ? cur : Math.max(goal, cur * (1 - capImp));
     const level = cur + (target - cur) * prog;
-    const Z = zones(level, dk, goal);
+    const Zt = zones(level, dk, goal);
+    // Off-road: easy, long and steady paces ease by about 6% (uneven ground is slower for the same effort)
+    const Z = p.trail ? { ...Zt, ...Object.fromEntries(['easy', 'long', 'steady', 'prrelax'].map(k => [k, Zt[k].map(x => x * 1.06)])) } : Zt;
     const [ef, emin, emax] = D.easy;
     const E = clamp(r05(L * ef), emin, emax) * (phase === 'taper' ? (dk === 'm' ? [.85, .7][ti] ?? .7 : .75) : cut ? .8 : 1);   // deloads ease every run, not just the long one
     const rw = fresh && L < 5 && i < 8 ? (i < 2 ? [2, 1] : i < 4 ? [3, 1] : [4, 1]) : null;
@@ -1106,14 +1140,14 @@ function generate(p, startISO, units, overrides, moves) {
             let t;
             const sep = slots.some(s => s[1] === 'tempo');
             if (phase === 'foundation') t = 'strides';           // foundation: easy running only
-            else if (phase === 'base') t = fresh && (r < 2 || L < 5) ? 'strides' : ['fartlek', 'hills'][(ctr.bq = (ctr.bq || 0) + 1) % 2];   // new runners build continuous running first
+            else if (phase === 'base') t = fresh && (r < 2 || L < 5) ? 'strides' : ['fartlek', HILL][(ctr.bq = (ctr.bq || 0) + 1) % 2];   // new runners build continuous running first
             else if (phase === 'build') t = sep ? 'intervals' : ['intervals', 'tempo'][(ctr.uq = (ctr.uq || 0) + 1) % 2];
             else if (phase === 'peak') t = (dk === '5k' || dk === '10k') ? (sep ? 'intervals' : ['intervals', 'tempo'][(ctr.uq = (ctr.uq || 0) + 1) % 2]) : (sep ? 'intervals' : ['racepace', 'intervals'][(ctr.pq = (ctr.pq || 0) + 1) % 2]);
             else t = (dk === 'hm' || dk === 'm') ? 'taperpace' : 'sharpen';
             if (prHard && n <= 4) t = 'strides';                 // parkrun is this week's harder session
             // speed work grows with the runner: strides until you can run ~4 km, gentle speed play until ~6 km
             if (L < 4) t = 'strides';
-            else if (L < 6 && ['intervals', 'tempo', 'racepace', 'taperpace'].includes(t)) t = (ctr.lq = (ctr.lq || 0) + 1) % 2 ? 'fartlek' : 'hills';
+            else if (L < 6 && ['intervals', 'tempo', 'racepace', 'taperpace'].includes(t)) t = (ctr.lq = (ctr.lq || 0) + 1) % 2 ? 'fartlek' : HILL;
             run = t === 'strides' ? S.strides(ctx, E) : t === 'taperpace' ? S.racepace(ctx, 0) : t === 'sharpen' ? S.sharpen(ctx) : S[t](ctx, k(t));
             break;
           }
@@ -1527,7 +1561,7 @@ IC.move = '<path d="M8 7 4 11l4 4"/><path d="M4 11h11a5 5 0 0 1 0 10h-2"/>';
 IC.chart = '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>';
 IC.trend = '<path d="M3 6.5l6.5 6.5 4-4 7.5 7.5"/><path d="M15.5 17.5H21V12"/>';
 /* Version: each published update of Run plan is a release */
-const APP_VERSION = '0.14';
+const APP_VERSION = '0.15';
 /* Releases: 0.1 first plan · 0.2 app look · 0.3 web-app feel, chart, moving runs · 0.4 phase/total chart, safer saves ·
    0.5 past runs fixed, clearer explained words · 0.6 logo, time ranges, race-week celebration, evidence-based taper ·
    0.7 parkrun buggy runs, "How this plan is built" (methodology and sources) ·
@@ -1538,7 +1572,9 @@ const APP_VERSION = '0.14';
    0.11 in-app confirm, backup and restore trays (no browser pop-ups) ·
    0.12 new TW logo: the W's last stroke as a light-blue slash ·
    0.13 clearer date errors, orb build animation, tighter run descriptions, slowest-first paces, shorter backup links ·
-   0.14 parkrun logo on parkrun runs, simple spinner build screen */
+   0.14 parkrun logo on parkrun runs, simple spinner build screen ·
+   0.15 log how runs felt, replan after missed runs, race-time prediction, weekly streaks and milestones,
+        avoid-hills and off-road options, Home Screen and backup reminders, get in touch */
 const versionHTML = () => `<p class="version">Run plan v${APP_VERSION} · Beta</p>`;
 /* TW mark: the favicon's letters, with the W's last stroke cut free as a light-blue slash.
    Tuned for 24-32px: the gap is the narrowest that still separates the slash cleanly, and the slash is a touch heavier than the W's own stroke. */
@@ -1976,7 +2012,7 @@ function finishSetup() {
   if (!wasNew) freezePast();
   state.profile = p;
   if (!state.start || wasNew) state.start = iso(today());
-  if (wasNew) { state.done = {}; state.buggy = {}; state.moves = {}; state.frozen = null; }
+  if (wasNew) { state.done = {}; state.buggy = {}; state.moves = {}; state.frozen = null; state.created = iso(today()); }
   save(true);
   const go = () => { view = 'plan'; editing = false; if (wasNew) tab = 'today'; render(); window.scrollTo(0, 0); };
   if (wasNew) buildingScreen(p, go); else go();
@@ -2016,7 +2052,7 @@ function applyFrozen() {
     w.runs = past.concat(w.runs.filter(r => r.date >= f.until && !ids.has(r.id))).sort((a, b) => a.date < b.date ? -1 : 1);
   });
 }
-const snapshotOf = r => ({ d: r.date, t: r.title, k: r.km, c: r.cat, m: Math.round(r.mins), b: r.buggy ? 1 : 0 });
+const snapshotOf = r => ({ d: r.date, t: r.title, k: r.km, c: r.cat, m: Math.round(r.mins), b: r.buggy ? 1 : 0, kd: r.kind });
 const KIND_OF = { easy: ['easy', 'easy'], long: ['long', 'long'], speed: ['intervals', 'interval'], tempo: ['tempo', 'tempo'], parkrun: ['parkrun-easy', 'parkrun'], race: ['race', 'race'] };
 function historyRun(rec, id) {
   const [kind, pace] = KIND_OF[rec.c] || KIND_OF.easy, date = rec.d || id;
@@ -2052,12 +2088,193 @@ function nowInfo() {
     wkIdx: plan.weeks.findIndex(w => t >= w.start && t <= w.end),
   };
 }
-/* Consecutive runs ticked off, counting back from the most recent one that's due */
+/* Weeks in a row on plan: a past week counts if you did all its runs, or all but one.
+   Rest days never break it. This week counts once you've run and haven't missed anything yet. */
 function streak(now) {
-  const due = allRuns().filter(r => r.date <= now.ti).reverse();
   let n = 0;
-  for (const r of due) { if (isDone(r)) n++; else if (r.date === now.ti) continue; else break; }
+  for (let i = plan.weeks.length - 1; i >= 0; i--) {
+    const w = plan.weeks[i];
+    if (w.start > now.t) continue;
+    const runs = w.runs.filter(r => r.kind !== 'race'), done = runs.filter(isDone).length;
+    if (now.t <= w.end) { if (done && !runs.some(r => r.date < now.ti && !isDone(r))) n++; continue; }
+    if (runs.length && done >= Math.max(1, runs.length - 1)) n++; else break;
+  }
   return n;
+}
+/* ---------- Logging, nudges and predictions ---------- */
+const FEEL = [['😌', 'Very easy'], ['🙂', 'Easy'], ['😐', 'OK'], ['😮‍💨', 'Hard'], ['🥵', 'Very hard']];
+const isPR = r => /^parkrun/.test(r.kind || r.kd || '') && r.kind !== 'parkrun-shake';
+const isStandalone = () => !!(navigator.standalone || (window.matchMedia && matchMedia('(display-mode: standalone)').matches));
+const isPhone = () => /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isIOS = () => /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const nudgeOn = (k, days) => { const t = (state.nudge || {})[k]; return !t || diffDays(parseISO(t), today()) >= days; };
+const snooze = k => { state.nudge = state.nudge || {}; state.nudge[k] = iso(today()); save(); };
+/* Several missed runs lately? */
+function missedLately(now) {
+  const from = iso(addDays(now.t, -14));
+  const due = allRuns().filter(r => r.date >= from && r.date < now.ti && r.kind !== 'race');
+  const missed = due.filter(r => !isDone(r));
+  return { due: due.length, missed: missed.length };
+}
+/* Where to restart after a break: a little below the longest run done in the last three weeks */
+function resumeKm(now) {
+  const recs = Object.entries(state.done).filter(([, x]) => x && x.k).map(([id, x]) => ({ d: x.d || id, k: x.ak || x.k }));
+  const within = n => recs.filter(x => diffDays(parseISO(x.d), now.t) <= n && x.d <= now.ti).reduce((a, x) => Math.max(a, x.k), 0);
+  const r21 = within(21), r42 = within(42);
+  if (r21) return Math.max(2, Math.round(r21 * .85 * 2) / 2);
+  if (r42) return Math.max(2, Math.round(r42 * .6 * 2) / 2);
+  return Math.max(2, Math.round((state.profile.longest || 0) * .6 * 2) / 2);
+}
+/* Rolling race-time prediction: the better of your PB and any recent all-out run you logged,
+   scaled to race distance (Riegel), plus a modest improvement for the weeks left that shrinks if training has been patchy */
+function prediction(now) {
+  const p = state.profile, D = DIST[p.distance], race = parseISO(p.date);
+  if (now.t > race) return null;
+  let cur = null, from = null;
+  const e = estimate(p); if (e) { cur = e.sec; from = 'pb'; }
+  const cutoff = iso(addDays(now.t, -56));
+  Object.entries(state.done).forEach(([id, x]) => {
+    if (!x || !x.as || (x.d || id) < cutoff) return;
+    const km = isPR(x) || x.kd === 'parkrun-tt' ? 5 : x.c === 'race' ? (x.ak || x.k) : x.ak;
+    if (!km || km < 3) return;
+    const hard = x.c === 'race' || x.kd === 'parkrun-tt' || x.kd === 'parkrun' || (x.f || 0) >= 5;
+    if (!hard) return;
+    const t = x.as * Math.pow(D.km / km, D.km > km ? 1.07 : 1.06);
+    if (!cur || t < cur) { cur = t; from = 'run'; }
+  });
+  if (!cur) return null;
+  const wl = Math.max(0, diffDays(now.t, race) / 7);
+  const f28 = iso(addDays(now.t, -28)), due = allRuns().filter(r => r.date >= f28 && r.date < now.ti);
+  const rate = due.length ? due.filter(isDone).length / due.length : 1;
+  const imp = Math.min(.08, .004 * wl) * (rate >= .75 ? 1 : rate >= .5 ? .6 : .3);
+  const m = cur * (1 - imp), sp = .01 + .0015 * Math.min(wl, 10);
+  const step = D.km <= 10 ? 10 : 60, rnd = x => Math.round(x / step) * step;
+  const f = x => { const t = hms(rnd(x)); return step === 60 && t.length > 5 ? t.slice(0, -3) : t; };
+  return { lo: f(m * (1 - sp)), hi: f(m * (1 + sp)), from, rate, weeks: Math.round(wl) };
+}
+function predHTML(now) {
+  const pr = prediction(now);
+  if (!pr) return now.t > parseISO(state.profile.date) ? '' : `<button class="race-card__pred" data-act="pred">${ic('trend')}<span>Log a parkrun time to see your predicted finish</span></button>`;
+  return `<button class="race-card__pred" data-act="pred">${ic('trend')}<span>Predicted finish <b>${pr.lo}–${pr.hi}</b></span>${ic('info', 'race-card__i')}</button>`;
+}
+function explainPred() {
+  const now = nowInfo(), pr = prediction(now), D = DIST[state.profile.distance];
+  ask({ icon: 'trend', title: 'Your predicted finish',
+    body: pr ? `<p>Right now you’re on track for about <b>${pr.lo}–${pr.hi}</b> in your ${D.name}.</p>
+      <p style="margin-top:10px">It starts from ${pr.from === 'pb' ? 'your personal best' : 'a recent all-out run you logged'}, converted to your race distance with Riegel’s formula, the standard way to compare times across distances. Then it adds a modest improvement for the ${pr.weeks} week${pr.weeks === 1 ? '' : 's'} left, which shrinks if training has been patchy (you’ve done ${Math.round(pr.rate * 100)}% of your runs in the last four weeks).</p>
+      <p style="margin-top:10px">Log your parkrun times (tap a parkrun, then <b>How did it go?</b>) and the prediction sharpens. It’s a guide, not a promise: hills, heat and how you feel on the day all count.</p>`
+      : `<p>Log a parkrun or time-trial time and we’ll predict your finish time. Tap a parkrun in your plan after you’ve run it, then <b>How did it go?</b></p>`,
+    actions: [{ label: 'Got it', value: 'ok', cls: 'btn--primary' }] });
+}
+/* The optional "How did it go?" tray: how it felt, and the actual distance and time */
+function logRun(id) {
+  const r = runById(id), rec = state.done[id];
+  if (!r || !rec) return;
+  const F = fmt(state.units), pr = isPR(r), race = r.kind === 'race', fixed = pr || race;
+  const kmShown = rec.ak ? String(Math.round((F.mi ? rec.ak / MI : rec.ak) * 100) / 100) : '';
+  let feel = rec.f || 0;
+  ask({ icon: 'check', kind: `k-${r.cat}`, title: race ? 'How was the race?' : 'How did it go?',
+    body: `<p class="hint" style="margin:0 0 14px">Optional. It helps your plan${race ? '' : ' and your predicted finish'}.</p>
+      <p class="slider__label" id="feel-l" style="margin-bottom:10px">How did it feel?</p>
+      <div class="feel" role="radiogroup" aria-labelledby="feel-l">${FEEL.map(([e, l], i) => `<button type="button" class="feel__b" role="radio" aria-checked="${feel === i + 1}" data-feel="${i + 1}"><span aria-hidden="true">${e}</span>${l}</button>`).join('')}</div>
+      <div class="log-grid">
+        ${fixed ? '' : `<label class="log-f"><span>Distance (${F.unit})</span><input class="input" id="log-km" inputmode="decimal" autocomplete="off" placeholder="${F.dist(r.km).split(' ')[0]}" value="${kmShown}"></label>`}
+        <label class="log-f"><span>${race ? 'Finish time' : pr ? 'Your parkrun time' : 'Time'}</span><input class="input" id="log-time" inputmode="numeric" autocomplete="off" placeholder="${race ? 'e.g. 2:05:30' : pr ? 'e.g. 27:45' : 'e.g. 32:10'}" value="${rec.as ? hms(rec.as) : ''}"></label>
+      </div>
+      <p class="err" id="log-err" hidden>That time doesn’t look right. Try something like 27:45.</p>`,
+    actions: [{ label: 'Save', value: 'savelog', cls: 'btn--primary' }, { label: 'Skip', value: 'skip', cls: 'btn--ghost' }] });
+  const d = $('#ask-sheet');
+  d.querySelectorAll('[data-feel]').forEach(b => b.addEventListener('click', () => {
+    feel = feel === +b.dataset.feel ? 0 : +b.dataset.feel; haptic();
+    d.querySelectorAll('[data-feel]').forEach(x => x.setAttribute('aria-checked', +x.dataset.feel === feel));
+  }));
+  d.querySelector('[data-ask="savelog"]').addEventListener('click', () => {
+    const kmIn = d.querySelector('#log-km'), tIn = d.querySelector('#log-time');
+    const kv = kmIn ? parseFloat(kmIn.value.replace(',', '.')) : NaN;
+    const km = fixed ? (race ? DIST[state.profile.distance].km : 5) : (kv > 0 && kv < 100 ? (F.mi ? kv * MI : kv) : null);
+    const ts = tIn.value.trim() ? parseTime(tIn.value, km || r.km) : null;
+    if (tIn.value.trim() && !ts) { $('#log-err').hidden = false; return; }
+    if (feel) rec.f = feel; else delete rec.f;
+    if (km && !fixed) rec.ak = km; else delete rec.ak;
+    if (ts) rec.as = ts; else delete rec.as;
+    closeSheet(d); save(); refresh();
+    const nm = first(state.profile.name), pbs = state.profile.pbs || {};
+    const pbKey = pr ? '5k' : race && PBD[state.profile.distance] ? state.profile.distance : null;
+    if (ts && pbKey && (!pbs[pbKey] || ts < pbs[pbKey])) {
+      if (race) { state.profile.pbs[pbKey] = ts; save(); toast(`A new personal best, ${nm}: ${hms(ts)}!`, 'trophy'); confetti(); return; }
+      setTimeout(() => ask({ icon: 'trophy', kind: 'k-good', title: `New 5K best: ${hms(ts)}!`,
+        body: `<p>Brilliant, ${nm}. ${pbs['5k'] ? `That beats your ${hms(pbs['5k'])}. ` : ''}Update your personal best so your paces and predicted finish keep up with you?</p><p class="hint" style="margin-top:8px">Runs you’ve already done stay exactly as they were.</p>`,
+        actions: [{ label: 'Update my paces', value: 'yes', cls: 'btn--primary' }, { label: 'Not now', value: 'no', cls: 'btn--ghost' }] })
+        .then(v => { if (v !== 'yes') return; freezePast(); state.profile.pbs['5k'] = ts; save(); regen(); refresh(); renderAdjust(); toast(`Paces updated, ${nm}. Nice work!`, 'check'); }), 360);
+      return;
+    }
+    toast(feel ? `Saved. ${feel >= 4 ? 'Tough one! Rest up well.' : 'Thanks for logging it.'}` : 'Saved.', 'check');
+  });
+}
+/* One gentle card at a time on Today: replan after missed runs, easy runs feeling hard, back up, Home Screen */
+function nudgeHTML(now) {
+  const p = state.profile, nm = first(p.name), act = (a, b) => `<div class="nudge__act">${a}${b}</div>`;
+  const ml = missedLately(now), recentResume = p.resume && diffDays(parseISO(p.resume.date), now.t) < 10;
+  if (ml.missed >= 2 && ml.missed * 2 >= ml.due && !recentResume && nudgeOn('replan', 7))
+    return { replan: true, html: `<div class="callout k-warn nudge">${ic('heart')}<div><p><b>Life happens, ${nm}.</b>You’ve missed ${ml.missed} of your last ${ml.due} runs. Rather than catching up, let’s ease you back in from where you are now.</p>
+      ${act(`<button class="btn btn--primary btn--sm" data-act="replan">Adjust my plan</button>`, `<button class="btn btn--ghost btn--sm" data-dismiss="replan">Not now</button>`)}
+      <p class="nudge__small">Did run them? Tick them off in the list instead.</p></div></div>` };
+  const felt = Object.entries(state.done).filter(([id, x]) => x && x.f && (x.c === 'easy' || x.c === 'long') && diffDays(parseISO(x.d || id), now.t) <= 14)
+    .sort((a, b) => (a[1].d || a[0]) < (b[1].d || b[0]) ? 1 : -1).slice(0, 3);
+  if (felt.length >= 2 && felt.filter(([, x]) => x.f >= 4).length >= 2 && nudgeOn('feel', 10))
+    return { html: `<div class="callout k-tempo nudge">${ic('info')}<div><p><b>Easy runs feeling hard?</b>Slow down a little: easy should feel chatty, even if that means walking up hills. If you’re tired, stressed or poorly, an extra rest day is the smart move.</p>
+      ${act(`<button class="btn btn--ghost btn--sm" data-dismiss="feel">Thanks, got it</button>`, '')}</div></div>` };
+  const nDone = Object.keys(state.done).length, start = parseISO(state.start);
+  const backupDue = state.backupDue || (!state.lastBackup && nDone >= 1 && diffDays(start, now.t) >= 7)
+    || (state.lastBackup && diffDays(parseISO(state.lastBackup), now.t) >= 28 && nDone > (state.backupDone || 0));
+  if (backupDue && nudgeOn('backup', 14))
+    return { html: `<div class="callout k-good nudge">${ic('shield')}<div><p><b>Keep your plan safe</b>Save a backup link in your Notes or an email to yourself. If anything happens to this device, one tap brings your plan back.</p>
+      ${act(`<button class="btn btn--primary btn--sm" data-act="backup">Back up now</button>`, `<button class="btn btn--ghost btn--sm" data-dismiss="backup">Not now</button>`)}</div></div>` };
+  if (isPhone() && !isStandalone() && !(state.nudge || {}).home && (!state.created || state.created < now.ti))
+    return { html: `<div class="callout k-accent nudge">${ic('phone')}<div><p><b>Add Run plan to your Home Screen</b>It opens like an app, and your plan stays safely saved: some browsers clear website data if you don’t visit for a while. ${isIOS() ? `Tap the Share button ${ic('share', 'inline-i')}, then <strong>Add to Home Screen</strong>.` : 'Open your browser menu, then <strong>Add to Home screen</strong> or <strong>Install app</strong>.'}</p>
+      ${act(`<button class="btn btn--ghost btn--sm" data-dismiss="home">Got it</button>`, '')}</div></div>` };
+  return null;
+}
+/* Ease back in: preview, then rebuild from today */
+function replan() {
+  const p = state.profile, now = nowInfo(), km = resumeKm(now), F = fmt(state.units), nm = first(p.name);
+  const after = generate({ ...p, resume: { date: now.ti, km } }, state.start, state.units, state.buggy, state.moves);
+  const longs = pl => pl.weeks.flatMap(w => w.runs).filter(r => r.slot === 'long' && r.date >= now.ti).slice(0, 3);
+  const a = longs(plan), b = longs(after);
+  const rows = b.map((r, i) => `<li><span>${fmtShort(parseISO(r.date))}</span><span>${a[i] ? `<s>${F.dist(a[i].km)}</s> ` : ''}<b>${F.dist(r.km)}</b></span></li>`).join('');
+  ask({ icon: 'heart', kind: 'k-warn', title: 'Ease back in',
+    body: `<p>Your long runs will rebuild gently from about <b>${F.dist(km)}</b>, a little below what you’ve run recently, and every other run scales with them. Your race date doesn’t change.</p>
+      ${rows ? `<p class="slider__label" style="margin:16px 0 8px">Your next long runs</p><ul class="replan-list">${rows}</ul>` : ''}
+      <p class="hint" style="margin-top:12px">Runs you’ve done stay exactly as they were. If there isn’t time to build all the way back, your plan peaks a little lower: that’s the safe choice, and you’ll still be ready to finish.</p>`,
+    actions: [{ label: 'Update my plan', value: 'yes', cls: 'btn--primary' }, { label: 'Keep my plan as it is', value: 'no', cls: 'btn--ghost' }] })
+    .then(v => {
+      if (v !== 'yes') { if (v === 'no') snooze('replan'); return; }
+      freezePast(); p.resume = { date: now.ti, km }; state.backupDue = true; snooze('replan');
+      save(true); regen(); refresh();
+      toast(`Plan adjusted, ${nm}. One run at a time.`, 'heart');
+    });
+}
+/* Get in touch: a short message, sent with Netlify Forms */
+function contact() {
+  ask({ icon: 'heart', title: 'Get in touch',
+    body: `<p>Spotted a problem, got an idea, or just want to say how your race went? We read every message.</p>
+      <label class="log-f" style="margin-top:14px"><span>Your message</span><textarea class="input ask-code" id="c-msg" style="min-height:120px;font:inherit" placeholder="Type your message"></textarea></label>
+      <label class="log-f" style="margin-top:12px"><span>Your email (optional, if you’d like a reply)</span><input class="input" id="c-email" type="email" autocomplete="email" placeholder="you@example.com"></label>
+      <p class="hint" style="margin-top:10px">Your plan isn’t sent, only what you type here and the app version.</p>
+      <p class="err" id="c-err" hidden></p>`,
+    actions: [{ label: 'Send message', value: 'send', cls: 'btn--primary' }] });
+  const d = $('#ask-sheet');
+  d.querySelector('[data-ask="send"]').addEventListener('click', async e => {
+    const btn = e.currentTarget, msg = $('#c-msg').value.trim(), err = $('#c-err');
+    if (!msg) { err.textContent = 'Please type a message first.'; err.hidden = false; return; }
+    btn.disabled = true; btn.textContent = 'Sending…';
+    try {
+      const body = new URLSearchParams({ 'form-name': 'run-feedback', message: msg, email: $('#c-email').value.trim(), version: APP_VERSION });
+      const res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
+      if (!res.ok) throw new Error(res.status);
+      closeSheet(d); toast('Thanks! Your message is on its way.', 'heart');
+    } catch (x) { btn.disabled = false; btn.textContent = 'Send message'; err.textContent = 'Couldn’t send just now. Check your connection and try again.'; err.hidden = false; }
+  });
 }
 function runPace(r) {
   if (r.paceRange) return fmt(state.units).range(r.paceRange);
@@ -2188,9 +2405,10 @@ function renderToday(now) {
   const hero = `<div class="head"><p class="eyebrow">${fmtDate(now.t)}</p><h1 class="h1">${days < 0 ? 'Well done' : greeting(new Date().getHours())}, ${nm} <span class="wave" aria-hidden="true">👋</span></h1></div>
   <section class="race-card" aria-label="Race countdown">
     <div class="race-card__top"><span class="tile">${ic('race')}</span><div><p class="race-card__name">${p.event ? esc(p.event) : `Your ${D.name}`}</p><p class="race-card__meta">${fmtShort(race)} · ${D.label} · target ${hms(p.goal)}</p></div></div>
+    ${predHTML(now)}
     <div class="race-card__mid">
       <div class="race-card__days"><b>${days > 0 ? days : days === 0 ? 'Today' : '✓'}</b><span>${days > 1 ? 'days to go' : days === 1 ? 'day to go' : days === 0 ? 'Race day. Go get it!' : 'Race complete'}</span></div>
-      ${st >= 2 ? `<span class="streak">${ic('tempo')}${st}-run streak</span>` : ''}
+      ${st >= 2 ? `<span class="streak">${ic('tempo')}${st}-week streak</span>` : ''}
     </div>
     <div class="road" style="--p:${Math.max(4, Math.round(pct * 100))}%" role="img" aria-label="${Math.round(pct * 100)}% of runs done">
       <div class="road__track"><div class="road__fill"></div><div class="road__me">${ic('shoe')}</div></div>
@@ -2216,7 +2434,7 @@ function renderToday(now) {
       main = `<h2 class="sec-h">Today</h2>
       <article class="run-card k-good done-card"><div class="run-card__head"><span class="tile tile--lg tile--solid">${ic('check')}</span><div><p class="run-card__kicker">Done</p><h3 class="run-card__title">${esc(r.title)} complete</h3></div></div>
         <div class="cheer">${ic('sparkle')}<span>${pick(DONE_MSG, seedOf(r.id))(nm)} Now rest up and recover well.</span></div>
-        <button class="btn btn--ghost btn--sm" data-open="${r.id}">${ic('info')}See today’s run</button></article>`;
+        <div class="nudge__act">${state.done[r.id] && !state.done[r.id].f ? `<button class="btn btn--secondary btn--sm" data-log="${r.id}">${ic('heart')}How did it go?</button>` : ''}<button class="btn btn--ghost btn--sm" data-open="${r.id}">${ic('info')}See today’s run</button></div></article>`;
       if (nx) { const dd = diffDays(now.t, parseISO(nx.date)); main += `<h2 class="sec-h">Up next <span class="eyebrow">${dd === 1 ? 'Tomorrow' : `In ${dd} days`}</span></h2><ul class="card list">${cell(nx, now)}</ul>`; }
     } else if (r) {
       main = `<h2 class="sec-h">Today’s run</h2>${runCardHTML(r, now)}`;
@@ -2226,7 +2444,9 @@ function renderToday(now) {
       if (nx) { const dd = diffDays(now.t, parseISO(nx.date)); main += `<h2 class="sec-h">${dd === 1 ? 'Tomorrow' : 'Next run'}${dd > 1 ? ` <span class="eyebrow">In ${dd} days</span>` : ''}</h2>${runCardHTML(nx, now)}`; }
     }
     if (now.wkIdx === plan.N - 1) main = raceWeekHTML(now, days) + main;
-    if (now.missed.length) main += `<div class="callout k-warn">${ic('heart')}<p><b>Missed ${now.missed.length === 1 ? 'a run' : `${now.missed.length} runs`}? No stress, ${nm}.</b>Don’t try to catch up. Just carry on from here. If you did run, tick it off in the list.</p></div>`;
+    const ng = nudgeHTML(now);
+    if (ng) main += ng.html;
+    if (now.missed.length && !(ng && ng.replan)) main += `<div class="callout k-warn">${ic('heart')}<p><b>Missed ${now.missed.length === 1 ? 'a run' : `${now.missed.length} runs`}? No stress, ${nm}.</b>Don’t try to catch up. Just carry on from here. If you did run, tick it off in the list.</p></div>`;
   }
   const wk = plan.weeks[now.wkIdx];
   const tip = pick(TIPS, diffDays(parseISO('2026-01-01'), now.t));
@@ -2386,6 +2606,11 @@ function renderAdjust() {
     <label class="row k-parkrun"><span class="tile">${ic('parkrun')}</span><span class="row__label">Saturday parkrun<small>Counts as one of your weekly runs</small></span><span class="sw"><input type="checkbox" role="switch" data-tune="parkrun" ${p.parkrun ? 'checked' : ''}><span class="sw__t"></span></span></label>
     <button class="row row--nav k-accent" data-act="edit"><span class="tile">${ic('edit')}</span><span class="row__label">Edit all your details<small>Name, race, date, PBs, buggy runs</small></span>${ic('chevR', 'chev')}</button>
   </div>
+  <p class="eyebrow group-label">Advanced</p>
+  <div class="card list">
+    <label class="row k-speed"><span class="tile">${ic('trend')}</span><span class="row__label">Avoid hill sessions<small>Swap hill reps for flat speed play, which does a similar job</small></span><span class="sw"><input type="checkbox" role="switch" data-tune="noHills" ${p.noHills ? 'checked' : ''}><span class="sw__t"></span></span></label>
+    <label class="row k-easy"><span class="tile">${ic('easy')}</span><span class="row__label">Mostly off-road<small>Trails or grass: easy and long-run paces ease by about 6%</small></span><span class="sw"><input type="checkbox" role="switch" data-tune="trail" ${p.trail ? 'checked' : ''}><span class="sw__t"></span></span></label>
+  </div>
   <p class="eyebrow group-label">Settings</p>
   <div class="card list">
     <div class="row k-accent"><span class="tile">${ic('ruler')}</span><span class="row__label" id="l-units">Units</span>
@@ -2393,6 +2618,7 @@ function renderAdjust() {
     <button class="row row--nav k-good" data-act="backup"><span class="tile">${ic('share')}</span><span class="row__label">Back up your plan<small>Get a link that restores it on any device</small></span>${ic('chevR', 'chev')}</button>
     <button class="row row--nav k-accent" data-act="restore"><span class="tile">${ic('move')}</span><span class="row__label">Restore from a backup<small>Paste a backup link to load a plan</small></span>${ic('chevR', 'chev')}</button>
     ${Object.keys(state.moves || {}).length ? `<button class="row row--nav k-tempo" data-act="reset-moves"><span class="tile">${ic('move')}</span><span class="row__label">Put moved runs back<small>Return every run to its suggested day</small></span>${ic('chevR', 'chev')}</button>` : ''}
+    <button class="row row--nav k-accent" data-act="contact"><span class="tile">${ic('heart')}</span><span class="row__label">Get in touch<small>Report a problem or share an idea</small></span>${ic('chevR', 'chev')}</button>
     <button class="row row--nav row--danger k-bad" data-act="reset"><span class="tile">${ic('trash')}</span><span class="row__label">Start a new plan</span>${ic('chevR', 'chev')}</button>
   </div>
   <p class="footnote">Your plan, ticks and changes are saved on this device and carry over whenever the app is updated. Clearing your browser data removes them, so keep a backup link somewhere safe. Plans follow widely used training principles; they’re a guide, not medical advice. If something hurts, rest, and see a professional if it doesn’t settle. · <a href="/">tedw.co.uk</a></p>${versionHTML()}`;
@@ -2419,6 +2645,8 @@ function onTune(t) {
   if (k === 'longest') { p.longest = +t.value; $('#to-longest').textContent = longestLabel(p.longest); }
   if (k === 'pb5') { const v = +t.value; if (v >= 3000) delete p.pbs['5k']; else p.pbs['5k'] = v; const s = p.pbs['5k'] ? hms(v) : 'None'; $('#to-pb5').textContent = s; t.setAttribute('aria-valuetext', s); }
   if (k === 'parkrun') p.parkrun = t.checked;
+  if (k === 'noHills') { if (t.checked) p.noHills = true; else delete p.noHills; }
+  if (k === 'trail') { if (t.checked) p.trail = true; else delete p.trail; }
   if (k === 'runs' || k === 'parkrun' || k === 'longDay') { const slots = buggySlots(p); p.buggyDays = (p.buggyDays || []).filter(x => slots.some(s => s[0] === x)); }
   save();
   cancelAnimationFrame(tuneRaf);
@@ -2561,6 +2789,15 @@ function methodHTML() {
       'eases buggy-run paces by about 7% and keeps speed sessions, hill reps and parkrun time trials solo, for safety and so those sessions keep their quality.',
       'estimate', '')}
 
+    ${principle('13. Coming back after missed runs',
+      'Fitness fades during a break, and returning to your old training load too quickly is a common cause of injury. Studies of detraining show measurable losses within two to four weeks.',
+      'never asks you to catch up. If you miss most of your runs over two weeks, it offers (never forces) to rebuild your long runs from about 85% of your longest run in the last three weeks (60% if your last run was longer ago), growing in the same capped steps as principle 3. Everything else scales with the long run, and the plan peaks lower if there isn’t time to build all the way back.',
+      'estimate', '')}
+    ${principle('14. Hills and off-road running',
+      'Running uphill or on uneven ground costs more energy at the same speed, so the same pace feels harder. That’s why effort and the talk test (principle 8) matter more than pace off-road.',
+      'can swap hill reps for fartlek (flat speed play, which also mixes harder and easier running) if you’d rather avoid hills. If you run mostly off-road, it eases easy, long and steady paces by about 6% and reminds you to run by feel. The 6% is a rough allowance, not a measured figure: ground varies too much for one number.',
+      'estimate', '')}
+
     <section class="sheet__sec"><h3>Did we follow our own rules?</h3>
       <p>We generated 216 test plans covering every distance, short, usual and long plan lengths, three starting points (brand new, returning and experienced), three to five runs a week, with and without parkrun. Then we measured each plan against the principles above. Wherever a plan fell short, we changed how plans are made; changing the description instead wasn’t an option. The “Checked” figures come from that test.</p></section>
 
@@ -2667,12 +2904,24 @@ function fillRunSheet() {
       <div class="effort-n" aria-hidden="true">${Array.from({ length: 10 }, (_, i) => `<span class="${i + 1 >= e[0] && i + 1 <= e[1] ? 'on' : ''}">${i + 1}</span>`).join('')}</div>
       <p>${P.feel}</p></section>
     ${r.note ? `<div class="callout k-warn">${ic('info')}<p>${esc(r.note)}</p></div>` : ''}
+    ${p.trail && ['easy', 'long', 'steady', 'prrelax'].includes(r.pace) && !r.frozen && !r.history ? `<div class="callout k-easy">${ic('easy')}<p><b>Off-road</b>Paces are eased for trails and grass, but ground varies a lot. Run by feel: it should match the effort below.</p></div>` : ''}
+    ${isDone(r) ? loggedHTML(r) : ''}
     ${r.kind !== 'race' ? `<section class="sheet__sec"><h3 class="eyebrow sheet__h">Day</h3>${moverHTML(r)}</section>` : ''}
     ${r.canBuggy ? `<div class="card list" style="margin-top:14px"><label class="row k-accent"><span class="tile">${ic('buggy')}</span><span class="row__label">With the buggy<small>Eases the target pace by about 7%</small></span><span class="sw"><input type="checkbox" role="switch" data-buggy-run="${r.id}" ${r.buggy ? 'checked' : ''}><span class="sw__t"></span></span></label></div>`
       : (buggyUser && r.cat === 'speed' && !r.note ? `<div class="callout k-accent">${ic('buggy')}<p>${BUGGY_NOTE.blocked}</p></div>` : '')}
   </div>
   <div class="sheet__foot">${tickBtn(r, 'btn--block')}</div>`;
   dlg.querySelector('.sheet__scroll').scrollTop = top;
+}
+
+function loggedHTML(r) {
+  const x = state.done[r.id] || {}, F = fmt(state.units), bits = [];
+  if (x.f) bits.push(`<span class="logged__feel"><span aria-hidden="true">${FEEL[x.f - 1][0]}</span>${FEEL[x.f - 1][1]}</span>`);
+  if (x.ak) bits.push(`<span>${F.dist(x.ak, true)}</span>`);
+  if (x.as) bits.push(`<span>${hms(x.as)}</span>`);
+  return `<section class="sheet__sec"><h3 class="eyebrow sheet__h">How it went</h3>
+    ${bits.length ? `<p class="logged">${bits.join('<span aria-hidden="true">·</span>')}</p>` : '<p class="hint" style="margin:0">Add how it felt, and your distance and time if you like. All optional.</p>'}
+    <button class="btn btn--secondary btn--sm" data-log="${r.id}" style="margin-top:12px">${ic(bits.length ? 'edit' : 'heart')}${bits.length ? 'Edit' : 'How did it go?'}</button></section>`;
 }
 
 /* ---------- Actions ---------- */
@@ -2687,12 +2936,22 @@ function toggleDone(id, btn) {
   if (!was && whereSel === '#run-sheet') setTimeout(() => closeSheet($('#run-sheet')), 450);
   if (was) return;
   const r = runById(id), wk = weekOf(r), wkDone = wk.runs.every(isDone);
+  const runs = allRuns(), doneRuns = runs.filter(isDone), kmNow = doneRuns.reduce((a, x) => a + x.km, 0), kmBefore = kmNow - r.km;
+  const half = runs.length && doneRuns.length / runs.length >= .5 && (doneRuns.length - 1) / runs.length < .5;
+  const kmMark = [500, 300, 200, 100, 50].find(m => kmBefore < m && kmNow >= m), F = fmt(state.units);
+  const st = wkDone ? streak(nowInfo()) : 0;
   let msg = pick(DONE_MSG, seedOf(id))(nm), icon = 'star';
   if (r.kind === 'race') { msg = `You did it, ${nm}! What a moment.`; icon = 'trophy'; confetti(); }
+  else if (doneRuns.length === 1) { msg = `Your first run is done, ${nm}! The hardest step.`; icon = 'trophy'; }
   else if (r.newLongest) { msg = `Your longest run yet, ${nm}. Huge!`; icon = 'trophy'; }
+  else if (kmMark) { msg = `That’s ${F.mi ? Math.round(kmMark / MI) + ' miles' : kmMark + ' km'} run since you started, ${nm}!`; icon = 'trophy'; }
+  else if (half) { msg = `Halfway through your plan, ${nm}. Look how far you’ve come!`; icon = 'trophy'; }
+  else if (wkDone && st >= 4 && st % 4 === 0) { msg = `${st} weeks in a row, ${nm}. That’s how runners are made.`; icon = 'tempo'; }
   else if (wkDone) { msg = `Week ${wk.n} done, ${nm}! Brilliant.`; icon = 'trophy'; }
   else if (r.cat === 'speed') { msg = `Speed session done, ${nm}. Legs getting quicker!`; icon = 'speed'; }
   toast(msg, icon);
+  // The big "Mark as done" button offers the optional log; the quick tick in lists doesn't
+  if (btn && btn.classList.contains('btn')) setTimeout(() => logRun(id), whereSel === '#run-sheet' ? 700 : 450);
 }
 function moveRun(id, toISO) {
   if (toISO === id) delete state.moves[id]; else state.moves[id] = toISO;
@@ -2712,7 +2971,7 @@ function ask({ icon = 'info', kind = 'k-accent', title, body, actions, foot = ''
     <div class="sheet__foot ask-actions">${actions.map(a => `<button class="btn ${a.cls || 'btn--secondary'} btn--block" data-ask="${a.value}">${a.icon ? ic(a.icon) : ''}${a.label}</button>`).join('')}${foot}</div>`;
   openSheet(d);
   return new Promise(res => {
-    const onClick = e => { const b = e.target.closest('[data-ask]'); if (!b) return; const v = b.dataset.ask; if (v === 'copy' || v === 'share' || v === 'restore') return; cleanup(); closeSheet(d); res(v); };
+    const onClick = e => { const b = e.target.closest('[data-ask]'); if (!b) return; const v = b.dataset.ask; if (v === 'copy' || v === 'share' || v === 'restore' || v === 'savelog' || v === 'send') return; cleanup(); closeSheet(d); res(v); };
     const onClose = () => { cleanup(); res(null); };
     const cleanup = () => { d.removeEventListener('click', onClick); d.removeEventListener('close', onClose); };
     d.addEventListener('click', onClick); d.addEventListener('close', onClose);
@@ -2735,11 +2994,12 @@ async function backup() {
   d.querySelector('[data-ask="copy"]').addEventListener('click', async e => {
     const btn = e.currentTarget, ok = await copyText(url, $('#backup-code'));
     btn.innerHTML = ok ? `${ic('check')}Copied!` : 'Select and copy the link above';
-    if (ok) toast(`Backup link copied, ${nm}. Keep it safe.`, 'check');
+    if (ok) { toast(`Backup link copied, ${nm}. Keep it safe.`, 'check'); markBackedUp(); }
   });
   const sh = d.querySelector('[data-ask="share"]');
-  if (sh) sh.addEventListener('click', () => { navigator.share({ title: `${nm}’s run plan`, text: 'My running plan backup. Open this link to restore it.', url }).catch(() => toast('Sharing isn’t available here. Use Copy link instead.', 'info')); });
+  if (sh) sh.addEventListener('click', () => { navigator.share({ title: `${nm}’s run plan`, text: 'My running plan backup. Open this link to restore it.', url }).then(markBackedUp, () => toast('Sharing isn’t available here. Use Copy link instead.', 'info')); });
 }
+function markBackedUp() { state.lastBackup = iso(today()); state.backupDone = Object.keys(state.done).length; delete state.backupDue; save(); if (view === 'plan') refresh(); }
 async function restoreFrom(text) {
   const m = String(text || '').trim().match(/(?:#p(?:lan)?=)?([\w~-]{20,})\s*$/);
   if (!m) return null;
@@ -2788,6 +3048,9 @@ document.addEventListener('click', e => {
     if (act === 'reset-moves') { state.moves = {}; save(); regen(); refresh(); renderAdjust(); toast('All runs are back on their suggested days.', 'move'); }
     if (act === 'another') { const name = state.profile.name; state = freshState(); save(true); startSetup({ name, step: 1 }); }
     if (act === 'backup') backup();
+    if (act === 'replan') replan();
+    if (act === 'pred') explainPred();
+    if (act === 'contact') contact();
     if (act === 'method') openMethod();
     return;
   }
@@ -2808,6 +3071,10 @@ document.addEventListener('click', e => {
     if (on) burst(ri.querySelector('.box'), '#fff');
     return;
   }
+  const dm = e.target.closest('[data-dismiss]');
+  if (dm) { const k = dm.dataset.dismiss; if (k === 'backup') delete state.backupDue; snooze(k); refresh(); return; }
+  const lg = e.target.closest('[data-log]');
+  if (lg) { const d = $('#run-sheet'); if (d.open) { closeSheet(d); setTimeout(() => logRun(lg.dataset.log), 360); } else logRun(lg.dataset.log); return; }
   const tk = e.target.closest('[data-tick]');
   if (tk) { toggleDone(tk.dataset.tick, tk); return; }
   const mv = e.target.closest('[data-move]');
