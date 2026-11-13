@@ -479,14 +479,14 @@ body[data-view="intro"] { background: var(--grad-a); }
 
 /* Mobile first: everything fits on screen at once; spacing follows the visible height (svh) */
 .intro__in { position: relative; z-index: 1; width: 100%; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column;
-  min-height: 100vh; min-height: 100svh; padding: calc(env(safe-area-inset-top) + clamp(10px, 2.4svh, 24px)) 24px calc(env(safe-area-inset-bottom) + clamp(14px, 2.6svh, 28px)); }
+  min-height: 100vh; padding: calc(env(safe-area-inset-top) + clamp(10px, 2.4svh, 24px)) 24px calc(env(safe-area-inset-bottom) + clamp(14px, 2.6svh, 28px)); }
 .intro__top { display: flex; justify-content: space-between; align-items: center; min-height: 44px; }
 .intro__top a { color: rgba(255, 255, 255, .8); text-decoration: none; font-size: 15px; padding: 10px 0; }
 .intro__top a:hover { color: #fff; text-decoration: underline; }
 
 /* Three preview cards, always full size and in shape. They overlap only by their padding, so all the text shows,
    and on phones they run off the edges. --ch is a card's height, --gap the step between cards. */
-.preview { --ch: 74px; --gap: clamp(56px, 8svh, 70px); position: relative; height: calc(var(--ch) + 2 * var(--gap)); margin: clamp(10px, 2svh, 28px) 0 0; }
+.preview { --ch: 74px; --gap: clamp(56px, 8svh, 70px); position: relative; height: calc(var(--ch) + 2 * var(--gap)); margin: clamp(22px, 3.6vh, 40px) 0 0; }
 .preview__card {
   position: absolute; display: flex; align-items: center; gap: 15px; width: 308px; height: var(--ch); padding: 0 18px; border-radius: 20px;
   background: rgba(255, 255, 255, .97); color: #10142A; box-shadow: 0 18px 40px -18px rgba(5, 10, 60, .7);
@@ -496,17 +496,15 @@ body[data-view="intro"] { background: var(--grad-a); }
 .preview__card .tile { flex: none; width: 46px; height: 46px; border-radius: 14px; background: color-mix(in srgb, var(--c) 14%, #fff); }
 .preview__card .tile .ic { width: 24px; height: 24px; }
 .preview__card .check__c { flex: none; margin-left: auto; width: 34px; height: 34px; min-width: 34px; border-color: #9297AB; }
-.preview__card:nth-child(1) { top: 0; left: -34px; rotate: -2.5deg; }
-.preview__card:nth-child(2) { top: var(--gap); right: -26px; rotate: 2deg; }
-.preview__card:nth-child(3) { top: calc(2 * var(--gap)); left: 2%; rotate: -1deg; }
-/* The middle card sits behind the other two, so overlaps only ever cover a card's empty padding, never its text */
-.preview__card:nth-child(1) { z-index: 3; } .preview__card:nth-child(2) { z-index: 1; } .preview__card:nth-child(3) { z-index: 2; }
+.preview__card:nth-child(1) { top: 0; left: -34px; rotate: 2.5deg; }
+.preview__card:nth-child(2) { top: var(--gap); right: -26px; rotate: -2deg; }
+.preview__card:nth-child(3) { top: calc(2 * var(--gap)); left: 2%; rotate: 1.5deg; }
 .preview__card:nth-child(2) .check__c { background: #17A658; border-color: #17A658; }
 .preview__card:nth-child(2) .check__c .ic { opacity: 1; transform: none; }
 
 /* Each gap has a comfortable minimum (padding); any spare height is shared evenly by the auto margins on the
    headline, features and button, instead of collecting in one lump */
-.intro h1 { margin-top: auto; padding-top: clamp(24px, 3.6svh, 40px); font: 750 clamp(27px, 4svh, 38px)/1.08 var(--ui); letter-spacing: -.025em; text-wrap: balance; }
+.intro h1 { margin-top: auto; padding-top: clamp(24px, 3.6svh, 40px); font: 750 clamp(29px, 4.5vh, 42px)/1.06 var(--ui); letter-spacing: -.025em; text-wrap: balance; }
 .intro__lede { margin-top: clamp(12px, 1.9svh, 18px); font-size: clamp(14.5px, 2.05svh, 16.5px); line-height: 1.5; color: rgba(255, 255, 255, .86); }
 .feats { display: grid; gap: clamp(10px, 1.4svh, 14px); margin: auto 0 0; padding-top: clamp(22px, 3svh, 32px); }
 .feats li { display: flex; align-items: center; gap: 12px; font-size: clamp(14px, 1.95svh, 15.5px); line-height: 1.35; }
@@ -518,11 +516,11 @@ body[data-view="intro"] { background: var(--grad-a); }
 /* In a phone browser, leave room above Safari's floating address bar */
 @media (pointer: coarse) { html:not(.app) .intro__in { padding-bottom: 30px; } }
 @media (max-height: 820px) {
-  .preview { --ch: 68px; --gap: 63px; margin-top: 10px; }
-  .intro h1 { padding-top: 24px; font-size: 30px; }
-  .intro__lede { margin-top: 12px; }
-  .feats { padding-top: 20px; gap: 9px; }
-  .intro__cta { padding-top: 24px; }
+  .preview { --ch: 68px; --gap: 63px; margin-top: 22px; }
+  .intro h1 { padding-top: 18px; font-size: 33px; }
+  .intro__lede { margin-top: 11px; }
+  .feats { padding-top: 17px; gap: 8px; }
+  .intro__cta { padding-top: 20px; }
 }
 /* Short phones: tighter, still three cards */
 @media (max-height: 720px) {
@@ -1812,7 +1810,7 @@ function renderIntro() {
         ${prev('k-long', 'long', 'Long run', 'Sun · 14 km')}
       </div>
       <h1>Build a bespoke race plan that supports you every step of the way.</h1>
-      <p class="intro__lede">Answer a few quick questions to get a week-by-week plan for your 5K, 10K, Half Marathon or Marathon, with everything explained.</p>
+      <p class="intro__lede">Answer a few quick questions and get a week-by-week plan for your 5K, 10K, Half Marathon or Marathon, with everything explained.</p>
       <ul class="feats">
         <li><span class="tile">${ic('shield')}</span><span>Built on proven training principles</span></li>
         <li><span class="tile">${ic('learn')}</span><span>Friendly for first-timers: no jargon</span></li>
