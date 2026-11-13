@@ -476,7 +476,8 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 .intro__top a { color: rgba(255, 255, 255, .8); text-decoration: none; font-size: 15px; padding: 10px 0; }
 .intro__top a:hover { color: #fff; text-decoration: underline; }
 /* The preview cards scale with the space available (sizes in cqh: 236px tall at full size) */
-.preview { position: relative; height: clamp(110px, 24svh, 236px); margin: clamp(8px, 2svh, 22px) 0 clamp(2px, .8svh, 10px); container-type: size; }
+.preview { position: relative; height: clamp(110px, 24svh, 236px); width: min(100%, clamp(160px, 34.8svh, 342px));   /* keeps the 342 × 236 shape as it scales */
+  margin: clamp(8px, 2svh, 22px) 0 clamp(2px, .8svh, 10px); container-type: size; }
 .preview__card {
   position: absolute; display: flex; align-items: center; gap: 5.9cqh; width: 74%; padding: 5.9cqh 6.8cqh; border-radius: 7.6cqh;
   background: rgba(255, 255, 255, .97); color: #10142A; box-shadow: 0 18px 40px -18px rgba(5, 10, 60, .7);
@@ -492,7 +493,7 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 .preview__card:nth-child(3) { top: 67.8%; left: 6%; rotate: -1.5deg; }
 .preview__card:nth-child(2) .check__c { background: #17A658; border-color: #17A658; }
 .preview__card:nth-child(2) .check__c .ic { opacity: 1; transform: none; }
-.intro h1 { margin-top: clamp(8px, 2svh, 20px); font: 750 clamp(28px, 4.7svh, 40px)/1.06 var(--ui); letter-spacing: -.025em; text-wrap: balance; }
+.intro h1 { margin-top: clamp(16px, 3.4svh, 32px); font: 750 clamp(30px, 5.1svh, 44px)/1.06 var(--ui); letter-spacing: -.025em; text-wrap: balance; }
 .intro__lede { margin-top: clamp(6px, 1.4svh, 14px); font-size: clamp(15.5px, 2.4svh, 18.5px); line-height: 1.42; color: rgba(255, 255, 255, .88); }
 .feats { display: grid; gap: clamp(6px, 1.3svh, 16px); margin: clamp(12px, 2.4svh, 28px) 0 clamp(12px, 2.4svh, 32px); }
 .feats li { display: flex; align-items: center; gap: 14px; font-size: clamp(15px, 2.2svh, 16.5px); line-height: 1.3; }
@@ -500,10 +501,17 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 .feats .tile .ic { width: 19px; height: 19px; }
 .intro__cta { margin-top: auto; display: flex; flex-direction: column; gap: clamp(6px, 1.4svh, 12px); align-items: center; }
 html:has(> body[data-view="intro"]) { background: var(--grad-a); }
-body[data-view="intro"] { background: var(--grad-b); }
+body[data-view="intro"] { background: var(--grad-a); }   /* Safari colours its top bar from this */
 .intro__cta .btn { max-width: 420px; }
 /* Short screens: drop the least important lines so everything still fits */
-@media (max-height: 700px) { .intro__fine { display: none; } }
+@media (max-height: 780px) { .intro__fine { display: none; } }
+@media (max-height: 620px) {
+  .preview { height: 19svh; width: 27.5svh; }
+  .intro h1 { margin-top: 12px; font-size: 28px; }
+  .feats { gap: 4px; margin: 12px 0 14px; }
+  .feats .tile { width: 28px; height: 28px; border-radius: 9px; }
+  .feats .tile .ic { width: 16px; height: 16px; }
+}
 @media (max-height: 480px) { .feats { display: none; } .intro__lede { margin-bottom: 16px; } }
 .intro__fine { font-size: 14px; color: rgba(255, 255, 255, .78); }
 
@@ -1752,8 +1760,8 @@ function renderIntro() {
         ${prev('k-speed', 'speed', 'Intervals', 'Thu · 6 × 400 m')}
         ${prev('k-long', 'long', 'Long run', 'Sun · 14 km')}
       </div>
-      <h1>Your race plan, made for you.</h1>
-      <p class="intro__lede">Five quick questions, then a week-by-week plan that fits your life, with every run explained.</p>
+      <h1>A race plan that supports you every step of the way.</h1>
+      <p class="intro__lede">Five quick questions, then a week-by-week plan for your 5K, 10K, Half Marathon or marathon, with every run explained.</p>
       <ul class="feats">
         <li><span class="tile">${ic('shield')}</span><span>Built on proven training principles</span></li>
         <li><span class="tile">${ic('learn')}</span><span>Friendly for first-timers: no jargon</span></li>
