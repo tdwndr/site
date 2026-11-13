@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Run plan: a free, personal training plan for your next race</title>
 <meta name="description" content="Answer a few questions and get a personal running plan for a 5K, 10K, Half Marathon or marathon, with every run explained. Free, no sign-up, saved on your device.">
-<meta name="theme-color" content="#F4F5F9" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0B0C11" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" id="theme-color" content="#4A66FF">
 <meta name="color-scheme" content="light dark">
 <meta name="format-detection" content="telephone=no">
 <link rel="canonical" href="https://tedw.co.uk/tools/run/">
 <link rel="preload" href="/tools/run/fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/tools/run/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="/tools/run/icon-180.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Run plan: a personal training plan for your next race">
 <meta property="og:description" content="A few questions, then a plan that fits your week, with every run explained.">
@@ -29,6 +29,9 @@
 <meta name="twitter:image:alt" content="Ted Winder / Tools: /tools/run. A personal training plan for your next race.">
 <link rel="manifest" href="/tools/run/manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="Run plan">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
 @font-face{font-family:"Figtree";font-style:normal;font-weight:300 900;font-display:swap;src:url(/tools/run/fonts/figtree.woff2) format("woff2")}
 @font-face{font-family:"Archivo";font-style:normal;font-weight:500;font-stretch:125%;font-display:swap;src:url(/fonts/archivo-500-wide.woff2) format("woff2")}
@@ -445,6 +448,12 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 .range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 25%, transparent); }
 .range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 25%, transparent); }
 
+/* Home Screen app: the page draws under the status bar, whose text is white, so the strip takes the page colour (transparent on the blue intro) */
+.statusfill { display: none; }
+@media (display-mode: standalone) { .statusfill { display: block; position: fixed; top: 0; left: 0; right: 0; height: env(safe-area-inset-top); background: var(--bg); z-index: 90; pointer-events: none; } }
+html.standalone .statusfill { display: block; position: fixed; top: 0; left: 0; right: 0; height: env(safe-area-inset-top); background: var(--bg); z-index: 90; pointer-events: none; }
+body[data-view="intro"] .statusfill { background: transparent; }
+
 /* 7. INTRO -------------------------------------------------------------------- */
 .intro {
   position: relative; overflow: hidden; min-height: 100vh; min-height: 100dvh; color: #fff;
@@ -833,6 +842,7 @@ body[data-view="setup"] .toast { bottom: calc(env(safe-area-inset-bottom) + 100p
 </style>
 </head>
 <body>
+<div class="statusfill" aria-hidden="true"></div>
 <noscript><div class="nojs"><p>This planner needs JavaScript to build and save your plan. Please turn it on and reload the page.</p></div></noscript>
 <div id="app"></div>
 <dialog class="sheet" id="run-sheet" aria-labelledby="run-sheet-title"></dialog>
@@ -1679,7 +1689,11 @@ let tab = 'today';
 const scrolls = {};
 
 function render() {
+  if (navigator.standalone) document.documentElement.classList.add('standalone');
   document.body.dataset.view = view;
+  // colour the browser / status bar to match the top of the screen (blue on the intro, page colour elsewhere)
+  { const cs = getComputedStyle(document.documentElement), c = (view === 'intro' ? cs.getPropertyValue('--grad-a') : cs.getPropertyValue('--bg')).trim();
+    if (c) $('#theme-color').setAttribute('content', c); }
   if (view === 'intro') renderIntro();
   else if (view === 'setup') renderSetup();
   else renderApp();
