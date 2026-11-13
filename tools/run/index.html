@@ -486,7 +486,7 @@ body[data-view="intro"] { background: var(--grad-a); }
 
 /* Three preview cards, always full size and in shape. They overlap only by their padding, so all the text shows,
    and on phones they run off the edges. --ch is a card's height, --gap the step between cards. */
-.preview { --ch: 74px; --gap: clamp(56px, 8svh, 70px); position: relative; height: calc(var(--ch) + 2 * var(--gap)); margin: clamp(12px, 2.4svh, 30px) 0 0; }
+.preview { --ch: 74px; --gap: clamp(56px, 8svh, 70px); position: relative; height: calc(var(--ch) + 2 * var(--gap)); margin: clamp(10px, 2svh, 28px) 0 0; }
 .preview__card {
   position: absolute; display: flex; align-items: center; gap: 15px; width: 308px; height: var(--ch); padding: 0 18px; border-radius: 20px;
   background: rgba(255, 255, 255, .97); color: #10142A; box-shadow: 0 18px 40px -18px rgba(5, 10, 60, .7);
@@ -496,57 +496,63 @@ body[data-view="intro"] { background: var(--grad-a); }
 .preview__card .tile { flex: none; width: 46px; height: 46px; border-radius: 14px; background: color-mix(in srgb, var(--c) 14%, #fff); }
 .preview__card .tile .ic { width: 24px; height: 24px; }
 .preview__card .check__c { flex: none; margin-left: auto; width: 34px; height: 34px; min-width: 34px; border-color: #9297AB; }
-.preview__card:nth-child(1) { top: 0; left: -34px; rotate: -4deg; }
-.preview__card:nth-child(2) { top: var(--gap); right: -26px; rotate: 3deg; }
-.preview__card:nth-child(3) { top: calc(2 * var(--gap)); left: 2%; rotate: -1.5deg; }
+.preview__card:nth-child(1) { top: 0; left: -34px; rotate: -2.5deg; }
+.preview__card:nth-child(2) { top: var(--gap); right: -26px; rotate: 2deg; }
+.preview__card:nth-child(3) { top: calc(2 * var(--gap)); left: 2%; rotate: -1deg; }
+/* The middle card sits behind the other two, so overlaps only ever cover a card's empty padding, never its text */
+.preview__card:nth-child(1) { z-index: 3; } .preview__card:nth-child(2) { z-index: 1; } .preview__card:nth-child(3) { z-index: 2; }
 .preview__card:nth-child(2) .check__c { background: #17A658; border-color: #17A658; }
 .preview__card:nth-child(2) .check__c .ic { opacity: 1; transform: none; }
 
-.intro h1 { margin-top: clamp(18px, 3.4svh, 40px); font: 750 clamp(28px, 4.1svh, 38px)/1.08 var(--ui); letter-spacing: -.025em; text-wrap: balance; }
-.intro__lede { margin-top: clamp(10px, 1.8svh, 16px); font-size: clamp(14.5px, 2.05svh, 16.5px); line-height: 1.5; color: rgba(255, 255, 255, .86); }
-.feats { display: grid; gap: clamp(8px, 1.3svh, 14px); margin: clamp(14px, 2.4svh, 30px) 0 clamp(16px, 2.6svh, 34px); }
+/* Each gap has a comfortable minimum (padding); any spare height is shared evenly by the auto margins on the
+   headline, features and button, instead of collecting in one lump */
+.intro h1 { margin-top: auto; padding-top: clamp(24px, 3.6svh, 40px); font: 750 clamp(27px, 4svh, 38px)/1.08 var(--ui); letter-spacing: -.025em; text-wrap: balance; }
+.intro__lede { margin-top: clamp(12px, 1.9svh, 18px); font-size: clamp(14.5px, 2.05svh, 16.5px); line-height: 1.5; color: rgba(255, 255, 255, .86); }
+.feats { display: grid; gap: clamp(10px, 1.4svh, 14px); margin: auto 0 0; padding-top: clamp(22px, 3svh, 32px); }
 .feats li { display: flex; align-items: center; gap: 12px; font-size: clamp(14px, 1.95svh, 15.5px); line-height: 1.35; }
 .feats .tile { width: clamp(30px, 4.4svh, 36px); height: clamp(30px, 4.4svh, 36px); border-radius: 10px; background: rgba(255, 255, 255, .16); color: #fff; }
 .feats .tile .ic { width: 18px; height: 18px; }
-.intro__cta { margin-top: auto; display: flex; flex-direction: column; gap: clamp(8px, 1.4svh, 12px); align-items: center; }
+.intro__cta { margin-top: auto; padding-top: clamp(26px, 3.6svh, 40px); display: flex; flex-direction: column; gap: clamp(8px, 1.4svh, 12px); align-items: center; }
 .intro__cta .btn { max-width: 420px; }
 .intro__fine { font-size: 14px; color: rgba(255, 255, 255, .78); }
 /* In a phone browser, leave room above Safari's floating address bar */
-@media (pointer: coarse) { html:not(.app) .intro__in { padding-bottom: max(40px, calc(env(safe-area-inset-bottom) + 10px)); } }
+@media (pointer: coarse) { html:not(.app) .intro__in { padding-bottom: 30px; } }
 @media (max-height: 820px) {
-  .preview { --gap: 66px; }
-  .intro h1 { margin-top: 15px; }
-  .intro__lede { margin-top: 8px; }
-  .feats { margin: 14px 0 16px; gap: 8px; }
+  .preview { --ch: 68px; --gap: 63px; margin-top: 10px; }
+  .intro h1 { padding-top: 24px; font-size: 30px; }
+  .intro__lede { margin-top: 12px; }
+  .feats { padding-top: 20px; gap: 9px; }
+  .intro__cta { padding-top: 24px; }
 }
 /* Short phones: tighter, still three cards */
 @media (max-height: 720px) {
-  .preview { --ch: 66px; --gap: 54px; margin-top: 8px; }
+  .preview { --ch: 62px; --gap: 57px; margin-top: 8px; }
   .preview__card { gap: 12px; width: 286px; }
   .preview__card .tile { width: 40px; height: 40px; border-radius: 12px; }
   .preview__card b { font-size: 17px; }
   .preview__card span { font-size: 14.5px; }
-  .intro h1 { margin-top: 16px; font-size: 25px; }
-  .intro__lede { font-size: 14px; }
-  .feats { gap: 4px; margin: 12px 0 14px; }
+  .intro h1 { padding-top: 18px; font-size: 25px; }
+  .intro__lede { font-size: 14px; margin-top: 10px; }
+  .feats { gap: 5px; padding-top: 14px; }
+  .intro__cta { padding-top: 18px; }
   .feats li { font-size: 13.5px; }
   .feats .tile { width: 26px; height: 26px; border-radius: 8px; }
   .feats .tile .ic { width: 15px; height: 15px; }
 }
-@media (max-height: 600px) { .feats { display: none; } .intro__lede { margin-bottom: 14px; } .preview { --ch: 62px; --gap: 60px; } .preview__card:nth-child(2) { right: -10px; } .intro h1 { margin-top: 10px; font-size: 23px; } .intro__fine { display: none; } }
+@media (max-height: 600px) { .feats { display: none; } .preview { --ch: 60px; --gap: 56px; } .preview__card:nth-child(2) { right: -10px; } .intro h1 { padding-top: 14px; font-size: 23px; } .intro__fine { display: none; } }
 
 /* Desktop: two roomy columns, text on the left and bigger cards on the right */
 @media (min-width: 960px) {
   .intro__in { max-width: 1200px; padding: clamp(20px, 3.6vh, 40px) 64px clamp(20px, 5vh, 56px); display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); column-gap: 64px;
     grid-template-areas: "top top" ". preview" "h1 preview" "lede preview" "feats preview" "cta preview" ". preview"; grid-template-rows: auto 1fr auto auto auto auto 1fr; }
   .intro__top { grid-area: top; }
-  .intro h1 { grid-area: h1; margin-top: 0; font-size: clamp(40px, min(4vw, 7.4vh), 58px); }
+  .intro h1 { grid-area: h1; margin-top: 0; padding-top: 0; font-size: clamp(40px, min(4vw, 7.4vh), 58px); }
   .intro__lede { grid-area: lede; margin-top: clamp(14px, 2.6vh, 24px); font-size: 19px; max-width: 32em; }
-  .feats { grid-area: feats; gap: clamp(10px, 1.8vh, 16px); margin: clamp(20px, 4vh, 36px) 0 clamp(24px, 4.4vh, 40px); }
+  .feats { grid-area: feats; gap: clamp(10px, 1.8vh, 16px); margin: clamp(20px, 4vh, 36px) 0 clamp(24px, 4.4vh, 40px); padding-top: 0; }
   .feats li { font-size: 17px; gap: 16px; }
   .feats .tile { width: 42px; height: 42px; border-radius: 12px; }
   .feats .tile .ic { width: 21px; height: 21px; }
-  .intro__cta { grid-area: cta; margin-top: 0; align-items: flex-start; }
+  .intro__cta { grid-area: cta; margin-top: 0; padding-top: 0; align-items: flex-start; }
   .intro__cta .btn { max-width: 360px; }
   .preview { grid-area: preview; align-self: center; --ch: 86px; --gap: 104px; margin: 0; }
   .preview__card { width: 380px; gap: 18px; padding: 0 22px; border-radius: 24px; }
