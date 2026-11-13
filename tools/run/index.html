@@ -465,39 +465,46 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 
 /* 7. INTRO -------------------------------------------------------------------- */
 .intro {
-  position: relative; overflow: hidden; min-height: 100vh; min-height: 100dvh; color: #fff;
-  background: radial-gradient(120% 60% at 85% 0%, rgba(255, 255, 255, .18), transparent 60%), linear-gradient(165deg, var(--grad-a), var(--grad-b) 70%);
+  position: relative; overflow: hidden; min-height: 100vh; color: #fff;   /* vh: runs behind the browser's bars */
+  background: linear-gradient(180deg, var(--grad-a), var(--grad-b) 85%);   /* top edge is exactly the band colour */
   display: flex; flex-direction: column;
 }
-.intro__in { position: relative; z-index: 1; flex: 1; width: 100%; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; padding: calc(env(safe-area-inset-top) + 22px) 24px calc(env(safe-area-inset-bottom) + 24px); }
+/* All the intro content fits on screen at once: sizes follow the visible height (svh) */
+.intro__in { position: relative; z-index: 1; width: 100%; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column;
+  min-height: 100vh; min-height: 100svh; padding: calc(env(safe-area-inset-top) + clamp(6px, 1.8svh, 22px)) 24px calc(env(safe-area-inset-bottom) + clamp(10px, 2svh, 24px)); }
 .intro__top { display: flex; justify-content: space-between; align-items: center; min-height: 44px; }
 .intro__top a { color: rgba(255, 255, 255, .8); text-decoration: none; font-size: 15px; padding: 10px 0; }
 .intro__top a:hover { color: #fff; text-decoration: underline; }
-.preview { position: relative; height: 236px; margin: 22px 0 10px; }
+/* The preview cards scale with the space available (sizes in cqh: 236px tall at full size) */
+.preview { position: relative; height: clamp(110px, 24svh, 236px); margin: clamp(8px, 2svh, 22px) 0 clamp(2px, .8svh, 10px); container-type: size; }
 .preview__card {
-  position: absolute; display: flex; align-items: center; gap: 14px; width: 74%; padding: 14px 16px; border-radius: 18px;
+  position: absolute; display: flex; align-items: center; gap: 5.9cqh; width: 74%; padding: 5.9cqh 6.8cqh; border-radius: 7.6cqh;
   background: rgba(255, 255, 255, .97); color: #10142A; box-shadow: 0 18px 40px -18px rgba(5, 10, 60, .7);
 }
-.preview__card b { display: block; font-size: 16.5px; white-space: nowrap; }
-.preview__card span { font-size: 14px; color: #585E75; white-space: nowrap; }
-.preview__card .tile { background: color-mix(in srgb, var(--c) 14%, #fff); }
-.preview__card .check__c { margin-left: auto; border-color: #9297AB; }
+.preview__card b { display: block; font-size: 7cqh; white-space: nowrap; }
+.preview__card span { font-size: 5.9cqh; color: #585E75; white-space: nowrap; }
+.preview__card .tile { width: 16.9cqh; height: 16.9cqh; border-radius: 5.5cqh; background: color-mix(in srgb, var(--c) 14%, #fff); }
+.preview__card .tile .ic { width: 8.9cqh; height: 8.9cqh; }
+.preview__card .check__c { margin-left: auto; width: 11.9cqh; height: 11.9cqh; border-color: #9297AB; }
+.preview__card .check__c .ic { width: 6.8cqh; height: 6.8cqh; }
 .preview__card:nth-child(1) { top: 0; left: 0; rotate: -4deg; }
-.preview__card:nth-child(2) { top: 80px; right: 0; rotate: 3deg; }
-.preview__card:nth-child(3) { top: 160px; left: 6%; rotate: -1.5deg; }
+.preview__card:nth-child(2) { top: 33.9%; right: 0; rotate: 3deg; }
+.preview__card:nth-child(3) { top: 67.8%; left: 6%; rotate: -1.5deg; }
 .preview__card:nth-child(2) .check__c { background: #17A658; border-color: #17A658; }
 .preview__card:nth-child(2) .check__c .ic { opacity: 1; transform: none; }
-.intro h1 { margin-top: 20px; font: 750 40px/1.06 var(--ui); letter-spacing: -.025em; text-wrap: balance; }
-.intro__lede { margin-top: 14px; font-size: 18.5px; line-height: 1.5; color: rgba(255, 255, 255, .88); }
-.feats { display: grid; gap: 16px; margin: 28px 0 32px; }
-.feats li { display: flex; align-items: center; gap: 14px; font-size: 16.5px; line-height: 1.4; }
-.feats .tile { background: rgba(255, 255, 255, .16); color: #fff; }
-.intro__cta { margin-top: auto; display: flex; flex-direction: column; gap: 12px; align-items: center; }
-/* In a phone browser the page runs behind the browser's own bars: paint them blue and keep the button clear of the address bar */
+.intro h1 { margin-top: clamp(8px, 2svh, 20px); font: 750 clamp(28px, 4.7svh, 40px)/1.06 var(--ui); letter-spacing: -.025em; text-wrap: balance; }
+.intro__lede { margin-top: clamp(6px, 1.4svh, 14px); font-size: clamp(15.5px, 2.4svh, 18.5px); line-height: 1.42; color: rgba(255, 255, 255, .88); }
+.feats { display: grid; gap: clamp(6px, 1.3svh, 16px); margin: clamp(12px, 2.4svh, 28px) 0 clamp(12px, 2.4svh, 32px); }
+.feats li { display: flex; align-items: center; gap: 14px; font-size: clamp(15px, 2.2svh, 16.5px); line-height: 1.3; }
+.feats .tile { width: clamp(30px, 4.8svh, 40px); height: clamp(30px, 4.8svh, 40px); border-radius: 11px; background: rgba(255, 255, 255, .16); color: #fff; }
+.feats .tile .ic { width: 19px; height: 19px; }
+.intro__cta { margin-top: auto; display: flex; flex-direction: column; gap: clamp(6px, 1.4svh, 12px); align-items: center; }
 html:has(> body[data-view="intro"]) { background: var(--grad-a); }
 body[data-view="intro"] { background: var(--grad-b); }
-@media (pointer: coarse) { html:not(.app) .intro__in { padding-bottom: calc(env(safe-area-inset-bottom) + 88px); } }
 .intro__cta .btn { max-width: 420px; }
+/* Short screens: drop the least important lines so everything still fits */
+@media (max-height: 700px) { .intro__fine { display: none; } }
+@media (max-height: 480px) { .feats { display: none; } .intro__lede { margin-bottom: 16px; } }
 .intro__fine { font-size: 14px; color: rgba(255, 255, 255, .78); }
 
 /* 8. SETUP -------------------------------------------------------------------- */
@@ -1746,10 +1753,10 @@ function renderIntro() {
         ${prev('k-long', 'long', 'Long run', 'Sun · 14 km')}
       </div>
       <h1>Your race plan, made for you.</h1>
-      <p class="intro__lede">Five quick questions, then a week-by-week running plan that fits your life, with every run explained.</p>
+      <p class="intro__lede">Five quick questions, then a week-by-week plan that fits your life, with every run explained.</p>
       <ul class="feats">
         <li><span class="tile">${ic('shield')}</span><span>Built on proven training principles</span></li>
-        <li><span class="tile">${ic('learn')}</span><span>Friendly for first-timers: no jargon, no guesswork</span></li>
+        <li><span class="tile">${ic('learn')}</span><span>Friendly for first-timers: no jargon</span></li>
         <li><span class="tile">${ic('phone')}</span><span>Saved on your device. No sign-up</span></li>
       </ul>
       <div class="intro__cta">
