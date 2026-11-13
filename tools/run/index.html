@@ -514,30 +514,26 @@ body[data-view="intro"] { background: var(--grad-a); }
 .intro__cta .btn { max-width: 420px; }
 .intro__fine { font-size: 14px; color: rgba(255, 255, 255, .78); }
 /* In a phone browser, leave room above Safari's floating address bar */
-@media (pointer: coarse) { html:not(.app) .intro__in { padding-bottom: 30px; } }
+@media (pointer: coarse) { html:not(.app) .intro__in { padding-bottom: 42px; } }
 @media (max-height: 820px) {
-  .preview { --ch: 68px; --gap: 63px; margin-top: 22px; }
-  .intro h1 { padding-top: 18px; font-size: 33px; }
+  .preview { --ch: 68px; --gap: 63px; margin-top: 18px; }
+  .intro h1 { padding-top: 16px; font-size: 33px; }
   .intro__lede { margin-top: 11px; }
-  .feats { padding-top: 17px; gap: 8px; }
-  .intro__cta { padding-top: 20px; }
-}
-/* Short phones: tighter, still three cards */
-@media (max-height: 720px) {
-  .preview { --ch: 62px; --gap: 57px; margin-top: 8px; }
-  .preview__card { gap: 12px; width: 286px; }
-  .preview__card .tile { width: 40px; height: 40px; border-radius: 12px; }
-  .preview__card b { font-size: 17px; }
-  .preview__card span { font-size: 14.5px; }
-  .intro h1 { padding-top: 18px; font-size: 25px; }
-  .intro__lede { font-size: 14px; margin-top: 10px; }
-  .feats { gap: 5px; padding-top: 14px; }
+  .feats { padding-top: 15px; gap: 7px; }
   .intro__cta { padding-top: 18px; }
-  .feats li { font-size: 13.5px; }
-  .feats .tile { width: 26px; height: 26px; border-radius: 8px; }
-  .feats .tile .ic { width: 15px; height: 15px; }
 }
-@media (max-height: 600px) { .feats { display: none; } .preview { --ch: 60px; --gap: 56px; } .preview__card:nth-child(2) { right: -10px; } .intro h1 { padding-top: 14px; font-size: 23px; } .intro__fine { display: none; } }
+/* Shorter phones: the same design, slightly tighter */
+@media (max-height: 720px) {
+  .preview { --ch: 65px; --gap: 59px; margin-top: 14px; }
+  .intro h1 { font-size: 29px; padding-top: 15px; }
+  .intro__lede { font-size: 14.5px; margin-top: 10px; }
+  .feats { padding-top: 13px; }
+  .intro__cta { padding-top: 16px; }
+  .feats li { font-size: 14px; }
+  .feats .tile { width: 30px; height: 30px; border-radius: 9px; }
+  .feats .tile .ic { width: 16px; height: 16px; }
+}
+/* The smallest screens keep everything and scroll a little, rather than losing content */
 
 /* Desktop: two roomy columns, text on the left and bigger cards on the right */
 @media (min-width: 960px) {
