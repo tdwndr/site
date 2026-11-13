@@ -466,11 +466,15 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 /* 7. INTRO -------------------------------------------------------------------- */
 .intro {
   position: relative; overflow: hidden; min-height: 100vh; color: #fff;   /* vh: runs behind the browser's bars */
-  background: linear-gradient(180deg, var(--grad-a), var(--grad-b) 85%);   /* top edge is exactly the band colour */
+  /* Safari tints BOTH its top bar and the strip under its address bar with the body colour, so the top and bottom
+     edges must both be exactly that colour. Depth comes from soft shading that fades out before either edge. */
+  background:
+    radial-gradient(70% 34% at 75% 22%, rgba(255, 255, 255, .12), transparent 70%),
+    radial-gradient(90% 36% at 40% 66%, rgba(12, 22, 170, .38), transparent 72%),
+    var(--grad-a);
   display: flex; flex-direction: column;
 }
-/* Safari colours its top bar from the body; anything below the page shows the root, so that's the bottom blue */
-html:has(> body[data-view="intro"]) { background: var(--grad-b); }
+html:has(> body[data-view="intro"]) { background: var(--grad-a); }
 body[data-view="intro"] { background: var(--grad-a); }
 
 /* Mobile first: everything fits on screen at once; spacing follows the visible height (svh) */
@@ -482,17 +486,18 @@ body[data-view="intro"] { background: var(--grad-a); }
 
 /* Three preview cards, always full size and in shape. They overlap only by their padding, so all the text shows,
    and on phones they run off the edges. --ch is a card's height, --gap the step between cards. */
-.preview { --ch: 64px; --gap: clamp(48px, 6.8svh, 62px); position: relative; height: calc(var(--ch) + 2 * var(--gap)); margin: clamp(12px, 2.4svh, 30px) 0 0; }
+.preview { --ch: 74px; --gap: clamp(56px, 8svh, 70px); position: relative; height: calc(var(--ch) + 2 * var(--gap)); margin: clamp(12px, 2.4svh, 30px) 0 0; }
 .preview__card {
-  position: absolute; display: flex; align-items: center; gap: 14px; width: 272px; height: var(--ch); padding: 0 16px; border-radius: 18px;
+  position: absolute; display: flex; align-items: center; gap: 15px; width: 308px; height: var(--ch); padding: 0 18px; border-radius: 20px;
   background: rgba(255, 255, 255, .97); color: #10142A; box-shadow: 0 18px 40px -18px rgba(5, 10, 60, .7);
 }
-.preview__card b { display: block; font-size: 16.5px; line-height: 1.25; white-space: nowrap; }
-.preview__card span { font-size: 14px; color: #585E75; white-space: nowrap; }
-.preview__card .tile { flex: none; background: color-mix(in srgb, var(--c) 14%, #fff); }
-.preview__card .check__c { flex: none; margin-left: auto; border-color: #9297AB; }
-.preview__card:nth-child(1) { top: 0; left: -30px; rotate: -4deg; }
-.preview__card:nth-child(2) { top: var(--gap); right: -46px; rotate: 3deg; }
+.preview__card b { display: block; font-size: 18.5px; line-height: 1.25; white-space: nowrap; }
+.preview__card span { font-size: 15.5px; color: #585E75; white-space: nowrap; }
+.preview__card .tile { flex: none; width: 46px; height: 46px; border-radius: 14px; background: color-mix(in srgb, var(--c) 14%, #fff); }
+.preview__card .tile .ic { width: 24px; height: 24px; }
+.preview__card .check__c { flex: none; margin-left: auto; width: 34px; height: 34px; min-width: 34px; border-color: #9297AB; }
+.preview__card:nth-child(1) { top: 0; left: -34px; rotate: -4deg; }
+.preview__card:nth-child(2) { top: var(--gap); right: -26px; rotate: 3deg; }
 .preview__card:nth-child(3) { top: calc(2 * var(--gap)); left: 2%; rotate: -1.5deg; }
 .preview__card:nth-child(2) .check__c { background: #17A658; border-color: #17A658; }
 .preview__card:nth-child(2) .check__c .ic { opacity: 1; transform: none; }
@@ -507,17 +512,20 @@ body[data-view="intro"] { background: var(--grad-a); }
 .intro__cta .btn { max-width: 420px; }
 .intro__fine { font-size: 14px; color: rgba(255, 255, 255, .78); }
 /* In a phone browser, leave room above Safari's floating address bar */
-@media (pointer: coarse) { html:not(.app) .intro__in { padding-bottom: calc(env(safe-area-inset-bottom) + 76px); } }
+@media (pointer: coarse) { html:not(.app) .intro__in { padding-bottom: max(40px, calc(env(safe-area-inset-bottom) + 10px)); } }
 @media (max-height: 820px) {
-  .preview { --gap: 50px; }
-  .intro h1 { margin-top: 16px; }
+  .preview { --gap: 66px; }
+  .intro h1 { margin-top: 15px; }
   .intro__lede { margin-top: 8px; }
   .feats { margin: 14px 0 16px; gap: 8px; }
 }
 /* Short phones: tighter, still three cards */
 @media (max-height: 720px) {
-  .preview { --ch: 60px; --gap: 46px; margin-top: 8px; }
-  .preview__card { gap: 12px; }
+  .preview { --ch: 66px; --gap: 54px; margin-top: 8px; }
+  .preview__card { gap: 12px; width: 286px; }
+  .preview__card .tile { width: 40px; height: 40px; border-radius: 12px; }
+  .preview__card b { font-size: 17px; }
+  .preview__card span { font-size: 14.5px; }
   .intro h1 { margin-top: 16px; font-size: 25px; }
   .intro__lede { font-size: 14px; }
   .feats { gap: 4px; margin: 12px 0 14px; }
@@ -525,7 +533,7 @@ body[data-view="intro"] { background: var(--grad-a); }
   .feats .tile { width: 26px; height: 26px; border-radius: 8px; }
   .feats .tile .ic { width: 15px; height: 15px; }
 }
-@media (max-height: 600px) { .feats { display: none; } .intro__lede { margin-bottom: 14px; } .preview { --ch: 60px; --gap: 58px; } .intro h1 { margin-top: 12px; font-size: 24px; } .intro__fine { display: none; } }
+@media (max-height: 600px) { .feats { display: none; } .intro__lede { margin-bottom: 14px; } .preview { --ch: 62px; --gap: 60px; } .preview__card:nth-child(2) { right: -10px; } .intro h1 { margin-top: 10px; font-size: 23px; } .intro__fine { display: none; } }
 
 /* Desktop: two roomy columns, text on the left and bigger cards on the right */
 @media (min-width: 960px) {
