@@ -448,12 +448,6 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 .range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 25%, transparent); }
 .range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 25%, transparent); }
 
-/* Home Screen app: the page draws under the status bar, whose text is white, so the strip takes the page colour (transparent on the blue intro) */
-.statusfill { display: none; }
-@media (display-mode: standalone) { .statusfill { display: block; position: fixed; top: 0; left: 0; right: 0; height: env(safe-area-inset-top); background: var(--bg); z-index: 90; pointer-events: none; } }
-html.standalone .statusfill { display: block; position: fixed; top: 0; left: 0; right: 0; height: env(safe-area-inset-top); background: var(--bg); z-index: 90; pointer-events: none; }
-body[data-view="intro"] .statusfill { background: transparent; }
-
 /* 7. INTRO -------------------------------------------------------------------- */
 .intro {
   position: relative; overflow: hidden; min-height: 100vh; min-height: 100dvh; color: #fff;
@@ -488,7 +482,7 @@ body[data-view="intro"] .statusfill { background: transparent; }
 .intro__fine { font-size: 14px; color: rgba(255, 255, 255, .78); }
 
 /* 8. SETUP -------------------------------------------------------------------- */
-.nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 94%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.nav { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
 .nav__in { display: flex; align-items: center; gap: 14px; max-width: 600px; margin: 0 auto; padding: calc(env(safe-area-inset-top) + 10px) 20px 10px; }
 .nav__bar { flex: 1; height: 8px; border-radius: 4px; background: var(--fill); overflow: hidden; }
 .nav__bar span { display: block; height: 100%; border-radius: 4px; background: var(--accent); transition: width .45s var(--ease); }
@@ -535,8 +529,7 @@ body[data-view="intro"] .statusfill { background: transparent; }
 /* 9. APP SHELL ---------------------------------------------------------------- */
 .top {
   position: sticky; top: 0; z-index: 20; padding-top: env(safe-area-inset-top);
-  background: color-mix(in srgb, var(--surface) 94%, transparent);
-  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  background: var(--surface);
   border-bottom: 1px solid var(--line);
 }
 .top__in { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "brand end" "tabs tabs"; align-items: center; column-gap: 12px; max-width: 1080px; margin: 0 auto; padding: 0 16px; }
@@ -842,7 +835,6 @@ body[data-view="setup"] .toast { bottom: calc(env(safe-area-inset-bottom) + 100p
 </style>
 </head>
 <body>
-<div class="statusfill" aria-hidden="true"></div>
 <noscript><div class="nojs"><p>This planner needs JavaScript to build and save your plan. Please turn it on and reload the page.</p></div></noscript>
 <div id="app"></div>
 <dialog class="sheet" id="run-sheet" aria-labelledby="run-sheet-title"></dialog>
@@ -1689,7 +1681,6 @@ let tab = 'today';
 const scrolls = {};
 
 function render() {
-  if (navigator.standalone) document.documentElement.classList.add('standalone');
   document.body.dataset.view = view;
   // colour the browser / status bar to match the top of the screen (blue on the intro, page colour elsewhere)
   { const cs = getComputedStyle(document.documentElement), c = (view === 'intro' ? cs.getPropertyValue('--grad-a') : cs.getPropertyValue('--bg')).trim();
