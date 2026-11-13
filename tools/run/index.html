@@ -196,6 +196,9 @@ b, strong { font-weight: 650; }
 .ai-note .ic { color: var(--accent); width: 22px; height: 22px; margin-top: 1px; }
 .sheet--ask .sheet__scroll { padding-bottom: 8px; }
 .ask-actions { display: grid; gap: 10px; }
+.sheet__saved { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 0 0 10px; font-size: 14.5px; font-weight: 600; color: var(--good); animation: fade-in .3s ease; }
+.sheet__saved .ic { width: 16px; height: 16px; stroke-width: 2.6; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } }
 .nudge > div { flex: 1; min-width: 0; }
 .nudge__act { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .nudge__small { margin-top: 10px; font-size: 14px; color: var(--ink-2); }
@@ -262,11 +265,7 @@ b, strong { font-weight: 650; }
   background: color-mix(in srgb, var(--c, var(--accent)) 14%, var(--surface)); color: var(--c, var(--accent));
 }
 .tile .ic { width: 21px; height: 21px; }
-/* parkrun: the logo's white tree line art, on the usual tile colour */
-.tile:has(> .pr-logo) { background: var(--c-parkrun); }
-.pr-logo { display: block; width: 25px; height: 25px; object-fit: contain; }
-.tile--lg .pr-logo { width: 32px; height: 32px; }
-.tile--lg { width: 52px; height: 52px; border-radius: 15px; }
+.tile--lg .tile--lg { width: 52px; height: 52px; border-radius: 15px; }
 .tile--lg .ic { width: 27px; height: 27px; }
 .tile--solid { background: var(--c); color: #fff; }
 .tile--txt { width: 48px; font: 700 14px/1 var(--ui); }
@@ -494,6 +493,10 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 .feats li { display: flex; align-items: center; gap: 14px; font-size: 16.5px; line-height: 1.4; }
 .feats .tile { background: rgba(255, 255, 255, .16); color: #fff; }
 .intro__cta { margin-top: auto; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+/* In a phone browser the page runs behind the browser's own bars: paint them blue and keep the button clear of the address bar */
+html:has(> body[data-view="intro"]) { background: var(--grad-a); }
+body[data-view="intro"] { background: var(--grad-b); }
+@media (pointer: coarse) { html:not(.app) .intro__in { padding-bottom: calc(env(safe-area-inset-bottom) + 88px); } }
 .intro__cta .btn { max-width: 420px; }
 .intro__fine { font-size: 14px; color: rgba(255, 255, 255, .78); }
 
@@ -612,8 +615,6 @@ input[type="date"].input::-webkit-date-and-time-value { text-align: left; }
 .road { position: relative; margin: 26px 0 0; }
 .road__track { position: relative; height: 10px; border-radius: 5px; background: rgba(255, 255, 255, .2); }
 .road__fill { position: absolute; inset: 0 auto 0 0; border-radius: 5px; background: #fff; width: var(--p); transition: width .8s var(--ease); }
-.road__me { position: absolute; top: 50%; left: var(--p); translate: -50% -50%; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #fff; color: var(--grad-b); box-shadow: 0 4px 12px rgba(5, 10, 60, .35); transition: left .8s var(--ease); }
-.road__me .ic { width: 17px; height: 17px; stroke-width: 2.4; }
 .road__labels { display: flex; justify-content: space-between; margin-top: 12px; font-size: 13.5px; color: rgba(255, 255, 255, .86); }
 .road__labels b { color: #fff; }
 .race-card__foot { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px; }
@@ -812,10 +813,7 @@ body[data-view="setup"] .toast { bottom: calc(env(safe-area-inset-bottom) + 100p
 .building h2 { font: 750 24px/1.2 var(--ui); letter-spacing: -.02em; }
 .building__line { margin-top: 8px; min-height: 26px; font-size: 16.5px; color: rgba(255, 255, 255, .88); opacity: 0; }
 .building__line.in { animation: b-line .45s var(--ease) forwards; }
-.building__flood { position: fixed; left: 50%; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--bg); transform: scale(0); pointer-events: none; }
-.building.flood { background: transparent; animation: none; }
-.building.flood .building__in { opacity: 0; transition: opacity .25s; }
-.building.flood .building__flood { transform: scale(420); transition: transform .65s cubic-bezier(.5, 0, .2, 1); }
+.building.out { opacity: 0; transition: opacity .28s ease; }
 @keyframes b-spin { to { transform: rotate(360deg); } }
 @keyframes b-line { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .confetti { position: fixed; inset: 0; z-index: 80; overflow: hidden; pointer-events: none; }
@@ -906,6 +904,11 @@ const fmtRangeDates = (a, b) => a.getMonth() === b.getMonth() ? `${a.getDate()}�
 const mmss = s => { s = Math.round(s); return `${Math.floor(s / 60)}:${pad(s % 60)}`; };
 const hms = s => { s = Math.round(s); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60; return h ? `${h}:${pad(m)}:${pad(x)}` : `${m}:${pad(x)}`; };
 
+/* Time fields: type the digits and the colons appear (2745 → 27:45, 10500 → 1:05:00) */
+function autoColon(t) {
+  const dg = t.value.replace(/\D/g, '').slice(0, 6);
+  t.value = dg.length <= 2 ? dg : dg.length <= 4 ? `${dg.slice(0, -2)}:${dg.slice(-2)}` : `${dg.slice(0, -4)}:${dg.slice(-4, -2)}:${dg.slice(-2)}`;
+}
 /* Read a race time typed as 25:30, 25.30, 1:55:00 or 1:55 */
 function parseTime(str, km) {
   const parts = String(str || '').trim().split(/[^0-9]+/).filter(Boolean).map(Number);
@@ -1256,7 +1259,7 @@ const BUGGY_NOTE = {
   blocked: 'A solo session: speed work and hills aren’t buggy runs. Pushing the buggy is challenge enough on its own!',
   easy: 'Buggy run: paces are about 7% slower, so run by feel. Use the wrist strap and stick to smooth, quiet paths.',
   hard: 'Buggy run: keep the quick bits on flat, smooth paths and run them by effort, not pace. If it feels unsafe, swap this with a solo day.',
-  parkrun: 'Most parkruns welcome running buggies: start near the back and check your event’s page first.',
+  parkrun: 'Most parkruns welcome running buggies: check your event’s page first.',
 };
 
 /* Formatters bound to the chosen units */
@@ -1318,7 +1321,7 @@ const S = {
     const reps = Math.min(10, 4 + k);
     return {
       spec: { reps }, kind: 'hills', cat: 'speed', canBuggy: false, title: 'Hill reps', purpose: 'Strength', pace: 'interval',
-      steps: [WU, 'Find a steady slope that takes about a minute to run up', `${reps} × 45 seconds uphill at a hard effort (8 out of 10), tall posture, quick arms`, 'Jog or walk back down to recover', CD],
+      steps: [WU, 'Find a steady slope that takes about a minute to run up', `${reps} × 45 seconds uphill at a hard effort (8 out of 10)`, 'Jog or walk back down to recover', CD],
       km: r05(1200 / mid(c.Z.easy) + reps * .3), mins: 20 + reps * 2.5,
     };
   },
@@ -1381,7 +1384,7 @@ const S = {
     if (mode === 'tempo') return { ...base, kind: 'parkrun-tempo', title: 'parkrun tempo', purpose: 'Stamina', pace: 'tempo',
       steps: ['First 1 km easy', `Middle 3 km at ${T('tempo', 'tempo pace')}: ${c.F.range(c.Z.tempo)}`, 'Last 1 km easy, and cheer people in'] };
     if (mode === 'steady') return { ...base, kind: 'parkrun-steady', mins: 5 * mid(c.Z.prsteady) / 60, title: 'Steady parkrun', purpose: 'Race practice', pace: 'prsteady',
-      steps: ['Start near the middle of the pack so you’re not swept off too fast', `Settle into a strong, steady pace, around marathon effort: ${c.F.range(c.Z.prsteady)}`, 'Finish strong if you feel good, then thank a marshal'] };
+      steps: ['Start near the middle of the pack so you’re not swept off too fast', `Settle into a strong, steady pace you could hold for well over an hour: ${c.F.range(c.Z.prsteady)}`, 'Finish strong if you feel good, then thank a marshal!'] };
     if (mode === 'shake') return { ...base, kind: 'parkrun-shake', title: 'parkrun (optional, very easy)', purpose: 'Freshen up', pace: 'easy', km: 5,
       steps: ['Jog it very gently, or volunteer instead and cheer everyone on', 'No racing today. Save it for tomorrow'] };
     if (mode === 'brisk') return { ...base, kind: 'parkrun', title: 'Brisk parkrun', purpose: 'Speed endurance', pace: 'parkrun', mins: 5 * mid(c.Z.parkrun) / 60,
@@ -1434,7 +1437,7 @@ const PACE = {
   interval: { name: '5K effort', term: 'intervals', feel: 'Effort 8 out of 10. Hard: you could only manage a word or two.' },
   prrelax: { name: 'parkrun (relaxed)', term: 'parkrun', feel: 'Effort 4 out of 10. The top end of easy: you can still chat.' },
   parkrun: { name: 'Brisk parkrun', term: 'parkrun', feel: 'Effort 6–7 out of 10. Comfortably hard, close to your 10K effort.' },
-  prsteady: { name: 'Steady parkrun', term: 'steady', feel: 'Effort 5–6 out of 10. Strong and steady, around marathon effort.' },
+  prsteady: { name: 'Steady parkrun', term: 'steady', feel: 'Effort 5–6 out of 10. Strong and steady: you can talk, but only in short sentences.' },
   race: { name: 'Goal race pace', term: 'racepace', feel: 'Your target pace for race day. Should feel controlled, as if you could hold it a long time.' },
 };
 const PHASE = {
@@ -1519,8 +1522,9 @@ async function unpack(str) {
    Icons (24px grid, 2px rounded strokes)
    ====================================================================== */
 const IC = {
+  parkrun: '<path d="M12 2.5 7 9h2.6L5.5 14.5h3.2L4.5 19.5h15l-4.2-5h3.2L14.4 9H17l-5-6.5Z"/><path d="M12 19.5v2.5"/>',
   easy: '<path d="M5 19.5C5 11 10 5 20 4c-.8 10-6.5 15.5-15 15.5Z"/><path d="M5 19.5c2.8-4.2 6-7.2 10-9.5"/>',
-  long: '<circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H16a3.5 3.5 0 0 0 0-7H8a3.5 3.5 0 0 1 0-7h7.5"/>',
+  long: '<circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H16a3.5 3.5 0 0 0 0-7H8a2.5 2.5 0 0 1 0-5h7.5"/>',
   speed: '<path d="M13 2.5 4.5 13.5H11L10 21.5l8.5-11H12l1-8Z"/>',
   tempo: '<path d="M12 21.5c4.2 0 7.3-2.9 7.3-7 0-3.6-2.2-5.7-3.8-8.6-.9 1.8-2 2.8-3.5 3.1-.1-2.6-1.4-4.9-3.6-6.5.2 4.5-4.4 6.8-4.4 12 0 4.1 3.4 7 8 7Z"/>',
   race: '<path d="M5 21.5V4"/><path d="M5 4h13l-2.6 4.5L18 13H5"/>',
@@ -1559,9 +1563,10 @@ IC.shoe = '<path d="M3 15.5V9.8c0-.7.6-1.2 1.3-1l2.2.6 2-2.4 3 2.2 1.4-1.2 1.6 1
 IC.bulb = '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.8 10.6c.6.5 1 1.3 1 2.1V16h5.6v-.3c0-.8.4-1.6 1-2.1A6 6 0 0 0 12 3Z"/>';
 IC.move = '<path d="M8 7 4 11l4 4"/><path d="M4 11h11a5 5 0 0 1 0 10h-2"/>';
 IC.chart = '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>';
+IC.arm = '<path d="M4.5 20.5h14a2 2 0 0 0 2-2c0-3-2.4-5.3-5.3-5.3-1.4 0-2.6.5-3.6 1.4L10 9.2l1.8-1.5a1.6 1.6 0 0 0 .3-2.1L10.9 4a1.6 1.6 0 0 0-2.2-.4L6.3 5.3a1.8 1.8 0 0 0-.8 1.4L4 17.5c-.2 1.5 0 3 .5 3Z"/><path d="M13 15.6c.9.7 2 1 3.1.8"/>';
 IC.trend = '<path d="M3 6.5l6.5 6.5 4-4 7.5 7.5"/><path d="M15.5 17.5H21V12"/>';
 /* Version: each published update of Run plan is a release */
-const APP_VERSION = '0.15';
+const APP_VERSION = '0.16';
 /* Releases: 0.1 first plan · 0.2 app look · 0.3 web-app feel, chart, moving runs · 0.4 phase/total chart, safer saves ·
    0.5 past runs fixed, clearer explained words · 0.6 logo, time ranges, race-week celebration, evidence-based taper ·
    0.7 parkrun buggy runs, "How this plan is built" (methodology and sources) ·
@@ -1574,15 +1579,15 @@ const APP_VERSION = '0.15';
    0.13 clearer date errors, orb build animation, tighter run descriptions, slowest-first paces, shorter backup links ·
    0.14 parkrun logo on parkrun runs, simple spinner build screen ·
    0.15 log how runs felt, replan after missed runs, race-time prediction, weekly streaks and milestones,
-        avoid-hills and off-road options, Home Screen and backup reminders, get in touch */
+        avoid-hills and off-road options, Home Screen and backup reminders, get in touch ·
+   0.16 tree icon for parkrun again, plain progress bar, clearer wording, "Saved" in run details, intro fills the screen */
 const versionHTML = () => `<p class="version">Run plan v${APP_VERSION} · Beta</p>`;
 /* TW mark: the favicon's letters, with the W's last stroke cut free as a light-blue slash.
    Tuned for 24-32px: the gap is the narrowest that still separates the slash cleanly, and the slash is a touch heavier than the W's own stroke. */
 let logoN = 0;
 const logoSvg = () => { const id = 'twc' + (logoN++); return `<span class="logo" aria-hidden="true"><svg viewBox="0 0 64 64"><defs><clipPath id="${id}"><polygon points="0,-900 1775.9,-900 1453.8,100 0,100"/></clipPath></defs><rect width="64" height="64" rx="12" fill="#1A33F5"/><g transform="translate(7.08 40.41) scale(0.0245)"><path fill="#F6F4EE" d="M334.9 0V-572.9H27V-686.8H771.9V-572.9H464V0Z"/><path fill="#F6F4EE" clip-path="url(#${id})" d="M1099.6 0 862.9 -686.8H1002.9L1151.6 -229.7Q1155.8 -218.7 1161.1 -200Q1166.3 -181.3 1172.1 -161.4Q1178 -141.6 1181.7 -125.8H1188.7Q1190.9 -137.8 1194.8 -152.1Q1198.7 -166.3 1202.3 -180.9Q1205.9 -195.5 1209.5 -208.3Q1213.1 -221 1215.6 -229.7L1351.9 -686.8H1530.2L1667 -229.7Q1670.5 -218.7 1675.5 -200.1Q1680.5 -181.5 1685.7 -161.5Q1690.9 -141.6 1693.6 -125.8H1700.6Q1704.1 -137.3 1708.1 -151.6Q1712.1 -165.8 1716.7 -180.1Q1721.3 -194.5 1724.9 -207.3Q1728.5 -220.2 1731.8 -229.7L1881.2 -686.8H2007.6L1770.2 0H1608.8L1465.9 -463.1Q1462.2 -476.2 1456.8 -494.9Q1451.4 -513.6 1447.1 -533.2Q1442.7 -552.8 1439.5 -568.1H1433.3Q1430.6 -552.6 1425.1 -532.5Q1419.6 -512.4 1414.6 -493.9Q1409.6 -475.4 1405.6 -463.1L1266.3 0Z"/><polygon fill="#B4C1FF" points="1636,0 1770.2,0 2007.6,-686.8 1857.2,-686.8"/></g></svg></span>`; };
 const BRAND = link => link ? `<a class="brandmark" href="/tools/run/">${logoSvg()}<span class="brand">Run plan</span><span class="beta">Beta</span></a>` : `<span class="brandmark">${logoSvg()}<span class="brand">Run plan</span><span class="beta">Beta</span></span>`;
-const PR_LOGO = 'data:image/webp;base64,UklGRtYCAABXRUJQVlA4WAoAAAAQAAAAfwAAfwAAQUxQSGoCAAABoAVJtmnbGte2bdu2bfveHde2bdu2bdvmn20b/THmwjwxxvOLiIgJoP97jFC4fqBB8WhKhZ/8Cy5nRVKn1Fd4/VZKlQS/4Oe36HpMg9+jtXgA5yMDapWrPfS0E67rAMclYck5yiYT3mnw0bSWvO4z4L58B2FMRd4LGbBMuiowkr8GZBIORvLbANmWGcj3BIa+ooEH/KOpDJL1MpBNQy3BwPNaacWeSkd2GeQqwxZZusoyiTWX5bDUhg0S6yYjy4nZHrEQFIjdVe+1es+lKhl0rkoUadovmIPEQnkawG0hW98AhJCmMtwvskVztsYkYR/A43lr4haGy+dLWmYJS9r2huP2VKTyRJiHkNL9YTxGWheGsQGpDWMqUvuDIQWpXRe8PukNfpb07mIgxcGHWKoFjJQro4EsA0BssfaxHZbqsoligaew1Iatk40sB9haqcqz57ZaijaBLbMVEG07a6nZJVbcVkvRbrIstgKinWeZbLUUbS0roFl/1sBWQLS8bImtlqIR+6oebAVkW8vaWWopW0IGSwHZyFBZszYMdpoKR4ZdVppI14ChvmL0iyGjYmRAFsVqGdBEL5plwEG9aLMBaKIWLTEBPbSidg7Ah6nFY4YNbSV23QlbT5ydLw1Fc3Ju5FOvd3CWhmikF/gR4QJcNxCHaI6tPfBYRSCiarcsZIHXryR1nHZrr7z+/GYreVhSG+6vT0hPehrc3u6RgJT10IQUdtWUVHZDSrsg7Ui7GuqRdu3Voz9799U7qN5m9Taot+5P31r1lv/jZ6V6a9Vb96dvk3pbNWvANmuWmPXXjH4AIN1rVaT/ewRWUDggRgAAAFAGAJ0BKoAAgAA+MRiLRCIhoRBEACADBLS3cLpIACe2xF4gqOe2IvEFRz2xF4gqOe2IvEFRz2xF4gmwAP7/1lgAAAAAAAA=';   // parkrun logo, supplied by the site owner
-const ic = (k, cls = '') => k === 'parkrun' ? `<img class="pr-logo ${cls}" src="${PR_LOGO}" alt="" width="40" height="40">` : `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true">${IC[k] || ''}</svg>`;
+const ic = (k, cls = '') => `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true">${IC[k] || ''}</svg>`;
 const CAT = { easy: 'Easy', long: 'Long run', speed: 'Speed', tempo: 'Stamina', parkrun: 'parkrun', race: 'Race day' };
 const TAG = { easy: 'Easy', strides: 'Easy + form', long: 'Endurance', fastfinish: 'Endurance', fartlek: 'Speed play', hills: 'Strength', intervals: 'Speed',
   tempo: 'Stamina', racepace: 'Race practice', sharpen: 'Race practice', shakeout: 'Recovery', 'parkrun-easy': 'parkrun', parkrun: 'Speed endurance', 'parkrun-steady': 'Race practice',
@@ -1718,6 +1723,7 @@ const scrolls = {};
 
 function render() {
   document.body.dataset.view = view;
+  if (isStandalone()) document.documentElement.classList.add('app');
   // colour the browser / status bar to match the top of the screen (blue on the intro, page colour elsewhere)
   { const cs = getComputedStyle(document.documentElement), c = (view === 'intro' ? cs.getPropertyValue('--grad-a') : cs.getPropertyValue('--bg')).trim();
     if (c) $('#theme-color').setAttribute('content', c); }
@@ -1818,7 +1824,7 @@ function renderSetup() {
         <div class="field"><label class="field__label" for="pb-${k}">${l}</label><input class="input input--time" id="pb-${k}" data-pb="${k}" inputmode="numeric" placeholder="${ph}" value="${d.pbs[k] ? hms(d.pbs[k]) : ''}" aria-describedby="pb-${k}-err"></div>`).join('')}
       </div>
       ${['5k', '10k', 'hm'].map(k => `<p class="err" id="pb-${k}-err" hidden>That doesn’t look like a ${DIST[k].label} time. Try something like ${k === 'hm' ? '2:15:00' : k === '10k' ? '58:30 or 1:05:00' : '29:45'}.</p>`).join('')}
-      <p class="hint">Just type the numbers and we’ll add the colons: 2745 becomes 27:45, and 10500 becomes 1:05:00. Your best recent time is most useful.</p>
+      <p class="hint">Your best recent time is most useful.</p>
       <div class="callout k-warn" id="ready-hint" hidden></div>
       <div class="card pad" style="margin-top:28px">
         <div class="slider"><div class="slider__top"><label class="slider__label" for="r-longest">Longest run in the last month</label><output class="slider__value" id="o-longest" for="r-longest">${longestLabel(d.longest)}</output></div>
@@ -1980,16 +1986,13 @@ function onSetupInput(t) {
   if (t.hasAttribute('data-buggy-day')) d.buggyDays = $$('[data-buggy-day]:checked').map(x => +x.value);
   if (t.id === 'r-longest') { d.longest = +t.value; $('#o-longest').textContent = longestLabel(d.longest); }
   if (t.id === 'r-goal') { d.goal = +t.value; goalTouched = true; }
-  if (t.hasAttribute('data-pb')) {
-    const dg = t.value.replace(/\D/g, '').slice(0, 6);
-    t.value = dg.length <= 2 ? dg : dg.length <= 4 ? `${dg.slice(0, -2)}:${dg.slice(-2)}` : `${dg.slice(0, -4)}:${dg.slice(-4, -2)}:${dg.slice(-2)}`;
-  }
+  if (t.hasAttribute('data-pb')) autoColon(t);
   if (t.hasAttribute('data-pb')) { const s = parseTime(t.value, PBD[t.dataset.pb]); if (s) d.pbs[t.dataset.pb] = s; else delete d.pbs[t.dataset.pb]; if (!goalTouched) d.goal = defaultGoal(d); }
   syncSetup();
 }
 
-/* A short full-screen moment while the plan is "built": a glowing sphere, a ring that closes week by week, and orbits.
-   About 4 seconds, then the sphere floods the screen to reveal the app. Skipped with reduced motion. */
+/* A short full-screen moment while the plan is "built": a spinner and a few status lines.
+   About 3 seconds with a spinner, then it fades to reveal the app. Skipped with reduced motion. */
 function buildingScreen(p, then) {
   if (reduceMotion()) return then();
   const nm = first(p.name), D = DIST[p.distance], wk = weeksUntil(p.date, null), N = clamp(wk, 6, 26);
@@ -1998,12 +2001,12 @@ function buildingScreen(p, then) {
   o.className = 'building'; o.setAttribute('role', 'status');
   o.innerHTML = `<div class="building__in">
     <span class="spinner" aria-hidden="true"></span>
-    <h2>Building your plan, ${nm}</h2><p class="building__line" id="b-line">${lines[0]}</p></div><span class="building__flood"></span>`;
+    <h2>Building your plan, ${nm}</h2><p class="building__line" id="b-line">${lines[0]}</p></div>`;
   document.body.appendChild(o);
   const line = o.querySelector('#b-line'); let i = 0;
   const tick = setInterval(() => { i++; if (i >= lines.length) return clearInterval(tick); line.classList.remove('in'); void line.offsetWidth; line.textContent = lines[i]; line.classList.add('in'); }, 560);
   line.classList.add('in');
-  setTimeout(() => { then(); o.classList.add('flood'); setTimeout(() => o.remove(), 700); }, 3000);
+  setTimeout(() => { then(); o.classList.add('out'); setTimeout(() => o.remove(), 300); }, 3000);
 }
 function finishSetup() {
   const p = draft;
@@ -2020,7 +2023,7 @@ function finishSetup() {
 }
 
 /* ---------- App (the plan) ---------- */
-let plan = null, openWeeks = new Set(), lastNow = null, sheetId = null, chartSel = null;
+let plan = null, openWeeks = new Set(), lastNow = null, sheetId = null, chartSel = null, sheetSaved = null;
 const allRuns = () => plan.weeks.flatMap(w => w.runs);
 const runById = id => allRuns().find(r => r.id === id);
 const weekOf = r => plan.weeks.find(w => w.runs.includes(r));
@@ -2154,12 +2157,12 @@ function prediction(now) {
 }
 function predHTML(now) {
   const pr = prediction(now);
-  if (!pr) return now.t > parseISO(state.profile.date) ? '' : `<button class="race-card__pred" data-act="pred">${ic('trend')}<span>Log a parkrun time to see your predicted finish</span></button>`;
-  return `<button class="race-card__pred" data-act="pred">${ic('trend')}<span>Predicted finish <b>${pr.lo}–${pr.hi}</b></span>${ic('info', 'race-card__i')}</button>`;
+  if (!pr) return now.t > parseISO(state.profile.date) ? '' : `<button class="race-card__pred" data-act="pred">${ic('arm')}<span>Log a parkrun time to see your predicted finish</span></button>`;
+  return `<button class="race-card__pred" data-act="pred">${ic('arm')}<span>Predicted finish <b>${pr.lo}–${pr.hi}</b></span>${ic('info', 'race-card__i')}</button>`;
 }
 function explainPred() {
   const now = nowInfo(), pr = prediction(now), D = DIST[state.profile.distance];
-  ask({ icon: 'trend', title: 'Your predicted finish',
+  ask({ icon: 'arm', title: 'Your predicted finish',
     body: pr ? `<p>Right now you’re on track for about <b>${pr.lo}–${pr.hi}</b> in your ${D.name}.</p>
       <p style="margin-top:10px">It starts from ${pr.from === 'pb' ? 'your personal best' : 'a recent all-out run you logged'}, converted to your race distance with Riegel’s formula, the standard way to compare times across distances. Then it adds a modest improvement for the ${pr.weeks} week${pr.weeks === 1 ? '' : 's'} left, which shrinks if training has been patchy (you’ve done ${Math.round(pr.rate * 100)}% of your runs in the last four weeks).</p>
       <p style="margin-top:10px">Log your parkrun times (tap a parkrun, then <b>How did it go?</b>) and the prediction sharpens. It’s a guide, not a promise: hills, heat and how you feel on the day all count.</p>`
@@ -2174,16 +2177,17 @@ function logRun(id) {
   const kmShown = rec.ak ? String(Math.round((F.mi ? rec.ak / MI : rec.ak) * 100) / 100) : '';
   let feel = rec.f || 0;
   ask({ icon: 'check', kind: `k-${r.cat}`, title: race ? 'How was the race?' : 'How did it go?',
-    body: `<p class="hint" style="margin:0 0 14px">Optional. It helps your plan${race ? '' : ' and your predicted finish'}.</p>
+    body: `<p class="hint" style="margin:0 0 14px">Optional. This helps to refine your plan${race ? '' : ' and your predicted finish'}.</p>
       <p class="slider__label" id="feel-l" style="margin-bottom:10px">How did it feel?</p>
       <div class="feel" role="radiogroup" aria-labelledby="feel-l">${FEEL.map(([e, l], i) => `<button type="button" class="feel__b" role="radio" aria-checked="${feel === i + 1}" data-feel="${i + 1}"><span aria-hidden="true">${e}</span>${l}</button>`).join('')}</div>
       <div class="log-grid">
         ${fixed ? '' : `<label class="log-f"><span>Distance (${F.unit})</span><input class="input" id="log-km" inputmode="decimal" autocomplete="off" placeholder="${F.dist(r.km).split(' ')[0]}" value="${kmShown}"></label>`}
-        <label class="log-f"><span>${race ? 'Finish time' : pr ? 'Your parkrun time' : 'Time'}</span><input class="input" id="log-time" inputmode="numeric" autocomplete="off" placeholder="${race ? 'e.g. 2:05:30' : pr ? 'e.g. 27:45' : 'e.g. 32:10'}" value="${rec.as ? hms(rec.as) : ''}"></label>
+        <label class="log-f"><span>${race ? 'Finish time' : pr ? 'Your parkrun time' : 'Time'}</span><input class="input" id="log-time" inputmode="numeric" autocomplete="off" placeholder="${race ? '2:05:30' : pr ? '27:45' : '32:10'}" value="${rec.as ? hms(rec.as) : ''}"></label>
       </div>
       <p class="err" id="log-err" hidden>That time doesn’t look right. Try something like 27:45.</p>`,
     actions: [{ label: 'Save', value: 'savelog', cls: 'btn--primary' }, { label: 'Skip', value: 'skip', cls: 'btn--ghost' }] });
   const d = $('#ask-sheet');
+  d.querySelector('#log-time').addEventListener('input', e => autoColon(e.target));
   d.querySelectorAll('[data-feel]').forEach(b => b.addEventListener('click', () => {
     feel = feel === +b.dataset.feel ? 0 : +b.dataset.feel; haptic();
     d.querySelectorAll('[data-feel]').forEach(x => x.setAttribute('aria-checked', +x.dataset.feel === feel));
@@ -2374,10 +2378,10 @@ function cell(r, now) {
 }
 
 const NOTE = {
-  easy: n => `Nice and easy today, ${n}. If you can chat, you’re doing it right.`,
-  long: n => `Big one today, ${n}. Slow and steady: time on your feet is what counts.`,
+  easy: (n, t) => `Nice and easy${t ? ' today' : ''}, ${n}. If you can chat, you’re doing it right.`,
+  long: (n, t) => t ? `Big one today, ${n}. Slow and steady: time on your feet is what counts.` : `Long run day, ${n}. Slow and steady: time on your feet is what counts.`,
   speed: n => `Time to get quick, ${n}! Short bursts, proper rests.`,
-  tempo: n => `Comfortably hard today, ${n}. You’ve got this.`,
+  tempo: (n, t) => `Comfortably hard${t ? ' today' : ''}, ${n}. You’ve got this.`,
   parkrun: n => `Enjoy parkrun, ${n}, and thank a marshal on the way round!`,
   race: n => `This is it, ${n}. You’ve done the work. Now enjoy it.`,
 };
@@ -2392,7 +2396,7 @@ function runCardHTML(run, now) {
     ${statsHTML(run)}
     <p class="run-card__purpose"><b>Purpose:</b> ${esc(run.purpose)}. ${WHY[run.kind](p.distance)}</p>
     ${run.buggy ? `<p><span class="tag k-accent">${ic('buggy')} With the buggy</span></p>` : ''}
-    <div class="cheer">${ic('sparkle')}<span>${(NOTE[run.cat] || NOTE.easy)(nm)}</span></div>
+    <div class="cheer">${ic('sparkle')}<span>${(NOTE[run.cat] || NOTE.easy)(nm, isToday)}</span></div>
     <div class="run-card__actions"><button class="btn btn--secondary" data-open="${run.id}">${ic('learn')}Details</button>${tickBtn(run)}</div>
   </article>`;
 }
@@ -2411,7 +2415,7 @@ function renderToday(now) {
       ${st >= 2 ? `<span class="streak">${ic('tempo')}${st}-week streak</span>` : ''}
     </div>
     <div class="road" style="--p:${Math.max(4, Math.round(pct * 100))}%" role="img" aria-label="${Math.round(pct * 100)}% of runs done">
-      <div class="road__track"><div class="road__fill"></div><div class="road__me">${ic('shoe')}</div></div>
+      <div class="road__track"><div class="road__fill"></div></div>
     </div>
     <p class="road__labels"><span>${MILESTONE(pct)}</span><b>${Math.round(pct * 100)}%</b></p>
     <div class="race-card__foot">
@@ -2489,7 +2493,7 @@ function chartReadout(i, now) {
   }
   const doneKm = w.runs.filter(isDone).reduce((s, r) => s + r.km, 0);
   return `<b>Week ${w.n}${isNow ? ' (this week)' : ''}</b><span>${PHASE[w.phase].name}${w.cut ? ' · deload' : ''} · ${fmtRangeDates(w.start, w.end)}</span>
-    ${w.runs.some(r => r.kind === 'race') ? `<span><strong>${F.dist(w.km - longOf(w))}</strong> of runs + the <strong>${F.dist(longOf(w), true)}</strong> race</span>` : `<span><strong>${F.dist(w.km)}</strong> in total${doneKm ? ` · ${F.dist(doneKm)} done` : ''}</span>`}<span>Long run <strong>${F.dist(longOf(w), w.runs.some(r => r.kind === 'race'))}</strong></span>`;
+    ${w.runs.some(r => r.kind === 'race') ? `<span><strong>${F.dist(w.km - longOf(w))}</strong> of runs + the <strong>${F.dist(longOf(w), true)}</strong> race</span>` : `<span><strong>${F.dist(w.km)}</strong> in total · long run <strong>${F.dist(longOf(w))}</strong>${doneKm ? ` · ${F.dist(doneKm)} done` : ''}</span>`}`;
 }
 const niceStep = v => [5, 10, 20, 25, 50, 100, 200, 250, 500, 1000].find(x => x >= v) || 1000;
 const chartTop = max => { const st = niceStep(max / 4); return [st, Math.ceil(max / st) * st]; };
@@ -2537,7 +2541,7 @@ function chartBody(now) {
       <tbody>${W.map((w, i) => `<tr><td>${w.n}${w.cut ? ' (deload)' : ''}</td><td>${PHASE[w.phase].name}</td><td>${F.dist(w.km)}</td><td>${F.dist(longOf(w))}</td><td>${F.dist(cum[i].plan)}</td></tr>`).join('')}</tbody></table>
     </details>`;
 }
-const chartSubText = () => { const F = fmt(state.units); return chartMode === 'total' ? `Total distance in ${F.unit}, building up to race day. Tap a week for details.` : `Weekly distance in ${F.unit}, coloured by phase. Spot the deload dips and the taper.`; };
+const chartSubText = () => { const F = fmt(state.units); return chartMode === 'total' ? `Total distance in ${F.unit}, building up to race day. Tap a week for details.` : `Weekly distance in ${F.unit}, coloured by phase.`; };
 function chartHTML(now) {
   return `<section class="card pad" aria-labelledby="load-h">
     <div class="chart__head"><div><h2 class="sec-h" style="margin:0 0 4px" id="load-h">How your training builds</h2>
@@ -2548,8 +2552,7 @@ function chartHTML(now) {
 }
 function renderPlanTab(now) {
   const p = state.profile, F = fmt(state.units), nm = first(p.name);
-  let h = `<div class="head"><p class="eyebrow">${plan.N} weeks · ${p.runs} runs a week</p><h1 class="h1">Your plan</h1>
-    <p class="head__sub">Tap a run for the details, or to move it to another day. Tap the circle when it’s done.</p></div>`;
+  let h = `<div class="head"><p class="eyebrow">${plan.N} weeks · ${p.runs} runs a week</p><h1 class="h1">Your plan</h1></div>`;
   h += chartHTML(now);
   if (plan.short) h += `<div class="callout k-warn">${ic('info')}<p><b>Time is a little tight</b>Your longest run will reach ${F.dist(plan.peakEff)} rather than the usual ${F.dist(plan.peak)}. That’s fine: you can still get round strongly.</p></div>`;
   h += `<div class="weeks">${plan.weeks.map(w => {
@@ -2778,7 +2781,7 @@ function methodHTML() {
       'convention', src(11), 'none of the 216 test plans has two harder sessions on consecutive days.')}
     ${principle('10. parkrun',
       'There’s no research on parkrun itself, but it fits the principles above: a harder effort counts towards your weekly hard work, and a relaxed one counts as easy running.',
-      'treats parkrun as one of your weekly runs. On alternate weeks it’s your harder session (steady around marathon effort, or brisk in the build and peak phases) and the midweek run is easy. In the other weeks it’s relaxed, at the top end of easy, and the midweek session is the hard one. Some deload weeks swap in a time trial. Brand-new runners keep parkrun relaxed until the build phase.',
+      'treats parkrun as one of your weekly runs. On alternate weeks it’s your harder session (steady, at a pace you could hold for well over an hour, or brisk in the build and peak phases) and the midweek run is easy. In the other weeks it’s relaxed, at the top end of easy, and the midweek session is the hard one. Some deload weeks swap in a time trial. Brand-new runners keep parkrun relaxed until the build phase.',
       'estimate', '')}
     ${principle('11. Checking your goal',
       'Beginners often improve quickly, but there’s no research-based limit for how fast an individual can improve.',
@@ -2827,7 +2830,7 @@ function methodHTML() {
 function openMethod() { const d = $('#method-sheet'); d.innerHTML = methodHTML(); openSheet(d); d.querySelector('.sheet__scroll').scrollTop = 0; }
 
 /* ---------- Run detail sheet ---------- */
-function openRun(id) { sheetId = id; fillRunSheet(); openSheet($('#run-sheet')); }
+function openRun(id) { sheetId = id; sheetSaved = null; fillRunSheet(); openSheet($('#run-sheet')); }
 /* A simple picture of a session: width is time, height is effort.
    Hills slope up and back down; intervals step up and down. */
 function profileHTML(r) {
@@ -2910,7 +2913,7 @@ function fillRunSheet() {
     ${r.canBuggy ? `<div class="card list" style="margin-top:14px"><label class="row k-accent"><span class="tile">${ic('buggy')}</span><span class="row__label">With the buggy<small>Eases the target pace by about 7%</small></span><span class="sw"><input type="checkbox" role="switch" data-buggy-run="${r.id}" ${r.buggy ? 'checked' : ''}><span class="sw__t"></span></span></label></div>`
       : (buggyUser && r.cat === 'speed' && !r.note ? `<div class="callout k-accent">${ic('buggy')}<p>${BUGGY_NOTE.blocked}</p></div>` : '')}
   </div>
-  <div class="sheet__foot">${tickBtn(r, 'btn--block')}</div>`;
+  <div class="sheet__foot">${sheetSaved === r.id ? `<p class="sheet__saved" role="status">${ic('check')}Change saved. No need to do anything else.</p>` : ''}${tickBtn(r, 'btn--block')}</div>`;
   dlg.querySelector('.sheet__scroll').scrollTop = top;
 }
 
@@ -2955,6 +2958,7 @@ function toggleDone(id, btn) {
 }
 function moveRun(id, toISO) {
   if (toISO === id) delete state.moves[id]; else state.moves[id] = toISO;
+  sheetSaved = id;
   save(); haptic(); regen(); refresh();
   const r = runById(id);
   toast(r && r.date === toISO ? (toISO === id ? 'Back on its usual day.' : `Moved to ${DOW[dowMon(parseISO(toISO))]}, ${first(state.profile.name)}.`) : 'That day isn’t free.', 'move');
@@ -3133,7 +3137,7 @@ document.addEventListener('change', e => {
     return;
   }
   if (t.hasAttribute('data-buggy-run')) {
-    state.buggy[t.dataset.buggyRun] = t.checked;
+    state.buggy[t.dataset.buggyRun] = t.checked; sheetSaved = t.dataset.buggyRun;
     save(); haptic(); regen(); refresh();
     const sw = $(`#run-sheet [data-buggy-run="${t.dataset.buggyRun}"]`); sw && sw.focus({ preventScroll: true });
     toast(t.checked ? `Buggy run noted. Paces eased off, ${first(state.profile.name)}.` : 'Solo run. Paces back to normal.', t.checked ? 'buggy' : 'check');
